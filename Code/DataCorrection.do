@@ -81,7 +81,7 @@ gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20090130-bday)/10000)
-drop b*
+drop byear bmonth bday
 export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\JHPS2009.csv", replace
 }
 
@@ -198,7 +198,7 @@ gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20100130-bday)/10000)
-drop b*
+drop byear bmonth bday
 export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\JHPS2010.csv", replace
 }
 
@@ -266,7 +266,7 @@ gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20110130-bday)/10000)
-drop b*
+drop byear bmonth bday
 export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\JHPS2011.csv", replace
 }
 
@@ -334,7 +334,7 @@ gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20120130-bday)/10000)
-drop b*
+drop byear bmonth bday
 export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\JHPS2012.csv", replace
 }
 
@@ -402,7 +402,7 @@ gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20130130-bday)/10000)
-drop b*
+drop byear bmonth bday
 export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\JHPS2013.csv", replace
 }
 
@@ -470,7 +470,7 @@ gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20140130-bday)/10000)
-drop b*
+drop byear bmonth bday
 export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\JHPS2014.csv", replace
 }
 
@@ -621,8 +621,311 @@ gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20040130-bday)/10000)
-drop b*
-export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\KHPS2004.csv", replace
+drop byear bmonth bday
+export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\KHPS2004.csv", replace
+}
+
+** KHPS2005
+{
+* 変数名の変更
+** 本人
+import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2005.csv", clear 
+rename (v1 v4 v5 v6 v7 v76 v139 ///
+v171 v159 v160 v161 v164 v165 ///
+v183 ///
+v185 v186 v187 v188 v189 v190 ///
+v203 v204 v205) ///
+(id marital sex byear bmonth earnmost workstatus ///
+occ owner ind size employed regular ///
+union ///
+paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
+workdaypermonth workhourperweek overworkperweek)
+** 主たる生計維持者
+replace earnmost=0 if earnmost!=1
+* 世帯主ダミー作成
+** 世帯主ですか (*) only 主たる生計維持者 asked in this survey
+gen head=earnmost
+* 使わない変数を落とす
+drop v*
+* idを+20000
+replace id=id+20000
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_pr.dta", replace
+
+** 配偶者
+import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2005.csv", clear 
+rename (v1 v4 v76 v392 ///
+v424 v412 v413 v414 v417 v418 ///
+v436 ///
+v438 v439 v440 v441 v442 v443 ///
+v456 v457 v458) ///
+(id marital earnmost workstatus ///
+occ owner ind size employed regular ///
+union ///
+paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
+workdaypermonth workhourperweek overworkperweek)
+* 続柄が配偶者のサンプルのみ残す
+keep if marital==1
+* 続柄の変数名変更->配偶者の情報を抽出
+rename (v13 v14 v15 v16 ///
+v20 v21 v22 v23 ///
+v27 v28 v29 v30 ///
+v34 v35 v36 v37 ///
+v41 v42 v43 v44 ///
+v48 v49 v50 v51 ///
+v55 v56 v57 v58 ///
+v62 v63 v64 v65 ///
+v69 v70 v71 v72) ///
+(rel1no rel1sex rel1byear rel1bmonth ///
+rel2no rel2sex rel2byear rel2bmonth ///
+rel3no rel3sex rel3byear rel3bmonth ///
+rel4no rel4sex rel4byear rel4bmonth ///
+rel5no rel5sex rel5byear rel5bmonth ///
+rel6no rel6sex rel6byear rel6bmonth ///
+rel7no rel7sex rel7byear rel7bmonth ///
+rel8no rel8sex rel8byear rel8bmonth ///
+rel9no rel9sex rel9byear rel9bmonth)
+** relation No. of spouse
+gen relno=0
+for num 1/9: replace relno=X+1 if relXno==1
+** sex
+gen sex=0
+for num 1/9: replace sex=relXsex if relXno==1
+** byear
+gen byear=0
+for num 1/9: replace byear=relXbyear if relXno==1
+** bmonth
+gen bmonth=0
+for num 1/9: replace bmonth=relXbmonth if relXno==1
+* 配偶者情報がないサンプルを落とす
+drop if relno==0
+** 主たる生計維持者
+replace earnmost=100 if earnmost==relno
+replace earnmost=0 if earnmost!=100
+replace earnmost=1 if earnmost==100
+* 世帯主ダミー作成
+** 世帯主ですか (*) only 主たる生計維持者 asked in this survey
+gen head=earnmost
+* 使わない変数を落とす
+drop v* rel*
+* idを+30000
+replace id=id+30000
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_sp.dta", replace
+
+** 本人と配偶者サンプルをバインド
+use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_pr.dta", clear
+append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_sp.dta"
+gen year=2005
+* ageを作成
+replace bmonth=bmonth+10
+tostring byear bmonth, replace
+gen bday=byear+bmonth+"15"
+destring bday, replace
+replace bday=bday-1000
+gen age=floor((20050130-bday)/10000)
+drop byear bmonth bday
+export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\KHPS2005.csv", replace
+}
+
+** KHPS2006
+{
+* 変数名の変更
+** 本人
+import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2006.csv", clear 
+rename (v1 v4 v5 v6 v7 v76 v132 ///
+v152 v153 v154 v155 v158 v159 ///
+v169 ///
+v171 v172 v173 v174 v175 v176 ///
+v189 v190 v191) ///
+(id marital sex byear bmonth earnmost workstatus ///
+occ owner ind size employed regular ///
+union ///
+paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
+workdaypermonth workhourperweek overworkperweek)
+** 主たる生計維持者
+replace earnmost=0 if earnmost!=1
+* 世帯主ダミー作成
+** 世帯主ですか (*) only 主たる生計維持者 asked in this survey
+gen head=earnmost
+* 使わない変数を落とす
+drop v*
+* idを+20000
+replace id=id+20000
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_pr.dta", replace
+
+** 配偶者
+import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2006.csv", clear 
+rename (v1 v4 v76 v348 ///
+v368 v369 v370 v371 v374 v375 ///
+v385 ///
+v387 v388 v389 v390 v391 v392 ///
+v405 v406 v407) ///
+(id marital earnmost workstatus ///
+occ owner ind size employed regular ///
+union ///
+paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
+workdaypermonth workhourperweek overworkperweek)
+* 続柄が配偶者のサンプルのみ残す
+keep if marital==1
+* 続柄の変数名変更->配偶者の情報を抽出
+rename (v13 v14 v15 v16 ///
+v20 v21 v22 v23 ///
+v27 v28 v29 v30 ///
+v34 v35 v36 v37 ///
+v41 v42 v43 v44 ///
+v48 v49 v50 v51 ///
+v55 v56 v57 v58 ///
+v62 v63 v64 v65 ///
+v69 v70 v71 v72) ///
+(rel1no rel1sex rel1byear rel1bmonth ///
+rel2no rel2sex rel2byear rel2bmonth ///
+rel3no rel3sex rel3byear rel3bmonth ///
+rel4no rel4sex rel4byear rel4bmonth ///
+rel5no rel5sex rel5byear rel5bmonth ///
+rel6no rel6sex rel6byear rel6bmonth ///
+rel7no rel7sex rel7byear rel7bmonth ///
+rel8no rel8sex rel8byear rel8bmonth ///
+rel9no rel9sex rel9byear rel9bmonth)
+** relation No. of spouse
+gen relno=0
+for num 1/9: replace relno=X+1 if relXno==1
+** sex
+gen sex=0
+for num 1/9: replace sex=relXsex if relXno==1
+** byear
+gen byear=0
+for num 1/9: replace byear=relXbyear if relXno==1
+** bmonth
+gen bmonth=0
+for num 1/9: replace bmonth=relXbmonth if relXno==1
+* 配偶者情報がないサンプルを落とす
+drop if relno==0
+** 主たる生計維持者
+replace earnmost=100 if earnmost==relno
+replace earnmost=0 if earnmost!=100
+replace earnmost=1 if earnmost==100
+* 世帯主ダミー作成
+** 世帯主ですか (*) only 主たる生計維持者 asked in this survey
+gen head=earnmost
+* 使わない変数を落とす
+drop v* rel*
+* idを+30000
+replace id=id+30000
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_sp.dta", replace
+
+** 本人と配偶者サンプルをバインド
+use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_pr.dta", clear
+append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_sp.dta"
+gen year=2006
+* ageを作成
+replace bmonth=bmonth+10
+tostring byear bmonth, replace
+gen bday=byear+bmonth+"15"
+destring bday, replace
+replace bday=bday-1000
+gen age=floor((20060130-bday)/10000)
+drop byear bmonth bday
+export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\KHPS2006.csv", replace
+}
+
+** KHPS2007
+{
+* 変数名の変更
+** 本人
+import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2007.csv", clear 
+rename (v1 v4 v5 v6 v7 v76 v138 ///
+v152 v153 v154 v155 v158 v159 ///
+v169 ///
+v171 v172 v173 v174 v175 v176 ///
+v189 v190 v191) ///
+(id marital sex byear bmonth earnmost workstatus ///
+occ owner ind size employed regular ///
+union ///
+paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
+workdaypermonth workhourperweek overworkperweek)
+** 主たる生計維持者
+replace earnmost=0 if earnmost!=1
+* 世帯主ダミー作成
+** 世帯主ですか (*) only 主たる生計維持者 asked in this survey
+gen head=earnmost
+* 使わない変数を落とす
+drop v*
+* idを+20000
+replace id=id+20000
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_pr.dta", replace
+
+** 配偶者
+import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2007.csv", clear 
+rename (v1 v4 v76 v348 ///
+v368 v369 v370 v371 v374 v375 ///
+v385 ///
+v387 v388 v389 v390 v391 v392 ///
+v405 v406 v407) ///
+(id marital earnmost workstatus ///
+occ owner ind size employed regular ///
+union ///
+paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
+workdaypermonth workhourperweek overworkperweek)
+* 続柄が配偶者のサンプルのみ残す
+keep if marital==1
+* 続柄の変数名変更->配偶者の情報を抽出
+rename (v13 v14 v15 v16 ///
+v20 v21 v22 v23 ///
+v27 v28 v29 v30 ///
+v34 v35 v36 v37 ///
+v41 v42 v43 v44 ///
+v48 v49 v50 v51 ///
+v55 v56 v57 v58 ///
+v62 v63 v64 v65 ///
+v69 v70 v71 v72) ///
+(rel1no rel1sex rel1byear rel1bmonth ///
+rel2no rel2sex rel2byear rel2bmonth ///
+rel3no rel3sex rel3byear rel3bmonth ///
+rel4no rel4sex rel4byear rel4bmonth ///
+rel5no rel5sex rel5byear rel5bmonth ///
+rel6no rel6sex rel6byear rel6bmonth ///
+rel7no rel7sex rel7byear rel7bmonth ///
+rel8no rel8sex rel8byear rel8bmonth ///
+rel9no rel9sex rel9byear rel9bmonth)
+** relation No. of spouse
+gen relno=0
+for num 1/9: replace relno=X+1 if relXno==1
+** sex
+gen sex=0
+for num 1/9: replace sex=relXsex if relXno==1
+** byear
+gen byear=0
+for num 1/9: replace byear=relXbyear if relXno==1
+** bmonth
+gen bmonth=0
+for num 1/9: replace bmonth=relXbmonth if relXno==1
+* 配偶者情報がないサンプルを落とす
+drop if relno==0
+** 主たる生計維持者
+replace earnmost=100 if earnmost==relno
+replace earnmost=0 if earnmost!=100
+replace earnmost=1 if earnmost==100
+* 世帯主ダミー作成
+** 世帯主ですか (*) only 主たる生計維持者 asked in this survey
+gen head=earnmost
+* 使わない変数を落とす
+drop v* rel*
+* idを+30000
+replace id=id+30000
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_sp.dta", replace
+
+** 本人と配偶者サンプルをバインド
+use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_pr.dta", clear
+append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_sp.dta"
+gen year=2007
+* ageを作成
+replace bmonth=bmonth+10
+tostring byear bmonth, replace
+gen bday=byear+bmonth+"15"
+destring bday, replace
+replace bday=bday-1000
+gen age=floor((20070130-bday)/10000)
+drop byear bmonth bday
+export delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\KHPS2007.csv", replace
 }
 
 }
@@ -638,10 +941,13 @@ mvdecode schooling, mv(0)
 keep id schooling
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\SchoolingJHPS.dta", replace
 *** KHPSの学歴
+**** old cohort
 import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\KHPS2004.csv", replace
 replace schooling=0 if edbg==9
 mvdecode schooling, mv(0)
 keep id schooling
+**** new cohort 2007
+**** new cohort 2012
 *** bind
 append using JHPS_schooling.dta
 sort id
@@ -664,6 +970,7 @@ keep id workexp2010
 sort id
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\WorkexpJHPS.dta", replace
 ** KHPS就業履歴
+**** old cohort
 import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\KHPS2004.csv", replace
 for num 18/70: gen weX=0
 for num 18/70: replace casX=0 if casX==9
@@ -676,5 +983,7 @@ egen workexp2004=rowtotal(we18-we70)
 keep id workexp2004
 sort id
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\WorkexpKHPS.dta", replace
+**** new cohort 2007
+**** new cohort 2012
 }
 }
