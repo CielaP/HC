@@ -1961,7 +1961,7 @@ for num 88888 99999: mvdecode monthlypaid, mv(X)
 *dailypaid
 for num 888888 999999: mvdecode dailypaid, mv(X)
 *hourlypaid
-for num 88888 99999: mvdecode hourlypaid, mv(X)
+for num 888888 999999: mvdecode hourlypaid, mv(X)
 *yearlypaid
 for num 88888 99999: mvdecode yearlypaid, mv(X)
 *bonus
