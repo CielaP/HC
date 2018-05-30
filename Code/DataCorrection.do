@@ -16,7 +16,7 @@ set more off
 ** 5. 学歴と勤続履歴データを抽出
 ** 6. 全てのサンプルに学歴と勤続履歴データをマージ
 ** 7. データに入った年のサンプルにのみ労働経験年数を作成
-** 8. データクリーニング/欠損値の修正・失業率のマージ・賃金データ作成
+** 8. データクリーニング/欠損値の修正・賃金データ作成・失業率のマージ
 ** 9. テニュア変数の作成
 ** 10. サンプルの制限
 
@@ -1973,4 +1973,40 @@ for num 888 999: mvdecode workhourperweek, mv(X)
 *overworkperweek
 for num 888 999: mvdecode overworkperweek, mv(X)
 }
+
+** 賃金データ作成
+{
+*** 賃金データの単位を合わせる(円)
+replace monthlypaid=monthlypaid*1000
+replace bonus=bonus*10000
+replace yearlypaid=yearlypaid*10000
+
+*** 年間労働時間 = workhourperweek*52
+gen workinghour=workhourperweek*52
+
+** 働き方に応じた年収を作成
+gen income=0
+*** 月給: monthlypaid*12+bonus
+replace income=monthlypaid*12+bonus if paymethod==1|paymethod==2
+*** 日給: dailypaid*workdaypermonth*12+bonus
+replace income=dailypaid*workdaypermonth*12+bonus if paymethod==3
+*** 時給: hourlypaid*workhourperweek*52+bonus
+replace income=hourlypaid*workhourperweek*52+bonus if paymethod==4
+*** 年俸: yearlypaid+bonus
+replace income=yearlypaid+bonus
+*** 支払い方法不明: 4パターンの年収のうちの最大値
+replace income=max(monthlypaid*12+bonus, dailypaid*workdaypermonth*12+bonus, ////
+hourlypaid*workhourperweek*52+bonus, yearlypaid+bonus)
+
+** 時給を算出: income/workinghour
+gen wage=income/workinghour
+
+** 時給を実質化
+gen realwage=0
+merge m:1 year using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\InflateUnempRate.dta"
+drop _merge
+replace realwage=wage/infrate*100
+}
+
+
 }
