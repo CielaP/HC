@@ -2001,12 +2001,48 @@ hourlypaid*workhourperweek*52+bonus, yearlypaid+bonus)
 ** 時給を算出: income/workinghour
 gen wage=income/workinghour
 
-** 時給を実質化
+** 時給を実質化+失業率とインフレ率をマージ
 gen realwage=0
 merge m:1 year using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\InflateUnempRate.dta"
-drop _merge
+drop _merge lagunemprate infrate
 replace realwage=wage/infrate*100
 }
+}
 
+* 9
+** テニュア変数の作成
+{
+*** テニュア変数の基準
+**** 労働時間が年間800時間以上&転職していない -> +1
+**** 労働時間が年間800時間未満- > stay
+**** 転職した -> 0
+**** サンプルに入った年のテニュア = workexp
+
+gen emptenure = workexp
+gen occtenure = workexp
+gen indtenure = workexp
+
+*** 労働時間800時間以上ダミー作成
+gen morethan800=0 if workinghour<800|workinghour==.
+replace morethan800=1 if morethan800==.
+
+*** パネル化
+tsset id year
+
+*** emptenure
+forvalues X = 2005/2014{ 
+	replace emptenure=l.emptenure+1 ///
+		if morethan800==1 & l.emptenure!=. & year==`X'
+	replace emptenure=l.emptenure ///
+		if morethan800==0 & switch==0 & year==`X'
+	replace emptenure=0 ///
+		if switch==1 & year==`X'
+}
 
 }
+
+
+
+
+
+
