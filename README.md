@@ -15,7 +15,7 @@ Folders:
 
  OriginalData: JHPS/KHPS 2004--2014
 
- Input: KHPS2004.csv--JHPS2014.csv(各年度のデータ, バインドする前, データ整理済)
+ Input: jhps_hc (推定用データ)
 
  Intermediate: 途中で生成されたデータ
 
