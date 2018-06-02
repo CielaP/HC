@@ -1942,6 +1942,10 @@ replace size=4 if (size==7|size==8)&(year==2004)
 replace size=5 if (size==9|size==10)&(year==2004)
 replace size=6 if (size==11)&(year==2004)
 for num  8 9 88 99: mvdecode size, mv(X)
+*switch
+for num 88 99: mvdecode switch, mv(X)
+replace switch=0 if switch<=3 | switch==7 | switch==8
+replace switch=1 if switch>1
 *employed 1=勤め人
 for num 8 9: mvdecode employed, mv(X)
 replace employed=0 if employed<=4 | employed==6
@@ -2004,8 +2008,8 @@ gen wage=income/workinghour
 ** 時給を実質化+失業率とインフレ率をマージ
 gen realwage=0
 merge m:1 year using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\InflateUnempRate.dta"
-drop _merge lagunemprate infrate
 replace realwage=wage/infrate*100
+drop _merge lagunemprate infrate
 }
 }
 
@@ -2030,19 +2034,83 @@ replace morethan800=1 if morethan800==.
 tsset id year
 
 *** emptenure
-forvalues X = 2005/2014{ 
-	replace emptenure=l.emptenure+1 ///
-		if morethan800==1 & l.emptenure!=. & year==`X'
-	replace emptenure=l.emptenure ///
+forvalues X = 2005(1)2014{ 
+	**** 労働時間800時間以上&転職してない->+1
+	replace emptenure=emptenure[_n-1]+1 ///
+		if morethan800==1 & switch==0 & year==`X'
+	**** 労働時間800時間未満&転職してない->+-0
+	replace emptenure=emptenure[_n-1] ///
 		if morethan800==0 & switch==0 & year==`X'
+	**** 転職した->0
 	replace emptenure=0 ///
 		if switch==1 & year==`X'
 }
 
+*** occtenure
+bysort id (year): gen occswitch=0 if occ==occ[_n-1] | occ==. | occ[_n-1]==. | _n==1
+replace occswitch=1 if occswitch==.
+forvalues X = 2005(1)2014{ 
+	**** 労働時間800時間以上&転職してない->+1
+	replace occtenure=occtenure[_n-1]+1 ///
+		if morethan800==1 & occswitch==0 & year==`X'
+	**** 労働時間800時間未満&転職してない->+-0
+	replace occtenure=occtenure[_n-1] ///
+		if morethan800==0 & occswitch==0 & year==`X' 
+	**** 転職した->0
+	replace occtenure=0 ///
+		if occswitch==1 & occ!=. & occ[_n-1]!=. & year==`X'
 }
 
+*** indtenure
+bysort id (year): gen indswitch=0 if ind==ind[_n-1] | ind==. | ind[_n-1]==. | _n==1
+replace indswitch=1 if indswitch==.
+forvalues X = 2005(1)2014{ 
+	**** 労働時間800時間以上&転職してない->+1
+	replace indtenure=indtenure[_n-1]+1 ///
+		if morethan800==1 & indswitch==0 & year==`X'
+	**** 労働時間800時間未満&転職してない->+-0
+	replace indtenure=indtenure[_n-1] ///
+		if morethan800==0 & indswitch==0 & year==`X' 
+	**** 転職した->0
+	replace indtenure=0 ///
+		if indswitch==1 & ind!=. & ind[_n-1]!=. & year==`X'
+}
 
+*** workexp
+forvalues X = 2005(1)2014{ 
+	**** 労働時間800時間以上->+1
+	replace workexp=workexp[_n-1]+1 ///
+		if morethan800==1 & year==`X'
+	**** 労働時間800時間未満->+-0
+	replace workexp=workexp[_n-1] ///
+		if morethan800==0& year==`X'
+}	
+}
 
-
-
+* 10
+** サンプルの制限
+{
+*** 18歳～64歳のみ残す
+keep if age>=18 & age<=64
+*** 世帯主のみ残す
+keep if head==1 | earnmost==1
+*** 女性を落とす
+drop if sex==2
+drop sex
+*** 雇用されていない人を落とす
+drop if employed==0
+drop employed
+*** 官公庁を落とす
+drop if size==6
+keep if owner==1 | owner==2 | owner==3
+drop owner
+*** 時給250円以下を落とす
+drop if realwage<250
+*** 年間労働時間500時間未満の時給を欠損値にする
+replace realwage=. if workinghour<500
+*** 実質時給をlog化
+replace realwage=log(realwage)
+drop paymethod-overworkperweek cohort workinghour-wage
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", replace
+}
 
