@@ -2044,6 +2044,8 @@ forvalues X = 2005(1)2014{
 	**** 転職した->0
 	replace emptenure=0 ///
 		if switch==1 & year==`X'
+	**** 最初のobservationは変更しない
+	bysort id (year): replace emptenure=workexp if _n==1
 }
 
 *** occtenure
@@ -2059,6 +2061,8 @@ forvalues X = 2005(1)2014{
 	**** 転職した->0
 	replace occtenure=0 ///
 		if occswitch==1 & occ!=. & occ[_n-1]!=. & year==`X'
+	**** 最初のobservationは変更しない
+	bysort id (year): replace occtenure=workexp if _n==1
 }
 
 *** indtenure
@@ -2074,17 +2078,23 @@ forvalues X = 2005(1)2014{
 	**** 転職した->0
 	replace indtenure=0 ///
 		if indswitch==1 & ind!=. & ind[_n-1]!=. & year==`X'
+	**** 最初のobservationは変更しない
+	bysort id (year): replace indtenure=workexp if _n==1
 }
 
 *** workexp
 forvalues X = 2005(1)2014{ 
 	**** 労働時間800時間以上->+1
-	replace workexp=workexp[_n-1]+1 ///
-		if morethan800==1 & year==`X'
+	bysort id (year): replace workexp=workexp[_n-1]+1 ///
+		if morethan800==1 & _n!=1 & year==`X'
 	**** 労働時間800時間未満->+-0
-	replace workexp=workexp[_n-1] ///
-		if morethan800==0& year==`X'
+	bysort id (year): replace workexp=workexp[_n-1] ///
+		if morethan800==0 & _n!=1 & year==`X'
 }	
+
+**** Old job dummy
+gen oj=1 if emptenure==0
+replace oj=0 if oj==.
 }
 
 * 10
@@ -2111,6 +2121,6 @@ replace realwage=. if workinghour<500
 *** 実質時給をlog化
 replace realwage=log(realwage)
 drop paymethod-overworkperweek cohort workinghour-wage
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", replace
 }
 
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", replace
