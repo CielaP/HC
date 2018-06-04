@@ -32,7 +32,7 @@ tsset id year
 {
 ***** 2nd
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp, vce(r) l(90)
+c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
 est sto olsemp2
 ***** 3rd
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
@@ -40,7 +40,8 @@ c.emptenure##c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp, vce(r)
 est sto olsemp3
 ***** 4th
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-c.emptenure##c.emptenure##c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp, vce(r)
+c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
+c.workexp##c.workexp##c.workexp##c.workexp, vce(r)
 est sto olsemp4
 }
 
@@ -48,15 +49,18 @@ est sto olsemp4
 {
 ***** 2nd
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-c.emptenure##c.emptenure oj c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp, vce(r)
+c.emptenure##c.emptenure oj c.occtenure##c.occtenure c.workexp##c.workexp, vce(r)
 est sto olsempocc2
 ***** 3rd
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-c.emptenure##c.emptenure##c.emptenure oj c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp, vce(r)
+c.emptenure##c.emptenure##c.emptenure oj ///
+c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp, vce(r)
 est sto olsempocc3
 ***** 4th
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-c.emptenure##c.emptenure##c.emptenure##c.emptenure oj c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp, vce(r)
+c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
+c.occtenure##c.occtenure##c.occtenure##c.occtenure ///
+c.workexp##c.workexp##c.workexp##c.workexp, vce(r)
 est sto olsempocc4
 }
 }
@@ -89,10 +93,9 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure c.emptenure#i.regular oj c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 regulariv ojiv workexpiv workexpiv2 workexpiv3), vce(r)
+(c.emptenure##c.emptenure oj c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
 est sto isvemp2
 drop if _est_isvemp2==0
 drop *iv *iv? avg*
@@ -111,13 +114,11 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
-tabulate year, generate(dum)
- }
- * 再推定
+}
+* 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure c.emptenure#i.regular oj c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 regulariv ojiv workexpiv workexpiv2 workexpiv3), vce(r)
+(c.emptenure##c.emptenure oj c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
 est sto isvemp2
 
 ***** 3rd
@@ -144,12 +145,11 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
 (c.emptenure##c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 emptenureiv3 ojiv workexpiv workexpiv2 workexpiv3), vce(r)
-est sto isvemp2
-drop if _est_isvemp2==0
+est sto isvemp3
+drop if _est_isvemp3==0
 drop *iv *iv? avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -166,7 +166,6 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
@@ -195,15 +194,18 @@ gen emptenureiv4=emptenure^4-avgemptenure4
 egen avgworkexp=mean(workexp), by(id)
 egen avgworkexp2=mean(workexp^2), by(id)
 egen avgworkexp3=mean(workexp^3), by(id)
+egen avgworkexp4=mean(workexp^4), by(id)
 gen workexpiv=workexp-avgworkexp
 gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
+gen workexpiv4=workexp^4-avgworkexp4
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv workexpiv workexpiv2 workexpiv3), vce(r)
+(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
+c.workexp##c.workexp##c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
+workexpiv workexpiv2 workexpiv3 workexpiv4), vce(r)
 est sto isvemp4
 drop if _est_isvemp4==0
 drop *iv *iv? avg*
@@ -219,16 +221,20 @@ gen emptenureiv4=emptenure^4-avgemptenure4
 egen avgworkexp=mean(workexp), by(id)
 egen avgworkexp2=mean(workexp^2), by(id)
 egen avgworkexp3=mean(workexp^3), by(id)
+egen avgworkexp4=mean(workexp^4), by(id)
 gen workexpiv=workexp-avgworkexp
 gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
+gen workexpiv4=workexp^4-avgworkexp4
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv workexpiv workexpiv2 workexpiv3), vce(r)
+(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
+c.workexp##c.workexp##c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
+workexpiv workexpiv2 workexpiv3 workexpiv4), vce(r)
 est sto isvemp4
 }
 
@@ -250,26 +256,27 @@ egen avgemptenure3=mean(emptenure^3), by(empid)
 gen emptenureiv=emptenure-avgemptenure
 gen emptenureiv2=emptenure^2-avgemptenure2
 gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
 egen avgocctenure=mean(occtenure), by(id occ)
 egen avgocctenure2=mean(occtenure^2), by(id occ)
 egen avgocctenure3=mean(occtenure^3), by(id occ)
 gen occtenureiv=occtenure-avgocctenure
 gen occtenureiv2=occtenure^2-avgocctenure2
 gen occtenureiv3=occtenure^3-avgocctenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure oj c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 ojiv occtenureiv occtenureiv2 occtenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
-est sto isvemp2
-drop if _est_isvemp2==0
+(c.emptenure##c.emptenure oj ///
+c.occtenure##c.occtenure c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 ojiv ///
+occtenureiv occtenureiv2 workexpiv workexpiv2), vce(r)
+est sto isvempocc2
+drop if _est_isvempocc2==0
 drop *iv *iv? avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -278,26 +285,27 @@ egen avgemptenure3=mean(emptenure^3), by(empid)
 gen emptenureiv=emptenure-avgemptenure
 gen emptenureiv2=emptenure^2-avgemptenure2
 gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
 egen avgocctenure=mean(occtenure), by(id occ)
 egen avgocctenure2=mean(occtenure^2), by(id occ)
 egen avgocctenure3=mean(occtenure^3), by(id occ)
 gen occtenureiv=occtenure-avgocctenure
 gen occtenureiv2=occtenure^2-avgocctenure2
 gen occtenureiv3=occtenure^3-avgocctenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure oj c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 ojiv occtenureiv occtenureiv2 occtenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
+(c.emptenure##c.emptenure oj ///
+c.occtenure##c.occtenure c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 ojiv ///
+occtenureiv occtenureiv2 workexpiv workexpiv2), vce(r)
 est sto isvempocc2
 
 ***** 3rd
@@ -316,26 +324,27 @@ egen avgemptenure3=mean(emptenure^3), by(empid)
 gen emptenureiv=emptenure-avgemptenure
 gen emptenureiv2=emptenure^2-avgemptenure2
 gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
 egen avgocctenure=mean(occtenure), by(id occ)
 egen avgocctenure2=mean(occtenure^2), by(id occ)
 egen avgocctenure3=mean(occtenure^3), by(id occ)
 gen occtenureiv=occtenure-avgocctenure
 gen occtenureiv2=occtenure^2-avgocctenure2
 gen occtenureiv3=occtenure^3-avgocctenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure##c.emptenure oj c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 ojiv occtenureiv occtenureiv2 occtenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
-est sto isvemp2
-drop if _est_isvemp2==0
+(c.emptenure##c.emptenure##c.emptenure oj ///
+c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 emptenureiv3 ojiv ///
+occtenureiv occtenureiv2 occtenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
+est sto isvempocc3
+drop if _est_isvempocc3==0
 drop *iv *iv? avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -344,26 +353,26 @@ egen avgemptenure3=mean(emptenure^3), by(empid)
 gen emptenureiv=emptenure-avgemptenure
 gen emptenureiv2=emptenure^2-avgemptenure2
 gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
 egen avgocctenure=mean(occtenure), by(id occ)
 egen avgocctenure2=mean(occtenure^2), by(id occ)
 egen avgocctenure3=mean(occtenure^3), by(id occ)
 gen occtenureiv=occtenure-avgocctenure
 gen occtenureiv2=occtenure^2-avgocctenure2
 gen occtenureiv3=occtenure^3-avgocctenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
 }
-* 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure##c.emptenure oj c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 ojiv occtenureiv occtenureiv2 occtenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
+(c.emptenure##c.emptenure##c.emptenure oj ///
+c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 emptenureiv3 ojiv ///
+occtenureiv occtenureiv2 occtenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
 est sto isvempocc3
 
 ***** 4th
@@ -384,28 +393,34 @@ gen emptenureiv=emptenure-avgemptenure
 gen emptenureiv2=emptenure^2-avgemptenure2
 gen emptenureiv3=emptenure^3-avgemptenure3
 gen emptenureiv4=emptenure^4-avgemptenure4
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
 egen avgocctenure=mean(occtenure), by(id occ)
 egen avgocctenure2=mean(occtenure^2), by(id occ)
 egen avgocctenure3=mean(occtenure^3), by(id occ)
+egen avgocctenure4=mean(occtenure^4), by(id occ)
 gen occtenureiv=occtenure-avgocctenure
 gen occtenureiv2=occtenure^2-avgocctenure2
 gen occtenureiv3=occtenure^3-avgocctenure3
+gen occtenureiv4=occtenure^4-avgocctenure4
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+egen avgworkexp4=mean(workexp^4), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+gen workexpiv4=workexp^4-avgworkexp4
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv occtenureiv occtenureiv2 occtenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
+(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
+c.occtenure##c.occtenure##c.occtenure##c.occtenure ///
+c.workexp##c.workexp##c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
+occtenureiv occtenureiv2 occtenureiv3 occtenureiv4 ///
+workexpiv workexpiv2 workexpiv3 workexpiv4), vce(r)
 est sto isvempocc4
 drop if _est_isvempocc4==0
 drop *iv *iv? avg*
-* 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
 egen avgemptenure3=mean(emptenure^3), by(empid)
@@ -414,25 +429,33 @@ gen emptenureiv=emptenure-avgemptenure
 gen emptenureiv2=emptenure^2-avgemptenure2
 gen emptenureiv3=emptenure^3-avgemptenure3
 gen emptenureiv4=emptenure^4-avgemptenure4
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
 egen avgocctenure=mean(occtenure), by(id occ)
 egen avgocctenure2=mean(occtenure^2), by(id occ)
 egen avgocctenure3=mean(occtenure^3), by(id occ)
+egen avgocctenure4=mean(occtenure^4), by(id occ)
 gen occtenureiv=occtenure-avgocctenure
 gen occtenureiv2=occtenure^2-avgocctenure2
 gen occtenureiv3=occtenure^3-avgocctenure3
+gen occtenureiv4=occtenure^4-avgocctenure4
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+egen avgworkexp4=mean(workexp^4), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+gen workexpiv4=workexp^4-avgworkexp4
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv occtenureiv occtenureiv2 occtenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
+(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
+c.occtenure##c.occtenure##c.occtenure##c.occtenure ///
+c.workexp##c.workexp##c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
+occtenureiv occtenureiv2 occtenureiv3 occtenureiv4 ///
+workexpiv workexpiv2 workexpiv3 workexpiv4), vce(r)
 est sto isvempocc4
 }
 
@@ -567,10 +590,10 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
  
 *** output tex all results
 {
-**** emptenure
+**** coefficients / emptenure
 quietly {
 esttab olsemp2 olsemp3 olsemp4 isvemp2 isvemp3 isvemp4 ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp.tex.pdf", ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
@@ -601,10 +624,10 @@ prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) //
 replace
 }
 
-**** emp+occ
+**** coefficients / emp+occ
 quietly {
 esttab olsempocc2 olsempocc3 olsempocc4 isvempocc2 isvempocc3 isvempocc4 ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_empocc.tex.pdf", ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_empocc.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
@@ -640,7 +663,7 @@ replace
 **** main table
 quietly{
 esttab olsemp2 olsempocc2 isvemp2 isvempocc2 ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_main.tex.pdf", ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_main.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
 occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
@@ -670,7 +693,7 @@ replace
 **** return
 quietly{
 esttab olsempr2 olsempoccr2 isvempr2 isvempoccr2 ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return.tex.pdf", ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -971,7 +994,7 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
 **** coefficients 
 quietly {
 esttab olsempsc isvempsc olsregular isvregular olsempsi isvempsi ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_ab.tex", ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_ab.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
 oj workexp c.workexp#c.workexp) ///
@@ -992,7 +1015,7 @@ replace
 **** return
 quietly {
 esttab olsempnsc isvempnsc olsempnst isvempnst olsempnsi isvempnsi ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_teturn_ab.tex", ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_teturn_ab.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -1387,7 +1410,7 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
 quietly {
 esttab olsemp59 isvemp59 olsempLa isvempLa ///
 olsempSm isvempSm olsempPr isvempPr ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_rob.tex", ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
 oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
@@ -1411,7 +1434,7 @@ replace
 quietly {
 esttab olsempn59 isvempn59 olsempnLa isvempnLa ///
 olsempnSm isvempnSm olsempnPr isvempnPr ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_return_rob.tex", ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
