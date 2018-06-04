@@ -99,7 +99,16 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20090130-bday)/10000)
 drop byear bmonth bday
+* emptenureを作成
+replace empsincemonth=empsincemonth+10
+tostring empsinceyear empsincemonth, replace
+gen eday=empsinceyear+empsincemonth+"15"
+destring eday, replace
+replace eday=eday-1000
+gen emptenure=floor((20090130-eday)/10000)
+drop empsinceyear empsincemonth eday
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=9
@@ -203,6 +212,7 @@ replace bday=bday-1000
 gen age=floor((20100130-bday)/10000)
 drop byear bmonth bday
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=9
@@ -276,6 +286,8 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20110130-bday)/10000)
 drop byear bmonth bday
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=9
@@ -349,6 +361,8 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20120130-bday)/10000)
 drop byear bmonth bday
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=9
@@ -422,6 +436,8 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20130130-bday)/10000)
 drop byear bmonth bday
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=9
@@ -495,6 +511,8 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20140130-bday)/10000)
 drop byear bmonth bday
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=9
@@ -637,6 +655,16 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20040130-bday)/10000)
 drop byear bmonth bday
+* emptenureを作成
+replace empsincemonth=empsincemonth+10
+tostring empsinceyear empsincemonth, replace
+gen eday=empsinceyear+empsincemonth+"15"
+destring eday, replace
+replace eday=eday-1000
+gen emptenure=floor((20040130-eday)/10000)
+drop empsinceyear empsincemonth eday
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=4
@@ -743,6 +771,8 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20050130-bday)/10000)
 drop byear bmonth bday
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=4
@@ -849,6 +879,8 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20060130-bday)/10000)
 drop byear bmonth bday
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=4
@@ -955,6 +987,8 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20070130-bday)/10000)
 drop byear bmonth bday
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=4
@@ -1064,6 +1098,16 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20070130-bday)/10000)
 drop byear bmonth bday
+* emptenureを作成
+replace empsincemonth=empsincemonth+10
+tostring empsinceyear empsincemonth, replace
+gen eday=empsinceyear+empsincemonth+"15"
+destring eday, replace
+replace eday=eday-1000
+gen emptenure=floor((20070130-eday)/10000)
+drop empsinceyear empsincemonth eday
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=7
@@ -1170,6 +1214,7 @@ replace bday=bday-1000
 gen age=floor((20080130-bday)/10000)
 drop byear bmonth bday
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008.dta", replace
+
 * cohort dummy
 keep id
 merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
@@ -1246,6 +1291,7 @@ replace bday=bday-1000
 gen age=floor((20090130-bday)/10000)
 drop byear bmonth bday
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009.dta", replace
+
 * cohort dummy
 keep id
 merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
@@ -1322,6 +1368,7 @@ replace bday=bday-1000
 gen age=floor((20100130-bday)/10000)
 drop byear bmonth bday
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010.dta", replace
+
 * cohort dummy
 keep id
 merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
@@ -1398,6 +1445,7 @@ replace bday=bday-1000
 gen age=floor((20110130-bday)/10000)
 drop byear bmonth bday
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011.dta", replace
+
 * cohort dummy
 keep id
 merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
@@ -1473,6 +1521,7 @@ replace bday=bday-1000
 gen age=floor((20120130-bday)/10000)
 drop byear bmonth bday
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012.dta", replace
+
 * cohort dummy
 keep id
 merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
@@ -1583,7 +1632,16 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20120130-bday)/10000)
 drop byear bmonth bday
+* emptenureを作成
+replace empsincemonth=empsincemonth+10
+tostring empsinceyear empsincemonth, replace
+gen eday=empsinceyear+empsincemonth+"15"
+destring eday, replace
+replace eday=eday-1000
+gen emptenure=floor((20120130-eday)/10000)
+drop empsinceyear empsincemonth eday
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", replace
+
 * cohort dummy
 keep id
 gen cohort=12
@@ -1659,6 +1717,7 @@ replace bday=bday-1000
 gen age=floor((20130130-bday)/10000)
 drop byear bmonth bday
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013.dta", replace
+
 * cohort dummy
 keep id
 merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
@@ -1735,6 +1794,7 @@ replace bday=bday-1000
 gen age=floor((20140130-bday)/10000)
 drop byear bmonth bday
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014.dta", replace
+
 * cohort dummy
 keep id
 merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
@@ -1791,6 +1851,7 @@ replace schooling=16 if edbg==4
 replace schooling=18 if edbg==5
 keep id schooling
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingJHPS.dta", replace
+
 *** KHPSの学歴
 **** old cohort
 use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", clear
@@ -1802,6 +1863,7 @@ replace schooling=16 if edbg==4
 replace schooling=18 if edbg==5
 keep id schooling
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS.dta", replace
+
 **** new cohort 2007
 use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", clear
 mvdecode edbg, mv(9)
@@ -1812,6 +1874,7 @@ replace schooling=16 if edbg==4
 replace schooling=18 if edbg==5
 keep id schooling
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2007.dta", replace
+
 **** new cohort 2012
 use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", clear
 mvdecode edbg, mv(9)
@@ -1822,6 +1885,7 @@ replace schooling=16 if edbg==4
 replace schooling=18 if edbg==5
 keep id schooling
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2012.dta", replace
+
 *** bind
 use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingJHPS.dta", clear
 append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS.dta"
@@ -1831,9 +1895,9 @@ sort id
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Schooling.dta", replace
  }
  
- ** idと就業履歴を抽出
+ ** idと労働経験年数を抽出
 {
-** JHPS就業履歴
+*** JHPS労働経験年数
 use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010.dta", clear
 for num 18/65: gen weX=0
 for num 18/65: mvdecode casX, mv(9)
@@ -1846,8 +1910,9 @@ egen workexp2010=rowtotal(we18-we65)
 keep id workexp2010 year
 sort id
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpJHPS.dta", replace
-** KHPS就業履歴
-**** old cohort
+
+*** KHPS労働経験年数
+***** old cohort
 use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", clear
 for num 18/65: gen weX=0
 for num 18/65: mvdecode casX, mv(9)
@@ -1860,7 +1925,8 @@ egen workexp2004=rowtotal(we18-we65)
 keep id workexp2004 year
 sort id
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS.dta", replace
-**** new cohort 2007
+
+***** new cohort 2007
 use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", clear
 for num 18/65: gen weX=0
 for num 18/65: mvdecode casX, mv(9)
@@ -1873,7 +1939,8 @@ egen workexp2007=rowtotal(we18-we65)
 keep id workexp2007 year
 sort id
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2007.dta", replace
-**** new cohort 2012
+
+***** new cohort 2012
 use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", clear
 for num 18/65: gen weX=0
 for num 18/65: mvdecode casX, mv(9)
@@ -1888,6 +1955,39 @@ sort id
 save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2012.dta", replace
 }
 
+** idと勤続年数を抽出
+{
+** JHPS勤続年数
+use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta", clear
+keep id emptenure
+replace emptenure=. if emptenure<0
+sort id
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenJHPS.dta", replace
+
+** KHPS勤続年数
+**** old cohort
+use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", clear
+keep id emptenure
+replace emptenure=. if emptenure<0
+sort id
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS.dta", replace
+
+**** new cohort 2007
+use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", clear
+keep id emptenure
+replace emptenure=. if emptenure<0
+sort id
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2007.dta", replace
+
+**** new cohort 2012
+use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", clear
+keep id emptenure
+replace emptenure=. if emptenure<0
+sort id
+save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2012.dta", replace
+
+}
+
 ** 学歴と就業履歴をサンプルにマージ
 {
 ** idで学歴データをマージ
@@ -1896,7 +1996,7 @@ sort id year
 merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Schooling.dta"
 drop _merge
 
- ** idでサンプルに入ったときの労働経験をマージ
+** idでサンプルに入ったときの労働経験をマージ
 merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 drop _merge
 merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpJHPS.dta"
@@ -1908,13 +2008,45 @@ drop _merge
 merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2012.dta"
 drop _merge
 
+** idでサンプルに入ったときの勤続年数をマージ
+merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenJHPS.dta"
+drop _merge
+rename emptenure empten2009
+merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS.dta"
+drop _merge
+rename emptenure empten2004
+merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2007.dta"
+drop _merge
+rename emptenure empten2007
+merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2012.dta"
+drop _merge
+rename emptenure empten2012
+
 ** データに入った年のサンプルにのみ労働経験年数を作成(他の年はworkexp=0)
 gen intexp=workexp2004 if workexp2004!=.
 for num 2007 2010 2012: replace intexp=workexpX if workexpX!=.
 sort id year
-by id: gen workexp = intexp if _n==1
+by id: gen workexp = intexp if _n==1&cohort!=9
+replace workexp=intexp if cohort==9&year==2010
 replace workexp=0 if workexp==.
-drop workexp2* intexp
+
+gen intten=empten2004 if empten2004!=.
+for num 2007 2009 2012: replace intten=emptenX if emptenX!=.
+sort id year
+by id: gen workexp = intexp if _n==1&cohort!=9
+replace workexp=intexp if cohort==9&year==2010
+replace workexp=0 if workexp==.
+
+*** 労働時間800時間以上ダミー作成
+gen morethan800=0 if workinghour<800|workinghour==.
+replace morethan800=1 if morethan800==.
+
+*** パネル化
+tsset id year
+
+*** JHPSは2010の労働経験年数をもとに2009の労働経験年数を作成
+replace workexp=workexp2010-1 if morethan800h==1&cohort==9&year==2009
+replace workexp=workexp2010 if morethan800==0&cohort==9&year==2009
 }
 }
 
@@ -2022,16 +2154,8 @@ drop _merge lagunemprate infrate
 **** 転職した -> 0
 **** サンプルに入った年のテニュア = workexp
 
-gen emptenure = workexp
 gen occtenure = workexp
 gen indtenure = workexp
-
-*** 労働時間800時間以上ダミー作成
-gen morethan800=0 if workinghour<800|workinghour==.
-replace morethan800=1 if morethan800==.
-
-*** パネル化
-tsset id year
 
 *** emptenure
 forvalues X = 2005(1)2014{ 
