@@ -757,7 +757,7 @@ emptenureiv emptenureiv2 ///
 empsciv9 empsciv12 empsciv14 empsciv16 empsciv18 ojiv ///
 workexpiv workexpiv2), vce(r)
 est sto isvempsc
-drop if _est_isvemp2==0
+drop if _est_isvempsc==0
 drop *iv *iv* avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -816,10 +816,10 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooli
 c.emptenure#i.regular oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ///
-empsciv ojiv ///
+regulariv ojiv ///
 workexpiv workexpiv2), vce(r)
 est sto isvregular
-drop if _est_isvemp2==0
+drop if _est_isvregular==0
 drop *iv *iv? avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -836,7 +836,7 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen empsciv=emptenureiv*empst
+gen regulariv=emptenureiv*regular
 }
  * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
@@ -844,7 +844,7 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooli
 c.emptenure#i.regular oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ///
-empsciv ojiv ///
+regulariv ojiv ///
 workexpiv workexpiv2), vce(r)
 est sto isvregular
 
@@ -882,7 +882,7 @@ emptenureiv emptenureiv2 ///
 empsciv1 empsciv2 empsciv3 empsciv4 empsciv5 ojiv ///
 workexpiv workexpiv2), vce(r)
 est sto isvempsi
-drop if _est_isvemp2==0
+drop if _est_isvempsi==0
 drop *iv *iv? avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -900,7 +900,8 @@ gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 for X in num 1/5 : gen empscivX=emptenureiv*siX
-} * 再推定
+}
+* 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
 (c.emptenure##c.emptenure ///
 c.emptenure#i.size oj ///
@@ -970,7 +971,7 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
 **** coefficients 
 quietly {
 esttab olsempsc isvempsc olsregular isvregular olsempsi isvempsi ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_ab.tex" ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_ab.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
 oj workexp c.workexp#c.workexp) ///
@@ -991,7 +992,7 @@ replace
 **** return
 quietly {
 esttab olsempnsc isvempnsc olsempnst isvempnst olsempnsi isvempnsi ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_teturn_ab.tex" ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_teturn_ab.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -1057,7 +1058,7 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size 
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
 est sto isvemp59
-drop if _est_isvemp2==0
+drop if _est_isvemp59==0
 drop *iv *iv? avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -1149,7 +1150,7 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size 
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
 est sto isvempLa
-drop if _est_isvemp2==0
+drop if _est_isvempLa==0
 drop *iv *iv? avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -1241,7 +1242,7 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size 
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
 est sto isvempSm
-drop if _est_isvemp2==0
+drop if _est_isvempSm==0
 drop *iv *iv? avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -1334,7 +1335,7 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size 
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
 est sto isvempPr
-drop if _est_isvemp2==0
+drop if _est_isvempPr==0
 drop *iv *iv? avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -1386,7 +1387,7 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
 quietly {
 esttab olsemp59 isvemp59 olsempLa isvempLa ///
 olsempSm isvempSm olsempPr isvempPr ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_rob.tex" ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
 oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
@@ -1410,7 +1411,7 @@ replace
 quietly {
 esttab olsempn59 isvempn59 olsempnLa isvempnLa ///
 olsempnSm isvempnSm olsempnPr isvempnPr ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_return_rob.tex" ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_return_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -1499,7 +1500,7 @@ capture program drop emprtn
 program emprtn, rclass
 suest fst1 snd1
 	foreach X of numlist 2 5 10 15 20 25 {
-	lincom ([fst1_mean]_b[_cons]-[snd1_mean]_b[initialemp])*`X'+[fst1_mean]_b[ojdif]
+	lincom ([fst1_mean]_b[_cons]-[snd1_mean]_b[initialemp])*`X'
 	return scalar rtn`X' =r(se)
 	}
 end
@@ -1576,7 +1577,7 @@ capture program drop emprtn
 program emprtn, rclass
 suest fst2 snd2
 	foreach X of numlist 2 5 10 15 20 25 {
-	lincom ([fst2_mean]_b[_cons]-[snd2_mean]_b[initialemp])*`X'+[fst2_mean]_b[emptendif2]*`X'*`X'+[fst2_mean]_b[ojdif]
+	lincom ([fst2_mean]_b[_cons]-[snd2_mean]_b[initialemp])*`X'+[fst2_mean]_b[emptendif2]*`X'*`X'
 	return scalar rtn`X' =r(se)
 	}
 end
@@ -1589,7 +1590,7 @@ emprtn
 **** coefficients 
 quietly {
 esttab fst1 fst2 ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\topel_emp.tex" ///
+using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\topel_emp.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(_cons c.emptenure#c.emptenure ///
 c.workexp#c.workexp) ///
@@ -1605,4 +1606,6 @@ replace
 }
 }
 }
+  
+
   

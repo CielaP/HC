@@ -2103,7 +2103,10 @@ replace oj=0 if oj==.
 *** 18歳～64歳のみ残す
 keep if age>=18 & age<=64
 *** 世帯主のみ残す
-keep if head==1 | earnmost==1
+**** headは「世帯主はだれか?」に対する回答
+**** earnmostは「家計で1番収入が多い人は?」に対する回答
+* keep if head==1
+keep if earnmost==1
 *** 女性を落とす
 drop if sex==2
 drop sex
