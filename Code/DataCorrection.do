@@ -1,12 +1,12 @@
 clear
 set more off
- cd "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intput"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\coefplot"
+ cd "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intput"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\coefplot"
 
 * Data Correction
 ** 1. 変数名を付ける
@@ -35,7 +35,7 @@ set more off
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2009.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2009.csv", clear 
 rename (v1 v4 v5 v6 v7 v101 v102 v103 v142 v146 ///
 v153 v154 v155 v156 v159 v160 ///
 v167 v168 v169 ///
@@ -56,10 +56,10 @@ replace earnmost=0 if earnmost!=1
 gen switch=0
 * 使わない変数を落とす
 drop earnif v*
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2009.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2009.csv", clear 
 rename (v1 v4  v12 v13 v14 v101 v102 v103 v274 v279 ///
 v286 v287 v288 v289 v292 v293 ///
 v300 v301 v302 ///
@@ -85,11 +85,11 @@ gen switch=0
 drop earnif v*
 * idを+10000
 replace id=id+10000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009_sp.dta"
 gen year=2009
 * ageを作成
 replace bmonth=bmonth+10
@@ -107,19 +107,19 @@ destring eday, replace
 replace eday=eday-1000
 gen emptenure=floor((20090130-eday)/10000)
 drop empsinceyear empsincemonth eday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=9
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** JHPS2010
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2010.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2010.csv", clear 
 rename (v1 v4 v5 v6 v7 v101 v102 v103 v146 ///
 v182 v183 v184 v185 v188 v189 ///
 v231 v196 ///
@@ -154,10 +154,10 @@ replace earnmost=1 if head==1&earnif==2
 replace earnmost=0 if earnmost!=1
 * 使わない変数を落とす
 drop earnif v*
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2010.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2010.csv", clear 
 rename (v1 v4  v12 v13 v14 v101 v102 v103 v796 ///
 v803 v804 v805 v806 v809 v810 ///
 v852 v817 ///
@@ -197,11 +197,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+10000
 replace id=id+10000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010_sp.dta"
 gen year=2010
 * ageを作成
 replace bmonth=bmonth+10
@@ -211,21 +211,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20100130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=9
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 duplicates drop id, force
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** JHPS2011
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2011.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2011.csv", clear 
 rename (v1 v4 v5 v6 v7 v101 v102 v103 v169 ///
 v176 v177 v178 v179 v182 v183 ///
 v219 v190 ///
@@ -244,10 +244,10 @@ replace earnmost=1 if head==1&earnif==2
 replace earnmost=0 if earnmost!=1
 * 使わない変数を落とす
 drop earnif v*
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2011.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2011.csv", clear 
 rename (v1 v4  v12 v13 v14 v101 v102 v103 v382 ///
 v389 v390 v391 v392 v395 v396 ///
 v432 v403 ///
@@ -272,11 +272,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+10000
 replace id=id+10000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011_sp.dta"
 gen year=2011
 * ageを作成
 replace bmonth=bmonth+10
@@ -286,21 +286,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20110130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=9
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 duplicates drop id, force
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** JHPS2012
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2012.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2012.csv", clear 
 rename (v1 v4 v5 v6 v7 v101 v102 v103 v190 ///
 v197 v198 v199 v200 v203 v204 ///
 v240 v211 ///
@@ -319,10 +319,10 @@ replace earnmost=1 if head==1&earnif==2
 replace earnmost=0 if earnmost!=1
 * 使わない変数を落とす
 drop earnif v*
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2012.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2012.csv", clear 
 rename (v1 v4  v12 v13 v14 v101 v102 v103 v420 ///
 v427 v428 v429 v430 v433 v434 ///
 v470 v441 ///
@@ -347,11 +347,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+10000
 replace id=id+10000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012_sp.dta"
 gen year=2012
 * ageを作成
 replace bmonth=bmonth+10
@@ -361,21 +361,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20120130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=9
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 duplicates drop id, force
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** JHPS2013
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2013.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2013.csv", clear 
 rename (v1 v4 v5 v6 v7 v101 v102 v103 v184 ///
 v191 v192 v193 v194 v197 v198 ///
 v234 v205 ///
@@ -394,10 +394,10 @@ replace earnmost=1 if head==1&earnif==2
 replace earnmost=0 if earnmost!=1
 * 使わない変数を落とす
 drop earnif v*
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2013.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2013.csv", clear 
 rename (v1 v4  v12 v13 v14 v101 v102 v103 v449 ///
 v456 v457 v458 v459 v462 v463 ///
 v499 v470 ///
@@ -422,11 +422,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+10000
 replace id=id+10000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013_sp.dta"
 gen year=2013
 * ageを作成
 replace bmonth=bmonth+10
@@ -436,21 +436,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20130130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=9
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 duplicates drop id, force
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** JHPS2014
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2014.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2014.csv", clear 
 rename (v1 v4 v5 v6 v7 v101 v102 v103 v220 ///
 v227 v228 v229 v230 v233 v234 ///
 v265 v242 ///
@@ -469,10 +469,10 @@ replace earnmost=1 if head==1&earnif==2
 replace earnmost=0 if earnmost!=1
 * 使わない変数を落とす
 drop earnif v*
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2014.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2014.csv", clear 
 rename (v1 v4  v12 v13 v14 v101 v102 v103 v498 ///
 v505 v506 v507 v508 v511 v512 ///
 v543 v520 ///
@@ -497,11 +497,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+10000
 replace id=id+10000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014_sp.dta"
 gen year=2014
 * ageを作成
 replace bmonth=bmonth+10
@@ -511,21 +511,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20140130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=9
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 duplicates drop id, force
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2004
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2004.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2004.csv", clear 
 rename (v1 v4 v5 v6 v7 v76 v106 v170 ///
 v228 v215 v216 v217 v218 v219 ///
 v238 v239 v240 ///
@@ -563,10 +563,10 @@ gen switch=0
 drop v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2004.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2004.csv", clear 
 rename (v1 v4 v76 v803 v867 ///
 v925 v912 v913 v914 v915 v916 ///
 v935 v936 v937 ///
@@ -641,11 +641,11 @@ gen switch=0
 drop v* rel*
 * idを+30000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004_sp.dta"
 gen year=2004
 * ageを作成
 replace bmonth=bmonth+10
@@ -663,21 +663,21 @@ destring eday, replace
 replace eday=eday-1000
 gen emptenure=floor((20040130-eday)/10000)
 drop empsinceyear empsincemonth eday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=4
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 duplicates drop id, force
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2005
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2005.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2005.csv", clear 
 rename (v1 v4 v5 v6 v7 v76 v139 ///
 v171 v159 v160 v161 v164 v165 ///
 v207 v183 ///
@@ -697,10 +697,10 @@ gen head=earnmost
 drop v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2005.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2005.csv", clear 
 rename (v1 v4 v76 v392 ///
 v424 v412 v413 v414 v417 v418 ///
 v460 v436 ///
@@ -757,11 +757,11 @@ gen head=earnmost
 drop v* rel*
 * idを+30000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_sp.dta"
 gen year=2005
 * ageを作成
 replace bmonth=bmonth+10
@@ -771,21 +771,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20050130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=4
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 duplicates drop id, force
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2006
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2006.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2006.csv", clear 
 rename (v1 v4 v5 v6 v7 v76 v132 ///
 v152 v153 v154 v155 v158 v159 ///
 v195 v169 ///
@@ -805,10 +805,10 @@ gen head=earnmost
 drop v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2006.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2006.csv", clear 
 rename (v1 v4 v76 v348 ///
 v368 v369 v370 v371 v374 v375 ///
 v411 v385 ///
@@ -865,11 +865,11 @@ gen head=earnmost
 drop v* rel*
 * idを+30000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_sp.dta"
 gen year=2006
 * ageを作成
 replace bmonth=bmonth+10
@@ -879,21 +879,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20060130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=4
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 duplicates drop id, force
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2007
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2007.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2007.csv", clear 
 rename (v1 v4 v5 v6 v7 v76 v138 ///
 v158 v159 v160 v161 v164 v165 ///
 v201 v175 ///
@@ -913,10 +913,10 @@ gen head=earnmost
 drop v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2007.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2007.csv", clear 
 rename (v1 v4 v76 v309 ///
 v329 v330 v331 v332 v335 v336 ///
 v372 v346 ///
@@ -973,11 +973,11 @@ gen head=earnmost
 drop v* rel*
 * idを+30000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_sp.dta"
 gen year=2007
 * ageを作成
 replace bmonth=bmonth+10
@@ -987,21 +987,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20070130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=4
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 duplicates drop id, force
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2007_new
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2007_new.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2007_new.csv", clear 
 rename (v1 v4 v5 v6 v7 v76 v135 v156 ///
 v203 v204 v205 v206 v209 v210 ///
 v222 v223 v224 ///
@@ -1039,10 +1039,10 @@ gen switch=0
 drop v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2007_new.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2007_new.csv", clear 
 rename (v1 v4 v14 v15 v16 v76 v813 v834 ///
 v881 v882 v823 v824 v887 v888 ///
 v900 v901 v902 ///
@@ -1084,11 +1084,11 @@ gen switch=0
 drop v*
 * idを+30000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new_sp.dta"
 gen year=2007
 * ageを作成
 replace bmonth=bmonth+10
@@ -1106,20 +1106,20 @@ destring eday, replace
 replace eday=eday-1000
 gen emptenure=floor((20070130-eday)/10000)
 drop empsinceyear empsincemonth eday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=7
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2008
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2008.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2008.csv", clear 
 rename (v1 v4 v5 v6 v7 v85 v148 ///
 v168 v169 v170 v171 v174 v175 ///
 v215 v188 ///
@@ -1139,10 +1139,10 @@ gen head=earnmost
 drop v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2008.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2008.csv", clear 
 rename (v1 v4 v85 v376 ///
 v396 v397 v398 v399 v402 v403 ///
 v443 v416 ///
@@ -1199,11 +1199,11 @@ gen head=earnmost
 drop v* rel*
 * idを+30000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008_sp.dta"
 gen year=2008
 * ageを作成
 replace bmonth=bmonth+10
@@ -1213,21 +1213,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20080130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008.dta", replace
 
 * cohort dummy
 keep id
-merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+merge 1:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 replace cohort=4 if cohort==.
 drop _merge
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2009
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2009.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2009.csv", clear 
 rename (v1 v4 v5 v6 v7 v85 v86 v87 v160 ///
 v180 v181 v182 v183 v186 v187 ///
 v238 v195 ///
@@ -1248,10 +1248,10 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2009.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2009.csv", clear 
 rename (v1 v4  v14 v15 v16 v101 v102 v103 v429 ///
 v449 v450 v451 v452 v455 v456 ///
 v507 v464 ///
@@ -1276,11 +1276,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+30000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009_sp.dta"
 gen year=2009
 * ageを作成
 replace bmonth=bmonth+10
@@ -1290,21 +1290,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20090130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009.dta", replace
 
 * cohort dummy
 keep id
-merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+merge 1:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 replace cohort=4 if cohort==.
 drop _merge
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2010
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2010.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2010.csv", clear 
 rename (v1 v4 v5 v6 v7 v85 v86 v87 v161 ///
 v181 v182 v183 v184 v187 v188 ///
 v243 v196 ///
@@ -1325,10 +1325,10 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2010.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2010.csv", clear 
 rename (v1 v4  v14 v15 v16 v85 v86 v87 v426 ///
 v446 v447 v448 v449 v452 v453 ///
 v508 v461 ///
@@ -1353,11 +1353,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+10000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010_sp.dta"
 gen year=2010
 * ageを作成
 replace bmonth=bmonth+10
@@ -1367,21 +1367,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20100130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010.dta", replace
 
 * cohort dummy
 keep id
-merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+merge 1:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 replace cohort=4 if cohort==.
 drop _merge
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2011
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2011.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2011.csv", clear 
 rename (v1 v4 v5 v6 v7 v85 v86 v87 v173 ///
 v193 v194 v195 v196 v199 v200 ///
 v249 v208 ///
@@ -1402,10 +1402,10 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2011.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2011.csv", clear 
 rename (v1 v4  v14 v15 v16 v85 v86 v87 v431 ///
 v451 v452 v453 v454 v457 v458 ///
 v507 v466 ///
@@ -1430,11 +1430,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+10000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011_sp.dta"
 gen year=2011
 * ageを作成
 replace bmonth=bmonth+10
@@ -1444,21 +1444,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20110130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011.dta", replace
 
 * cohort dummy
 keep id
-merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+merge 1:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 replace cohort=4 if cohort==.
 drop _merge
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2012
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2012.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2012.csv", clear 
 rename (v1 v4 v5 v6 v7 v85 v86 v87 v167 ///
 v187 v188 v189 v190 v193 v194 ///
 v228 v202 ///
@@ -1479,10 +1479,10 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2012.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2012.csv", clear 
 rename (v1 v4  v14 v15 v16 v85 v86 v87 v405 ///
 v425 v426 v427 v428 v431 v432 ///
 v466 v440 ///
@@ -1506,11 +1506,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+10000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_sp.dta"
 gen year=2012
 * ageを作成
 replace bmonth=bmonth+10
@@ -1520,21 +1520,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20120130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012.dta", replace
 
 * cohort dummy
 keep id
-merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+merge 1:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 replace cohort=4 if cohort==.
 drop _merge
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2012_new
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2012_new.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2012_new.csv", clear 
 rename (v1 v4 v5 v6 v7 v85 v86 v87 v150 v167 ///
 v218 v219 v220 v221 v222 v223 ///
 v233 v234 v235 ///
@@ -1573,10 +1573,10 @@ gen switch=0
 drop v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2012_new.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2012_new.csv", clear 
 rename (v1 v4 v5 v6 v7 v85 v86 v87 v864 v885 ///
 v932 v933 v934 v935 v938 v939 ///
 v947 v948 v949 ///
@@ -1618,11 +1618,11 @@ gen switch=0
 drop v*
 * idを+30000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new_sp.dta"
 gen year=2012
 * ageを作成
 replace bmonth=bmonth+10
@@ -1640,20 +1640,20 @@ destring eday, replace
 replace eday=eday-1000
 gen emptenure=floor((20120130-eday)/10000)
 drop empsinceyear empsincemonth eday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", replace
 
 * cohort dummy
 keep id
 gen cohort=12
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2013
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2013.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2013.csv", clear 
 rename (v1 v4 v5 v6 v7 v85 v86 v87 v190 ///
 v210 v211 v212 v213 v216 v217 ///
 v266 v225 ///
@@ -1674,10 +1674,10 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2013.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2013.csv", clear 
 rename (v1 v4  v14 v15 v16 v85 v86 v87 v471 ///
 v491 v492 v493 v494 v497 v498 ///
 v506 ///
@@ -1702,11 +1702,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+10000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013_sp.dta"
 gen year=2013
 * ageを作成
 replace bmonth=bmonth+10
@@ -1716,21 +1716,21 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20130130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013.dta", replace
 
 * cohort dummy
 keep id
-merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+merge 1:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 replace cohort=4 if cohort==.
 drop _merge
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** KHPS2014
 {
 * 変数名の変更
 ** 本人
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2014.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2014.csv", clear 
 rename (v1 v4 v5 v6 v7 v101 v102 v103 v220 ///
 v227 v228 v229 v230 v233 v234 ///
 v265 v242 ///
@@ -1751,10 +1751,10 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+20000
 replace id=id+20000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014_pr.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014_pr.dta", replace
 
 ** 配偶者
-import delimited "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2014.csv", clear 
+import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2014.csv", clear 
 rename (v1 v4  v12 v13 v14 v101 v102 v103 v498 ///
 v505 v506 v507 v508 v511 v512 ///
 v520 ///
@@ -1779,11 +1779,11 @@ replace earnmost=0 if earnmost!=1
 drop earnif v*
 * idを+10000
 replace id=id+30000
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014_sp.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014_sp.dta", replace
 
 ** 本人と配偶者サンプルをバインド
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014_pr.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014_sp.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014_pr.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014_sp.dta"
 gen year=2014
 * ageを作成
 replace bmonth=bmonth+10
@@ -1793,46 +1793,46 @@ destring bday, replace
 replace bday=bday-1000
 gen age=floor((20140130-bday)/10000)
 drop byear bmonth bday
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014.dta", replace
 
 * cohort dummy
 keep id
-merge 1:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+merge 1:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 replace cohort=4 if cohort==.
 drop _merge
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta", replace
 }
 
 ** 全ての年に共通の変数のみバインドする
 {
 *** JHPS
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta",  clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta",  clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014.dta"
 *** KHPS2004
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014.dta"
 *** new cohort
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta"
 keep id marital sex age head earnmost workstatus year  ///
 occ owner ind size employed regular ///
 switch union ///
 paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
 workdaypermonth workhourperweek overworkperweek
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPSKHPS_2004_2014.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPSKHPS_2004_2014.dta", replace
 }
 }
 
@@ -1842,7 +1842,7 @@ save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\
 ** idと学歴データを抽出
 {
 *** JHPSの学歴
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta", clear
 mvdecode edbg, mv(9)
 gen schooling=9 if edbg==1
 replace schooling=12 if edbg==2
@@ -1850,11 +1850,11 @@ replace schooling=14 if edbg==3 | edbg==6
 replace schooling=16 if edbg==4
 replace schooling=18 if edbg==5
 keep id schooling
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingJHPS.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingJHPS.dta", replace
 
 *** KHPSの学歴
 **** old cohort
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", clear
 mvdecode edbg, mv(9)
 gen schooling=9 if edbg==1
 replace schooling=12 if edbg==2
@@ -1862,10 +1862,10 @@ replace schooling=14 if edbg==3 | edbg==6
 replace schooling=16 if edbg==4
 replace schooling=18 if edbg==5
 keep id schooling
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS.dta", replace
 
 **** new cohort 2007
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", clear
 mvdecode edbg, mv(9)
 gen schooling=9 if edbg==1
 replace schooling=12 if edbg==2
@@ -1873,10 +1873,10 @@ replace schooling=14 if edbg==3 | edbg==6
 replace schooling=16 if edbg==4
 replace schooling=18 if edbg==5
 keep id schooling
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2007.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2007.dta", replace
 
 **** new cohort 2012
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", clear
 mvdecode edbg, mv(9)
 gen schooling=9 if edbg==1
 replace schooling=12 if edbg==2
@@ -1884,21 +1884,21 @@ replace schooling=14 if edbg==3 | edbg==6
 replace schooling=16 if edbg==4
 replace schooling=18 if edbg==5
 keep id schooling
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2012.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2012.dta", replace
 
 *** bind
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingJHPS.dta", clear
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2007.dta"
-append using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2012.dta"
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingJHPS.dta", clear
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2007.dta"
+append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2012.dta"
 sort id
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Schooling.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Schooling.dta", replace
  }
  
  ** idと労働経験年数を抽出
 {
 *** JHPS労働経験年数
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010.dta", clear
 for num 18/65: gen weX=0
 for num 18/65: mvdecode casX, mv(9)
 for num 18/65: mvdecode regX, mv(9)
@@ -1909,11 +1909,11 @@ for num 18/65: replace weX=1 if casX!=. | regX!=. | selfX!=. | sideX!=. | fmwX!=
 egen workexp2010=rowtotal(we18-we65)
 keep id workexp2010 year
 sort id
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpJHPS.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpJHPS.dta", replace
 
 *** KHPS労働経験年数
 ***** old cohort
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", clear
 for num 18/65: gen weX=0
 for num 18/65: mvdecode casX, mv(9)
 for num 18/65: mvdecode regX, mv(9)
@@ -1924,10 +1924,10 @@ for num 18/65: replace weX=1 if casX!=. | regX!=. | selfX!=. | sideX!=. | fmwX!=
 egen workexp2004=rowtotal(we18-we65)
 keep id workexp2004 year
 sort id
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS.dta", replace
 
 ***** new cohort 2007
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", clear
 for num 18/65: gen weX=0
 for num 18/65: mvdecode casX, mv(9)
 for num 18/65: mvdecode regX, mv(9)
@@ -1938,10 +1938,10 @@ for num 18/65: replace weX=1 if casX!=. | regX!=. | selfX!=. | sideX!=. | fmwX!=
 egen workexp2007=rowtotal(we18-we65)
 keep id workexp2007 year
 sort id
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2007.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2007.dta", replace
 
 ***** new cohort 2012
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", clear
 for num 18/65: gen weX=0
 for num 18/65: mvdecode casX, mv(9)
 for num 18/65: mvdecode regX, mv(9)
@@ -1952,77 +1952,78 @@ for num 18/65: replace weX=1 if casX!=. | regX!=. | selfX!=. | sideX!=. | fmwX!=
 egen workexp2012=rowtotal(we18-we65)
 keep id workexp2012 year
 sort id
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2012.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2012.dta", replace
 }
 
 ** idと勤続年数を抽出
 {
 ** JHPS勤続年数
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta", clear
 keep id emptenure
 replace emptenure=. if emptenure<0
 sort id
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenJHPS.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenJHPS.dta", replace
 
 ** KHPS勤続年数
 **** old cohort
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", clear
 keep id emptenure
 replace emptenure=. if emptenure<0
 sort id
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS.dta", replace
 
 **** new cohort 2007
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", clear
 keep id emptenure
 replace emptenure=. if emptenure<0
 sort id
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2007.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2007.dta", replace
 
 **** new cohort 2012
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", clear
 keep id emptenure
 replace emptenure=. if emptenure<0
 sort id
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2012.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2012.dta", replace
 
 }
 
 ** 学歴と就業履歴をサンプルにマージ
 {
 ** idで学歴データをマージ
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPSKHPS_2004_2014.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPSKHPS_2004_2014.dta", clear
 sort id year
-merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Schooling.dta"
+merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Schooling.dta"
 drop _merge
 
 ** idでサンプルに入ったときの労働経験をマージ
-merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
+merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
 drop _merge
-merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpJHPS.dta"
+merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpJHPS.dta"
 drop _merge
-merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS.dta"
+merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS.dta"
 drop _merge
-merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2007.dta"
+merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2007.dta"
 drop _merge
-merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2012.dta"
+merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2012.dta"
 drop _merge
 
 ** idでサンプルに入ったときの勤続年数をマージ
-merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenJHPS.dta"
+merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenJHPS.dta"
 drop _merge
 rename emptenure empten2009
-merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS.dta"
+merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS.dta"
 drop _merge
 rename emptenure empten2004
-merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2007.dta"
+merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2007.dta"
 drop _merge
 rename emptenure empten2007
-merge m:1 id using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2012.dta"
+merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2012.dta"
 drop _merge
 rename emptenure empten2012
 
 ** データに入った年のサンプルにのみ労働経験年数を作成(他の年はworkexp=0)
+*** experience
 gen intexp=workexp2004 if workexp2004!=.
 for num 2007 2010 2012: replace intexp=workexpX if workexpX!=.
 sort id year
@@ -2030,12 +2031,15 @@ by id: gen workexp = intexp if _n==1&cohort!=9
 replace workexp=intexp if cohort==9&year==2010
 replace workexp=0 if workexp==.
 
+*** emptenure
 gen intten=empten2004 if empten2004!=.
 for num 2007 2009 2012: replace intten=emptenX if emptenX!=.
 sort id year
-by id: gen workexp = intexp if _n==1&cohort!=9
-replace workexp=intexp if cohort==9&year==2010
-replace workexp=0 if workexp==.
+by id: gen emptenure = intten if _n==1
+by id: replace emptenure=0 if emptenure==.&_n>1
+
+*** 年間労働時間 = workhourperweek*52
+gen workinghour=workhourperweek*52
 
 *** 労働時間800時間以上ダミー作成
 gen morethan800=0 if workinghour<800|workinghour==.
@@ -2045,7 +2049,7 @@ replace morethan800=1 if morethan800==.
 tsset id year
 
 *** JHPSは2010の労働経験年数をもとに2009の労働経験年数を作成
-replace workexp=workexp2010-1 if morethan800h==1&cohort==9&year==2009
+replace workexp=workexp2010-1 if morethan800==1&cohort==9&year==2009
 replace workexp=workexp2010 if morethan800==0&cohort==9&year==2009
 }
 }
@@ -2117,9 +2121,6 @@ replace monthlypaid=monthlypaid*1000
 replace bonus=bonus*10000
 replace yearlypaid=yearlypaid*10000
 
-*** 年間労働時間 = workhourperweek*52
-gen workinghour=workhourperweek*52
-
 ** 働き方に応じた年収を作成
 gen income=0
 *** 月給: monthlypaid*12+bonus
@@ -2139,7 +2140,7 @@ gen wage=income/workinghour
 
 ** 時給を実質化+失業率とインフレ率をマージ
 gen realwage=0
-merge m:1 year using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\InflateUnempRate.dta"
+merge m:1 year using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\InflateUnempRate.dta"
 replace realwage=wage/infrate*100
 drop _merge lagunemprate infrate
 }
@@ -2152,10 +2153,9 @@ drop _merge lagunemprate infrate
 **** 労働時間が年間800時間以上&転職していない -> +1
 **** 労働時間が年間800時間未満- > stay
 **** 転職した -> 0
-**** サンプルに入った年のテニュア = workexp
 
-gen occtenure = workexp
-gen indtenure = workexp
+*** パネル化
+tsset id year
 
 *** emptenure
 forvalues X = 2005(1)2014{ 
@@ -2169,8 +2169,22 @@ forvalues X = 2005(1)2014{
 	replace emptenure=0 ///
 		if switch==1 & year==`X'
 	**** 最初のobservationは変更しない
-	bysort id (year): replace emptenure=workexp if _n==1
+	bysort id (year): replace emptenure=intten if _n==1
 }
+
+*** workexp
+forvalues X = 2005(1)2014{ 
+	**** 労働時間800時間以上->+1
+	bysort id (year): replace workexp=workexp[_n-1]+1 ///
+		if morethan800==1 & _n!=1 & year==`X'
+	**** 労働時間800時間未満->+-0
+	bysort id (year): replace workexp=workexp[_n-1] ///
+		if morethan800==0 & _n!=1 & year==`X'
+}	
+
+/*
+gen occtenure = emptenure
+gen indtenure = emptenure
 
 *** occtenure
 bysort id (year): gen occswitch=0 if occ==occ[_n-1] | occ==. | occ[_n-1]==. | _n==1
@@ -2205,16 +2219,7 @@ forvalues X = 2005(1)2014{
 	**** 最初のobservationは変更しない
 	bysort id (year): replace indtenure=workexp if _n==1
 }
-
-*** workexp
-forvalues X = 2005(1)2014{ 
-	**** 労働時間800時間以上->+1
-	bysort id (year): replace workexp=workexp[_n-1]+1 ///
-		if morethan800==1 & _n!=1 & year==`X'
-	**** 労働時間800時間未満->+-0
-	bysort id (year): replace workexp=workexp[_n-1] ///
-		if morethan800==0 & _n!=1 & year==`X'
-}	
+*/
 
 **** Old job dummy
 gen oj=1 if emptenure==0
@@ -2250,4 +2255,4 @@ replace realwage=log(realwage)
 drop paymethod-overworkperweek cohort workinghour-wage
 }
 
-save "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", replace
+save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", replace
