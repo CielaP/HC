@@ -1,20 +1,21 @@
 clear
 set more off
- cd "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Intput"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\coefplot"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\coefplot"
- adopath + "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\estout"
+ cd "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intput"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\coefplot"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\coefplot"
+ adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\estout"
 
 * Estimation
 ** 1. OLS->AS / 基本の推定式1-4次項まで
 ** 2. OLS->AS / ability*tenure
 ** 3. OLS->AS / 60歳以下, 大企業, 中小企業, 専門職以外
-** 4. Topel / 基本の推定式1-4次項まで
+** 4. OLS->AS / テニュアをダミーで
+** 5. Topel / 基本の推定式1-4次項まで
 
 * 1
 ** OLS->AS / 基本の推定式1-4次項まで
@@ -23,7 +24,7 @@ set more off
 {
 **** sample selection
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 }
@@ -71,7 +72,7 @@ est sto olsempocc4
 {
 ***** 2nd
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 操作変数を作成
@@ -123,7 +124,7 @@ est sto isvemp2
 
 ***** 3rd
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 操作変数を作成
@@ -175,7 +176,7 @@ est sto isvemp3
 
 ***** 4th
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 操作変数を作成
@@ -242,7 +243,7 @@ est sto isvemp4
 {
 ***** 2nd
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 操作変数を作成
@@ -310,7 +311,7 @@ est sto isvempocc2
 
 ***** 3rd
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 操作変数を作成
@@ -377,7 +378,7 @@ est sto isvempocc3
 
 ***** 4th
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 操作変数を作成
@@ -480,7 +481,7 @@ coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_2.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_2.pdf", replace
  
 ***** 3rd
 est res olsemp3
@@ -499,7 +500,7 @@ coefplot (olsempr3, label(OLS)) (isvempr3, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_3.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_3.pdf", replace
 
 ***** 4th
 est res olsemp4
@@ -522,7 +523,7 @@ coefplot (olsempr4, label(OLS)) (isvempr4, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_4.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_4.pdf", replace
  }
  
 **** empten+occten
@@ -542,7 +543,7 @@ coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_2.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_2.pdf", replace
 
 ***** 3rd
 est res olsempocc3
@@ -561,7 +562,7 @@ coefplot (olsempr3, label(OLS)) (isvempr3, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_3.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_3.pdf", replace
 
 ***** 4th
 est res olsempocc4
@@ -584,7 +585,7 @@ coefplot (olsempr4, label(OLS)) (isvempr4, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_4.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_4.pdf", replace
 }
 }
  
@@ -593,7 +594,7 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
 **** coefficients / emptenure
 quietly {
 esttab olsemp2 olsemp3 olsemp4 isvemp2 isvemp3 isvemp4 ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp.tex", ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
@@ -627,7 +628,7 @@ replace
 **** coefficients / emp+occ
 quietly {
 esttab olsempocc2 olsempocc3 olsempocc4 isvempocc2 isvempocc3 isvempocc4 ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_empocc.tex", ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_empocc.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
@@ -663,7 +664,7 @@ replace
 **** main table
 quietly{
 esttab olsemp2 olsempocc2 isvemp2 isvempocc2 ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_main.tex", ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_main.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
 occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
@@ -693,7 +694,7 @@ replace
 **** return
 quietly{
 esttab olsempr2 olsempoccr2 isvempr2 isvempoccr2 ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return.tex", ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -717,7 +718,7 @@ replace
  {
 **** sample selection
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 }
@@ -746,7 +747,7 @@ est sto olsempsi
 {
 ***** schooling
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 操作変数を作成
@@ -811,7 +812,7 @@ est sto isvempsc
 
 ***** regular
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 操作変数を作成
@@ -873,7 +874,7 @@ est sto isvregular
 
 ***** size
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 操作変数を作成
@@ -952,7 +953,7 @@ coefplot (olsempnsc, label(OLS)) (isvempnsc, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_sc.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_sc.pdf", replace
  
 **** regular
 est res olsregular
@@ -969,7 +970,7 @@ coefplot (olsempnst, label(OLS)) (isvempnst, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_rg.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_rg.pdf", replace
  
 **** size
 est res olsempsi
@@ -986,7 +987,7 @@ coefplot (olsempnsi, label(OLS)) (isvempnsi, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_si.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_si.pdf", replace
  }
  
 *** output tex all results
@@ -994,7 +995,7 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
 **** coefficients 
 quietly {
 esttab olsempsc isvempsc olsregular isvregular olsempsi isvempsi ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_ab.tex", ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_ab.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
 oj workexp c.workexp#c.workexp) ///
@@ -1015,7 +1016,7 @@ replace
 **** return
 quietly {
 esttab olsempnsc isvempnsc olsempnst isvempnst olsempnsi isvempnsi ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_teturn_ab.tex", ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_teturn_ab.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -1040,7 +1041,7 @@ replace
 **** OLS
 {
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 drop if age>=60
@@ -1053,7 +1054,7 @@ est sto olsemp59
 **** AS
 {
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 drop if age>=60
@@ -1123,7 +1124,7 @@ coefplot (olsempn59, label(OLS)) (isvempn59, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_59.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_59.pdf", replace
  }
  }
  
@@ -1132,7 +1133,7 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
 **** OLS
 {
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 drop if size<5
@@ -1145,7 +1146,7 @@ est sto olsempLa
 **** AS
 {
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 drop if size<5
@@ -1215,7 +1216,7 @@ coefplot (olsempnLa, label(OLS)) (isvempnLa, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_La.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_La.pdf", replace
  }
  }
  
@@ -1224,7 +1225,7 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
 **** OLS
 {
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 drop if size==5
@@ -1237,7 +1238,7 @@ est sto olsempSm
 **** AS
 {
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 drop if size==5
@@ -1307,7 +1308,7 @@ coefplot (olsempnSm, label(OLS)) (isvempnSm, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_Sm.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_Sm.pdf", replace
  }
  }
 
@@ -1316,7 +1317,7 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
 **** OLS
 {
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 drop if occ==10
@@ -1329,7 +1330,7 @@ est sto olsempPr
 **** AS
 {
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 drop if occ==10
@@ -1400,7 +1401,7 @@ coefplot (olsempnPr, label(OLS)) (isvempnPr, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_Pr.pdf", replace
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_Pr.pdf", replace
 }
 }
 
@@ -1410,7 +1411,7 @@ graph export "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Sub
 quietly {
 esttab olsemp59 isvemp59 olsempLa isvempLa ///
 olsempSm isvempSm olsempPr isvempPr ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_rob.tex", ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
 oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
@@ -1434,7 +1435,7 @@ replace
 quietly {
 esttab olsempn59 isvempn59 olsempnLa isvempnLa ///
 olsempnSm isvempnSm olsempnPr isvempnPr ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return_rob.tex", ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -1454,12 +1455,299 @@ replace
 }
 
 * 4
+** OLS->AS / テニュアをダミーで
+{
+*** OLS
+{
+**** sample selection
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+destring, replace
+tsset id year
+}
+
+**** empten
+{
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+i.emptenure oj i.workexp, vce(r)
+est sto olsempD
+}
+
+**** empten+occten
+{
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+i.emptenure oj i.occtenure i.workexp, vce(r)
+est sto olsempoccD
+}
+}
+
+*** AS
+{
+**** empten
+{
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+destring, replace
+tsset id year
+* 操作変数を作成
+sort id year
+by id: gen empid = 1 if _n==1|switch==1
+replace empid=sum(empid)
+sort empid year
+tabulate emptenure, generate(emp)
+for X in num 1/50 \ Y in num 0/49: rename empX empY
+for X in num 0/49 : egen avgempX=mean(empX), by(empid)
+for X in num 0/49 : gen empivX=empX-avgempX
+sort id year
+tabulate workexp, generate(exp)
+for X in num 1/50 \ Y in num 0/49: rename expX expY
+for X in num 0/49 : egen avgexpX=mean(expX), by(id)
+for X in num 0/49 : gen expivX=expX-avgexpX
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+(i.emptenure i.workexp = ///
+emp0 emp1 emp2 emp3 emp4 emp5 emp6 emp7 emp8 emp9 ///
+emp10 emp11 emp12 emp13 emp14 emp15 emp16 emp17 emp18 emp19 ///
+emp20 emp21 emp22 emp23 emp24 emp25 emp26 emp27 emp28 emp29 ///
+emp30 emp31 emp32 emp33 emp34 emp35 emp36 emp37 emp38 emp39 ///
+emp40 emp41 emp42 emp43 emp44 emp45 emp46 emp47 emp48 emp49 ///
+exp0 exp1 exp2 exp3 exp4 exp5 exp6 exp7 exp8 exp9 ///
+exp10 exp11 exp12 exp13 exp14 exp15 exp16 exp17 exp18 exp19 ///
+exp20 exp21 exp22 exp23 exp24 exp25 exp26 exp27 exp28 exp29 ///
+exp30 exp31 exp32 exp33 exp34 exp35 exp36 exp37 exp38 exp39 ///
+exp40 exp41 exp42 exp43 exp45 exp46 exp47 exp48 exp49), vce(r)
+est sto isvempD
+drop if _est_isvempD==0
+drop *iv *iv? avg*
+* 必要な変数を再作成
+sort empid year
+for X in num 0/49 : egen avgempX=mean(empX), by(empid)
+for X in num 0/49 : egen empivX=empX-avgempX
+sort id year
+for X in num 0/49 : egen avgexpX=mean(expX), by(id)
+for X in num 0/49 : egen expX=expX-avgexpX
+}
+* 再推定
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+(i.emptenure i.workexp = ///
+emp0 emp1 emp2 emp3 emp4 emp5 emp6 emp7 emp8 emp9 ///
+emp10 emp11 emp12 emp13 emp14 emp15 emp16 emp17 emp18 emp19 ///
+emp20 emp21 emp22 emp23 emp24 emp25 emp26 emp27 emp28 emp29 ///
+emp30 emp31 emp32 emp33 emp34 emp35 emp36 emp37 emp38 emp39 ///
+emp40 emp41 emp42 emp43 emp44 emp45 emp46 emp47 emp48 emp49 ///
+exp0 exp1 exp2 exp3 exp4 exp5 exp6 exp7 exp8 exp9 ///
+exp10 exp11 exp12 exp13 exp14 exp15 exp16 exp17 exp18 exp19 ///
+exp20 exp21 exp22 exp23 exp24 exp25 exp26 exp27 exp28 exp29 ///
+exp30 exp31 exp32 exp33 exp34 exp35 exp36 exp37 exp38 exp39 ///
+exp40 exp41 exp42 exp43 exp45 exp46 exp47 exp48 exp49), vce(r)
+est sto isvempD
+}
+
+**** empten+occten
+{
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+destring, replace
+tsset id year
+* 操作変数を作成
+sort id year
+by id: gen empid = 1 if _n==1|switch==1
+replace empid=sum(empid)
+sort empid year
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgocctenure=mean(occtenure), by(id occ)
+egen avgocctenure2=mean(occtenure^2), by(id occ)
+egen avgocctenure3=mean(occtenure^3), by(id occ)
+gen occtenureiv=occtenure-avgocctenure
+gen occtenureiv2=occtenure^2-avgocctenure2
+gen occtenureiv3=occtenure^3-avgocctenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+egen avgoj=mean(oj), by(empid)
+gen ojiv=oj-avgoj
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+(c.emptenure##c.emptenure oj ///
+c.occtenure##c.occtenure c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 ojiv ///
+occtenureiv occtenureiv2 workexpiv workexpiv2), vce(r)
+est sto isvempocc2
+drop if _est_isvempocc2==0
+drop *iv *iv? avg*
+* 必要な変数を再作成
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgocctenure=mean(occtenure), by(id occ)
+egen avgocctenure2=mean(occtenure^2), by(id occ)
+egen avgocctenure3=mean(occtenure^3), by(id occ)
+gen occtenureiv=occtenure-avgocctenure
+gen occtenureiv2=occtenure^2-avgocctenure2
+gen occtenureiv3=occtenure^3-avgocctenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+egen avgoj=mean(oj), by(empid)
+gen ojiv=oj-avgoj
+}
+* 再推定
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+(c.emptenure##c.emptenure oj ///
+c.occtenure##c.occtenure c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 ojiv ///
+occtenureiv occtenureiv2 workexpiv workexpiv2), vce(r)
+est sto isvempocc2
+}
+
+}
+
+ *** culc. return
+ {
+**** empten
+{
+est res olsemp2
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempr2
+est res isvemp2
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempr2
+coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
+at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
+xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
+title("Earnings Function Estimation.") yline(0) rescale(100)
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_2.pdf", replace
+ }
+ 
+**** empten+occten
+{
+est res olsempocc2
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempoccr2
+est res isvempocc2
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempoccr2
+coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
+at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
+xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
+title("Earnings Function Estimation.") yline(0) rescale(100)
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_2.pdf", replace
+}
+}
+ 
+*** output tex all results
+{
+**** coefficients
+quietly {
+esttab olsemp2 olsemp3 olsemp4 isvemp2 isvemp3 isvemp4 ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp.tex", ///
+se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+keep(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
+c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
+oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
+order(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
+c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
+oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
+coeflabel(emptenure "Employer tenure" ///
+c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
+c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
+c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
+occtenure "Occupation tenure" c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
+c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
+oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
+c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$") ///
+transform(c.emptenure#c.emptenure 100*@ 100 ///
+c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
+c.emptenure#c.emptenurec.emptenure#c.emptenure 1000*@ 1000 ///
+c.occtenure#c.occtenure 100*@ 100 ///
+c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
+c.workexp#c.workexp#c.workexp 100*@ 100) ///
+nodep nonote nomtitles ///
+title(Earnings Function Estimates, using to 64-year-old, ///
+including Non-regular Workers and Specialists.) ///
+mgroups("OLS" "IV" ///
+pattern(1 0 0 1 0 0) ///
+prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+replace
+}
+
+**** main table
+quietly{
+esttab olsemp2 olsempocc2 isvemp2 isvempocc2 ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_main.tex", ///
+se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+keep(emptenure c.emptenure#c.emptenure ///
+occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
+oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
+order(emptenure c.emptenure#c.emptenure ///
+occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
+oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
+coeflabel(emptenure "Employer tenure" ///
+c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
+occtenure "Occupation tenure" c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
+c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
+oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
+c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$") ///
+transform(c.emptenure#c.emptenure 100*@ 100 ///
+c.occtenure#c.occtenure 100*@ 100 ///
+c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
+c.workexp#c.workexp#c.workexp 100*@ 100) ///
+nodep nonote nomtitles ///
+title(Earnings Function Estimates, using to 64-year-old, ///
+including Non-regular Workers and Specialists.) ///
+mgroups("OLS" "IV" ///
+pattern(1 0 1 0) ///
+prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+replace
+}
+
+**** return
+quietly{
+esttab olsempr2 olsempoccr2 isvempr2 isvempoccr2 ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return.tex", ///
+se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
+coeflabel(3._at "2 Years" ///
+6._at "5 Years" 11._at "10 Years" ///
+16._at "15 Years" ///
+21._at "20 Years" 26._at "25 Years") ///
+nodep nonote nomtitles ///
+title(Estimated Returns to Employer Tenure.) ///
+mgroups("OLS" "IV" ///
+pattern(1 0 1 0) ///
+prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+replace
+}
+}
+}
+
+* 5
 ** Topel / 基本の推定式1-4次項まで
 {
 *** linear
 {
  quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 変数を作る
@@ -1534,7 +1822,7 @@ emprtn
 *** qadratic
  {
 quietly {
-use "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 変数を作る
@@ -1613,7 +1901,7 @@ emprtn
 **** coefficients 
 quietly {
 esttab fst1 fst2 ///
-using "C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion\Output\topel_emp.tex", ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\topel_emp.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(_cons c.emptenure#c.emptenure ///
 c.workexp#c.workexp) ///

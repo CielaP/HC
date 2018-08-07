@@ -2171,6 +2171,7 @@ forvalues X = 2005(1)2014{
 	**** 最初のobservationは変更しない
 	bysort id (year): replace emptenure=intten if _n==1
 }
+drop empten2* intten
 
 *** workexp
 forvalues X = 2005(1)2014{ 
@@ -2180,15 +2181,15 @@ forvalues X = 2005(1)2014{
 	**** 労働時間800時間未満->+-0
 	bysort id (year): replace workexp=workexp[_n-1] ///
 		if morethan800==0 & _n!=1 & year==`X'
-}	
-
-/*
-gen occtenure = emptenure
-gen indtenure = emptenure
+}
+drop workexp2* intexp
 
 *** occtenure
+gen occtenure = emptenure if _n==1
+replace occtenure=0 if occtenure==.
 bysort id (year): gen occswitch=0 if occ==occ[_n-1] | occ==. | occ[_n-1]==. | _n==1
 replace occswitch=1 if occswitch==.
+
 forvalues X = 2005(1)2014{ 
 	**** 労働時間800時間以上&転職してない->+1
 	replace occtenure=occtenure[_n-1]+1 ///
@@ -2202,6 +2203,9 @@ forvalues X = 2005(1)2014{
 	**** 最初のobservationは変更しない
 	bysort id (year): replace occtenure=workexp if _n==1
 }
+
+/*
+gen indtenure = emptenure
 
 *** indtenure
 bysort id (year): gen indswitch=0 if ind==ind[_n-1] | ind==. | ind[_n-1]==. | _n==1
@@ -2248,6 +2252,10 @@ keep if owner==1 | owner==2 | owner==3
 drop owner
 *** 時給250円以下を落とす
 drop if realwage<250
+*** テニュア変数がマイナスのもの, 変な値のものを欠損値にする
+replace emptenure=. if emptenure<0| emptenure>50
+replace workexp=. if workexp<0
+replace occtenure=. if occtenure<0
 *** 年間労働時間500時間未満の時給を欠損値にする
 replace realwage=. if workinghour<500
 *** 実質時給をlog化
