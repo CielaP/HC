@@ -2261,6 +2261,10 @@ replace realwage=. if workinghour<500
 *** 実質時給をlog化
 replace realwage=log(realwage)
 drop paymethod-overworkperweek cohort workinghour-wage
+*** empidの作成
+sort id year
+by id: gen empid = 1 if _n==1|switch==1
+replace empid=sum(empid)
 }
 
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", replace

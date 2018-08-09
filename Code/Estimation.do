@@ -76,9 +76,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -128,9 +125,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -180,9 +174,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -247,9 +238,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -315,9 +303,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -382,9 +367,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -751,9 +733,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -816,9 +795,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -878,9 +854,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -1059,9 +1032,6 @@ destring, replace
 tsset id year
 drop if age>=60
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -1151,9 +1121,6 @@ destring, replace
 tsset id year
 drop if size<5
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -1243,9 +1210,6 @@ destring, replace
 tsset id year
 drop if size==5
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -1335,9 +1299,6 @@ destring, replace
 tsset id year
 drop if occ==10
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
 egen avgemptenure2=mean(emptenure^2), by(empid)
@@ -1464,19 +1425,36 @@ quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
+sort empid year
+forvalues X=0(5)45{
+	gen emp`X'=1 if emptenure>=`X'&emptenure<`X'+5
+	replace emp`X'=0 if emp`X'==.
+}
+sort id year
+forvalues X=0(5)45{
+	gen exp`X'=1 if workexp>=`X'&workexp<`X'+5
+	replace exp`X'=0 if exp`X'==.
+}
+forvalues X=0(5)45{
+	gen occ`X'=1 if occtenure>=`X'&occtenure<`X'+5
+	replace occ`X'=0 if occ`X'==.
+}
 }
 
 **** empten
 {
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-i.emptenure oj i.workexp, vce(r)
+emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
+exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45, vce(r)
 est sto olsempD
 }
 
 **** empten+occten
 {
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-i.emptenure oj i.occtenure i.workexp, vce(r)
+(emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
+occ0 occ5 occ10 occ15 occ20 occ25 occ30 occ35 occ40 occ45 ///
+exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45, vce(r)
 est sto olsempoccD
 }
 }
@@ -1490,55 +1468,46 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
-tabulate emptenure, generate(emp)
-for X in num 1/50 \ Y in num 0/49: rename empX empY
-for X in num 0/49 : egen avgempX=mean(empX), by(empid)
-for X in num 0/49 : gen empivX=empX-avgempX
+forvalues X=0(5)45{
+	gen emp`X'=1 if emptenure>=`X'&emptenure<`X'+5
+	replace emp`X'=0 if emp`X'==.
+}
+for X in num 0(5)45 : egen avgempX=mean(empX), by(empid)
+for X in num 0(5)45 : gen empivX=empX-avgempX
 sort id year
-tabulate workexp, generate(exp)
-for X in num 1/50 \ Y in num 0/49: rename expX expY
-for X in num 0/49 : egen avgexpX=mean(expX), by(id)
-for X in num 0/49 : gen expivX=expX-avgexpX
+forvalues X=0(5)45{
+	gen exp`X'=1 if workexp>=`X'&workexp<`X'+5
+	replace exp`X'=0 if exp`X'==.
+}
+for X in num 0(5)45 : egen avgexpX=mean(expX), by(id)
+for X in num 0(5)45 : gen expivX=expX-avgexpX
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(i.emptenure i.workexp = ///
-emp0 emp1 emp2 emp3 emp4 emp5 emp6 emp7 emp8 emp9 ///
-emp10 emp11 emp12 emp13 emp14 emp15 emp16 emp17 emp18 emp19 ///
-emp20 emp21 emp22 emp23 emp24 emp25 emp26 emp27 emp28 emp29 ///
-emp30 emp31 emp32 emp33 emp34 emp35 emp36 emp37 emp38 emp39 ///
-emp40 emp41 emp42 emp43 emp44 emp45 emp46 emp47 emp48 emp49 ///
-exp0 exp1 exp2 exp3 exp4 exp5 exp6 exp7 exp8 exp9 ///
-exp10 exp11 exp12 exp13 exp14 exp15 exp16 exp17 exp18 exp19 ///
-exp20 exp21 exp22 exp23 exp24 exp25 exp26 exp27 exp28 exp29 ///
-exp30 exp31 exp32 exp33 exp34 exp35 exp36 exp37 exp38 exp39 ///
-exp40 exp41 exp42 exp43 exp45 exp46 exp47 exp48 exp49), vce(r)
+(emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
+exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45 = ///
+empiv0 empiv5 empiv10 empiv15 empiv20 ///
+empiv25 empiv30 empiv35 empiv40 empiv45 ///
+expiv0 expiv5 expiv10 expiv15 expiv20 ///
+expiv25 expiv30 expiv35 expiv40 expiv45), vce(r)
 est sto isvempD
 drop if _est_isvempD==0
-drop *iv *iv? avg*
+drop *iv* avg*
 * 必要な変数を再作成
 sort empid year
-for X in num 0/49 : egen avgempX=mean(empX), by(empid)
-for X in num 0/49 : egen empivX=empX-avgempX
+for X in num 0(5)45 : egen avgempX=mean(empX), by(empid)
+for X in num 0(5)45 : gen empivX=empX-avgempX
 sort id year
-for X in num 0/49 : egen avgexpX=mean(expX), by(id)
-for X in num 0/49 : egen expX=expX-avgexpX
+for X in num 0(5)45 : egen avgexpX=mean(expX), by(id)
+for X in num 0(5)45 : gen expivX=expX-avgexpX
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(i.emptenure i.workexp = ///
-emp0 emp1 emp2 emp3 emp4 emp5 emp6 emp7 emp8 emp9 ///
-emp10 emp11 emp12 emp13 emp14 emp15 emp16 emp17 emp18 emp19 ///
-emp20 emp21 emp22 emp23 emp24 emp25 emp26 emp27 emp28 emp29 ///
-emp30 emp31 emp32 emp33 emp34 emp35 emp36 emp37 emp38 emp39 ///
-emp40 emp41 emp42 emp43 emp44 emp45 emp46 emp47 emp48 emp49 ///
-exp0 exp1 exp2 exp3 exp4 exp5 exp6 exp7 exp8 exp9 ///
-exp10 exp11 exp12 exp13 exp14 exp15 exp16 exp17 exp18 exp19 ///
-exp20 exp21 exp22 exp23 exp24 exp25 exp26 exp27 exp28 exp29 ///
-exp30 exp31 exp32 exp33 exp34 exp35 exp36 exp37 exp38 exp39 ///
-exp40 exp41 exp42 exp43 exp45 exp46 exp47 exp48 exp49), vce(r)
+(emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
+exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45 = ///
+empiv0 empiv5 empiv10 empiv15 empiv20 ///
+empiv25 empiv30 empiv35 empiv40 empiv45 ///
+expiv0 expiv5 expiv10 expiv15 expiv20 ///
+expiv25 expiv30 expiv35 expiv40 expiv45)
 est sto isvempD
 }
 
@@ -1553,63 +1522,61 @@ sort id year
 by id: gen empid = 1 if _n==1|switch==1
 replace empid=sum(empid)
 sort empid year
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgocctenure=mean(occtenure), by(id occ)
-egen avgocctenure2=mean(occtenure^2), by(id occ)
-egen avgocctenure3=mean(occtenure^3), by(id occ)
-gen occtenureiv=occtenure-avgocctenure
-gen occtenureiv2=occtenure^2-avgocctenure2
-gen occtenureiv3=occtenure^3-avgocctenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
+forvalues X=0(5)45{
+	gen emp`X'=1 if emptenure>=`X'&emptenure<`X'+5
+	replace emp`X'=0 if emp`X'==.
+}
+for X in num 0(5)45 : egen avgempX=mean(empX), by(empid)
+for X in num 0(5)45 : gen empivX=empX-avgempX
+sort id year
+forvalues X=0(5)45{
+	gen exp`X'=1 if workexp>=`X'&workexp<`X'+5
+	replace exp`X'=0 if exp`X'==.
+}
+for X in num 0(5)45 : egen avgexpX=mean(expX), by(id)
+for X in num 0(5)45 : gen expivX=expX-avgexpX
+sort id year
+forvalues X=0(5)45{
+	gen occ`X'=1 if occtenure>=`X'&occtenure<`X'+5
+	replace occ`X'=0 if occ`X'==.
+}
+for X in num 0(5)45 : egen avgoccX=mean(occX), by(id occ)
+for X in num 0(5)45 : gen occivX=occX-avgoccX
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure oj ///
-c.occtenure##c.occtenure c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 ojiv ///
-occtenureiv occtenureiv2 workexpiv workexpiv2), vce(r)
-est sto isvempocc2
-drop if _est_isvempocc2==0
-drop *iv *iv? avg*
+(emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
+occ0 occ5 occ10 occ15 occ20 occ25 occ30 occ35 occ40 occ45 ///
+exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45 = ///
+empiv0 empiv5 empiv10 empiv15 empiv20 ///
+empiv25 empiv30 empiv35 empiv40 empiv45 ///
+occiv0 occiv5 occiv10 occiv15 occiv20 ///
+occiv25 occiv30 occiv35 occiv40 occiv45 ///
+expiv0 expiv5 expiv10 expiv15 expiv20 ///
+expiv25 expiv30 expiv35 expiv40 expiv45), vce(r)
+est sto isvempoccD
+drop if _est_isvempoccD==0
+drop *iv* avg*
 * 必要な変数を再作成
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgocctenure=mean(occtenure), by(id occ)
-egen avgocctenure2=mean(occtenure^2), by(id occ)
-egen avgocctenure3=mean(occtenure^3), by(id occ)
-gen occtenureiv=occtenure-avgocctenure
-gen occtenureiv2=occtenure^2-avgocctenure2
-gen occtenureiv3=occtenure^3-avgocctenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
+sort empid year
+for X in num 0(5)45 : egen avgempX=mean(empX), by(empid)
+for X in num 0(5)45 : gen empivX=empX-avgempX
+sort id year
+for X in num 0(5)45 : egen avgexpX=mean(expX), by(id)
+for X in num 0(5)45 : gen expivX=expX-avgexpX
+for X in num 0(5)45 : egen avgoccX=mean(occX), by(id occ)
+for X in num 0(5)45 : gen occivX=occX-avgoccX
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(c.emptenure##c.emptenure oj ///
-c.occtenure##c.occtenure c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 ojiv ///
-occtenureiv occtenureiv2 workexpiv workexpiv2), vce(r)
-est sto isvempocc2
+(emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
+occ0 occ5 occ10 occ15 occ20 occ25 occ30 occ35 occ40 occ45 ///
+exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45 = ///
+empiv0 empiv5 empiv10 empiv15 empiv20 ///
+empiv25 empiv30 empiv35 empiv40 empiv45 ///
+occiv0 occiv5 occiv10 occiv15 occiv20 ///
+occiv25 occiv30 occiv35 occiv40 occiv45 ///
+expiv0 expiv5 expiv10 expiv15 expiv20 ///
+expiv25 expiv30 expiv35 expiv40 expiv45), vce(r)
+est sto isvempoccD
 }
 
 }
@@ -1751,9 +1718,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 変数を作る
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 gen initialemp=workexp-emptenure
 bysort empid: gen emptendif=1 ///
@@ -1826,9 +1790,6 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 * 変数を作る
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
 sort empid year
 gen initialemp=workexp-emptenure
 bysort empid: gen emptendif=1 ///
