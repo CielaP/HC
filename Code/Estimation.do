@@ -1417,6 +1417,7 @@ replace
 
 * 4
 ** OLS->AS / テニュアをダミーで
+*** base=0, 1年以降, 3年以降, 5年以降, 10年以降
 {
 *** OLS
 {
@@ -1426,17 +1427,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 sort empid year
-forvalues X=0(5)45{
-	gen emp`X'=1 if emptenure>=`X'&emptenure<`X'+5
+forvalues X=1 3 5 10{
+	gen emp`X'=1 if emptenure>=`X'
 	replace emp`X'=0 if emp`X'==.
 }
 sort id year
-forvalues X=0(5)45{
-	gen exp`X'=1 if workexp>=`X'&workexp<`X'+5
+forvalues X=1 3 5 10{
+	gen exp`X'=1 if workexp>=`X'
 	replace exp`X'=0 if exp`X'==.
 }
-forvalues X=0(5)45{
-	gen occ`X'=1 if occtenure>=`X'&occtenure<`X'+5
+forvalues X=1 3 5 10{
+	gen occ`X'=1 if occtenure>=`X'
 	replace occ`X'=0 if occ`X'==.
 }
 }
@@ -1444,17 +1445,17 @@ forvalues X=0(5)45{
 **** empten
 {
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
-exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45, vce(r)
+emp1 emp3 emp5 emp10 ///
+exp1 exp3 exp5 exp10, vce(r)
 est sto olsempD
 }
 
 **** empten+occten
 {
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
-occ0 occ5 occ10 occ15 occ20 occ25 occ30 occ35 occ40 occ45 ///
-exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45, vce(r)
+emp1 emp3 emp5 emp10 ///
+occ1 occ3 occ5 occ10
+exp1 exp3 exp5 exp10, vce(r)
 est sto olsempoccD
 }
 }
@@ -1581,6 +1582,7 @@ est sto isvempoccD
 
 }
 
+/*
  *** culc. return
  {
 **** empten
@@ -1706,6 +1708,7 @@ prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) //
 replace
 }
 }
+*/
 }
 
 * 5

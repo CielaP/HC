@@ -2226,7 +2226,7 @@ forvalues X = 2005(1)2014{
 */
 
 **** Old job dummy
-gen oj=1 if emptenure==0
+gen oj=1 if emptenure>0
 replace oj=0 if oj==.
 }
 
