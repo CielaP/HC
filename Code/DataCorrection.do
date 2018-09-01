@@ -120,7 +120,7 @@ save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\I
 * 変数名の変更
 ** 本人
 import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\JHPS2010.csv", clear 
-rename (v1 v4 v5 v6 v7 v101 v102 v103 v146 ///
+rename (v1 v4 v5 v6 v7 v101 v102 v103 v175 ///
 v182 v183 v184 v185 v188 v189 ///
 v231 v196 ///
 v198 v199 v200 v201 v202 v203 ///
@@ -335,7 +335,6 @@ paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
 workdaypermonth workhourperweek overworkperweek)
 * 続柄が配偶者のサンプルのみ残す
 keep if marital==1
-* 世帯主ダミー作成
 * 世帯主ダミー作成
 ** 世帯主ですか
 replace head=0 if head!=2
@@ -1157,14 +1156,14 @@ workdaypermonth workhourperweek overworkperweek)
 keep if marital==1
 * 続柄の変数名変更->配偶者の情報を抽出
 rename (v13 v14 v15 v16 ///
-v20 v21 v22 v23 ///
-v27 v28 v29 v30 ///
-v34 v35 v36 v37 ///
-v41 v42 v43 v44 ///
-v48 v49 v50 v51 ///
-v55 v56 v57 v58 ///
-v62 v63 v64 v65 ///
-v69 v70 v71 v72) ///
+v21 v22 v23 v24 ///
+v29 v30 v31 v32 ///
+v37 v38 v39 v40 ///
+v45 v46 v47 v48 ///
+v53 v54 v55 v56 ///
+v61 v62 v63 v64 ///
+v69 v70 v71 v72 ///
+v77 v78 v79 v80) ///
 (rel1no rel1sex rel1byear rel1bmonth ///
 rel2no rel2sex rel2byear rel2bmonth ///
 rel3no rel3sex rel3byear rel3bmonth ///
@@ -1252,7 +1251,7 @@ save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\I
 
 ** 配偶者
 import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2009.csv", clear 
-rename (v1 v4  v14 v15 v16 v101 v102 v103 v429 ///
+rename (v1 v4  v14 v15 v16 v86 v87 v88 v429 ///
 v449 v450 v451 v452 v455 v456 ///
 v507 v464 ///
 v466 v467 v468 v469 v470 v471 ///
@@ -1535,8 +1534,8 @@ save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\I
 * 変数名の変更
 ** 本人
 import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2012_new.csv", clear 
-rename (v1 v4 v5 v6 v7 v85 v86 v87 v150 v167 ///
-v218 v219 v220 v221 v222 v223 ///
+rename (v1 v4 v5 v6 v7 v85 v86 v87 v150 v171 ///
+v218 v219 v220 v221 v224 v225 ///
 v233 v234 v235 ///
 v239 v240 v241 v242 v243 v244 ///
 v249 v250 v251) ///
@@ -1577,7 +1576,7 @@ save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\I
 
 ** 配偶者
 import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2012_new.csv", clear 
-rename (v1 v4 v5 v6 v7 v85 v86 v87 v864 v885 ///
+rename (v1 v4 v14 v15 v16 v85 v86 v87 v864 v885 ///
 v932 v933 v934 v935 v938 v939 ///
 v947 v948 v949 ///
 v953 v954 v955 v956 v957 v958 ///
@@ -1680,12 +1679,12 @@ save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\I
 import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2013.csv", clear 
 rename (v1 v4  v14 v15 v16 v85 v86 v87 v471 ///
 v491 v492 v493 v494 v497 v498 ///
-v506 ///
+v547 v506 ///
 v508 v509 v510 v511 v512 v513 ///
 v527 v528 v529) ///
 (id marital sex byear bmonth head earnif earnmost workstatus ///
 occ owner ind size employed regular ///
-union ///
+switch union ///
 paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
 workdaypermonth workhourperweek overworkperweek)
 * 続柄が配偶者のサンプルのみ残す
@@ -1757,12 +1756,12 @@ save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\I
 import delimited "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData\KHPS2014.csv", clear 
 rename (v1 v4  v12 v13 v14 v101 v102 v103 v498 ///
 v505 v506 v507 v508 v511 v512 ///
-v520 ///
+v543 v520 ///
 v522 v523 v524 v525 v526 v527 ///
 v529 v530 v531) ///
 (id marital sex byear bmonth head earnif earnmost workstatus ///
 occ owner ind size employed regular ///
-union ///
+switch union ///
 paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
 workdaypermonth workhourperweek overworkperweek)
 * 続柄が配偶者のサンプルのみ残す
