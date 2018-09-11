@@ -32,7 +32,8 @@ tsset id year
 **** empten
 {
 ***** 2nd
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+reg realwa
+ge i.occ i.ind i.union i.marital i.year i.schooling i.size ///
 c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
 est sto olsemp2
 ***** 3rd
@@ -1470,12 +1471,22 @@ destring, replace
 tsset id year
 * 操作変数を作成
 sort empid year
-forvalues X=0(5)45{
-	gen emp`X'=1 if emptenure>=`X'&emptenure<`X'+5
+sort empid year
+forvalues X=1(1)10{
+	gen emp`X'=1 if emptenure>=`X'
 	replace emp`X'=0 if emp`X'==.
 }
-for X in num 0(5)45 : egen avgempX=mean(empX), by(empid)
-for X in num 0(5)45 : gen empivX=empX-avgempX
+sort id year
+forvalues X=1(1)10{
+	gen exp`X'=1 if workexp>=`X'
+	replace exp`X'=0 if exp`X'==.
+}
+forvalues X=1(1)10{
+	gen occ`X'=1 if occtenure>=`X'
+	replace occ`X'=0 if occ`X'==.
+}
+for X in num 1(1)10 : egen avgempX=mean(empX), by(empid)
+for X in num 1(1)10 : gen empivX=empX-avgempX
 sort id year
 forvalues X=0(5)45{
 	gen exp`X'=1 if workexp>=`X'&workexp<`X'+5

@@ -2265,7 +2265,7 @@ sort id year
 by id: gen empid = 1 if _n==1|switch==1
 replace empid=sum(empid)
 *** 配偶者サンプルのフラグを作成
-gen sp =1 if id>=10000|id<20000|id>=30000
+gen sp =1 if (id>=10000&id<20000)|id>=30000
 replace sp=0 if sp==.
 }
 
