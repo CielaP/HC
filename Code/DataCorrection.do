@@ -2080,7 +2080,7 @@ for num  8 9 88 99: mvdecode size, mv(X)
 *switch
 for num 88 99: mvdecode switch, mv(X)
 replace switch=0 if switch<=3 | switch==7 | switch==8
-replace switch=1 if switch>1
+replace switch=1 if switch>=4&switch<=6
 *employed 1=勤め人
 for num 8 9: mvdecode employed, mv(X)
 replace employed=0 if employed<=4 | employed==6
@@ -2225,7 +2225,9 @@ forvalues X = 2005(1)2014{
 */
 
 **** Old job dummy
-gen oj=1 if emptenure>0
+*gen oj=1 if emptenure>0
+*gen oj=1 if switch==0&emptenure>0
+gen oj=1 if switch==0
 replace oj=0 if oj==.
 }
 
