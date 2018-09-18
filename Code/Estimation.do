@@ -1,3 +1,5 @@
+* pathを通す
+quietly {
 clear
 set more off
  cd "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion"
@@ -9,6 +11,7 @@ set more off
  adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\coefplot"
  adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\coefplot"
  adopath + "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\estout"
+}
 
 * Estimation
 ** 1. OLS->AS / 基本の推定式1-4次項まで
@@ -32,8 +35,7 @@ tsset id year
 **** empten
 {
 ***** 2nd
-reg realwa
-ge i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
 c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
 est sto olsemp2
 ***** 3rd
@@ -1428,298 +1430,69 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 sort empid year
-forvalues X=1(1)10{
-	gen emp`X'=1 if emptenure>=`X'
-	replace emp`X'=0 if emp`X'==.
+* emptenureをダミーに変更
+replace emptenure=1 if emptenure>=1&emptenure<2
+replace emptenure=2 if emptenure>=2&emptenure<5
+replace emptenure=5 if emptenure>=5&emptenure<10
+replace emptenure=10 if emptenure>=10&emptenure<15
+replace emptenure=15 if emptenure>=15&emptenure<20
+replace emptenure=20 if emptenure>=20&emptenure<25
+replace emptenure=25 if emptenure>=25&emptenure<30
+replace emptenure=30 if emptenure>=30
 }
-sort id year
-forvalues X=1(1)10{
-	gen exp`X'=1 if workexp>=`X'
-	replace exp`X'=0 if exp`X'==.
-}
-forvalues X=1(1)10{
-	gen occ`X'=1 if occtenure>=`X'
-	replace occ`X'=0 if occ`X'==.
-}
-}
-
-**** empten
-{
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-oj emp3 emp5 emp10 ///
+i.emptenure ///
 c.workexp##c.workexp, vce(r)
 est sto olsempD
 }
 
-**** empten+occten
-{
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-emp1 emp3 emp5 emp10 ///
-occ1 occ3 occ5 occ10 ///
-exp1 exp3 exp5 exp10, vce(r)
-est sto olsempoccD
-}
-}
-
 *** AS
-{
-**** empten
 {
 quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
+sort empid year
+sort empid year
+* emptenureをダミーに変更
+replace emptenure=3 if emptenure>=3&emptenure<5
+replace emptenure=5 if emptenure>=5&emptenure<10
+replace emptenure=10 if emptenure>=10&emptenure<15
+replace emptenure=15 if emptenure>=15&emptenure<20
+replace emptenure=20 if emptenure>=20&emptenure<25
+replace emptenure=25 if emptenure>=25&emptenure<30
+replace emptenure=30 if emptenure>=30
 * 操作変数を作成
-sort empid year
-sort empid year
-forvalues X=1(1)10{
-	gen emp`X'=1 if emptenure>=`X'
-	replace emp`X'=0 if emp`X'==.
-}
-sort id year
-forvalues X=1(1)10{
-	gen exp`X'=1 if workexp>=`X'
-	replace exp`X'=0 if exp`X'==.
-}
-forvalues X=1(1)10{
-	gen occ`X'=1 if occtenure>=`X'
-	replace occ`X'=0 if occ`X'==.
-}
-for X in num 1(1)10 : egen avgempX=mean(empX), by(empid)
-for X in num 1(1)10 : gen empivX=empX-avgempX
-sort id year
-forvalues X=0(5)45{
-	gen exp`X'=1 if workexp>=`X'&workexp<`X'+5
-	replace exp`X'=0 if exp`X'==.
-}
-for X in num 0(5)45 : egen avgexpX=mean(expX), by(id)
-for X in num 0(5)45 : gen expivX=expX-avgexpX
+egen avgemptenure=mean(emptenure), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
-exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45 = ///
-empiv0 empiv5 empiv10 empiv15 empiv20 ///
-empiv25 empiv30 empiv35 empiv40 empiv45 ///
-expiv0 expiv5 expiv10 expiv15 expiv20 ///
-expiv25 expiv30 expiv35 expiv40 expiv45), vce(r)
+(i.emptenure c.workexp##c.workexp = ///
+i.emptenureiv workexpiv workexpiv2), vce(r)
 est sto isvempD
 drop if _est_isvempD==0
 drop *iv* avg*
 * 必要な変数を再作成
-sort empid year
-for X in num 0(5)45 : egen avgempX=mean(empX), by(empid)
-for X in num 0(5)45 : gen empivX=empX-avgempX
-sort id year
-for X in num 0(5)45 : egen avgexpX=mean(expX), by(id)
-for X in num 0(5)45 : gen expivX=expX-avgexpX
+egen avgemptenure=mean(emptenure), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
-exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45 = ///
-empiv0 empiv5 empiv10 empiv15 empiv20 ///
-empiv25 empiv30 empiv35 empiv40 empiv45 ///
-expiv0 expiv5 expiv10 expiv15 expiv20 ///
-expiv25 expiv30 expiv35 expiv40 expiv45)
+(i.emptenure c.workexp##c.workexp = ///
+emptenureiv workexpiv workexpiv2), vce(r)
 est sto isvempD
 }
-
-**** empten+occten
-{
-quietly {
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
-destring, replace
-tsset id year
-* 操作変数を作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1
-replace empid=sum(empid)
-sort empid year
-forvalues X=0(5)45{
-	gen emp`X'=1 if emptenure>=`X'&emptenure<`X'+5
-	replace emp`X'=0 if emp`X'==.
-}
-for X in num 0(5)45 : egen avgempX=mean(empX), by(empid)
-for X in num 0(5)45 : gen empivX=empX-avgempX
-sort id year
-forvalues X=0(5)45{
-	gen exp`X'=1 if workexp>=`X'&workexp<`X'+5
-	replace exp`X'=0 if exp`X'==.
-}
-for X in num 0(5)45 : egen avgexpX=mean(expX), by(id)
-for X in num 0(5)45 : gen expivX=expX-avgexpX
-sort id year
-forvalues X=0(5)45{
-	gen occ`X'=1 if occtenure>=`X'&occtenure<`X'+5
-	replace occ`X'=0 if occ`X'==.
-}
-for X in num 0(5)45 : egen avgoccX=mean(occX), by(id occ)
-for X in num 0(5)45 : gen occivX=occX-avgoccX
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
-occ0 occ5 occ10 occ15 occ20 occ25 occ30 occ35 occ40 occ45 ///
-exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45 = ///
-empiv0 empiv5 empiv10 empiv15 empiv20 ///
-empiv25 empiv30 empiv35 empiv40 empiv45 ///
-occiv0 occiv5 occiv10 occiv15 occiv20 ///
-occiv25 occiv30 occiv35 occiv40 occiv45 ///
-expiv0 expiv5 expiv10 expiv15 expiv20 ///
-expiv25 expiv30 expiv35 expiv40 expiv45), vce(r)
-est sto isvempoccD
-drop if _est_isvempoccD==0
-drop *iv* avg*
-* 必要な変数を再作成
-sort empid year
-for X in num 0(5)45 : egen avgempX=mean(empX), by(empid)
-for X in num 0(5)45 : gen empivX=empX-avgempX
-sort id year
-for X in num 0(5)45 : egen avgexpX=mean(expX), by(id)
-for X in num 0(5)45 : gen expivX=expX-avgexpX
-for X in num 0(5)45 : egen avgoccX=mean(occX), by(id occ)
-for X in num 0(5)45 : gen occivX=occX-avgoccX
-}
-* 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(emp0 emp5 emp10 emp15 emp20 emp25 emp30 emp35 emp40 emp45 ///
-occ0 occ5 occ10 occ15 occ20 occ25 occ30 occ35 occ40 occ45 ///
-exp0 exp5 exp10 exp15 exp20 exp25 exp30 exp35 exp40 exp45 = ///
-empiv0 empiv5 empiv10 empiv15 empiv20 ///
-empiv25 empiv30 empiv35 empiv40 empiv45 ///
-occiv0 occiv5 occiv10 occiv15 occiv20 ///
-occiv25 occiv30 occiv35 occiv40 occiv45 ///
-expiv0 expiv5 expiv10 expiv15 expiv20 ///
-expiv25 expiv30 expiv35 expiv40 expiv45), vce(r)
-est sto isvempoccD
-}
-
-}
-
-/*
- *** culc. return
- {
-**** empten
-{
-est res olsemp2
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto olsempr2
-est res isvemp2
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto isvempr2
-coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_2.pdf", replace
- }
- 
-**** empten+occten
-{
-est res olsempocc2
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto olsempoccr2
-est res isvempocc2
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto isvempoccr2
-coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_2.pdf", replace
-}
-}
- 
-*** output tex all results
-{
-**** coefficients
-quietly {
-esttab olsemp2 olsemp3 olsemp4 isvemp2 isvemp3 isvemp4 ///
-using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-keep(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
-c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
-order(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
-c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
-coeflabel(emptenure "Employer tenure" ///
-c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
-c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
-c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
-occtenure "Occupation tenure" c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
-c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
-oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
-c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$") ///
-transform(c.emptenure#c.emptenure 100*@ 100 ///
-c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
-c.emptenure#c.emptenurec.emptenure#c.emptenure 1000*@ 1000 ///
-c.occtenure#c.occtenure 100*@ 100 ///
-c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
-c.workexp#c.workexp#c.workexp 100*@ 100) ///
-nodep nonote nomtitles ///
-title(Earnings Function Estimates, using to 64-year-old, ///
-including Non-regular Workers and Specialists.) ///
-mgroups("OLS" "IV" ///
-pattern(1 0 0 1 0 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
-}
-
-**** main table
-quietly{
-esttab olsemp2 olsempocc2 isvemp2 isvempocc2 ///
-using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_main.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-keep(emptenure c.emptenure#c.emptenure ///
-occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
-order(emptenure c.emptenure#c.emptenure ///
-occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
-coeflabel(emptenure "Employer tenure" ///
-c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
-occtenure "Occupation tenure" c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
-c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
-oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
-c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$") ///
-transform(c.emptenure#c.emptenure 100*@ 100 ///
-c.occtenure#c.occtenure 100*@ 100 ///
-c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
-c.workexp#c.workexp#c.workexp 100*@ 100) ///
-nodep nonote nomtitles ///
-title(Earnings Function Estimates, using to 64-year-old, ///
-including Non-regular Workers and Specialists.) ///
-mgroups("OLS" "IV" ///
-pattern(1 0 1 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
-}
-
-**** return
-quietly{
-esttab olsempr2 olsempoccr2 isvempr2 isvempoccr2 ///
-using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
-coeflabel(3._at "2 Years" ///
-6._at "5 Years" 11._at "10 Years" ///
-16._at "15 Years" ///
-21._at "20 Years" 26._at "25 Years") ///
-nodep nonote nomtitles ///
-title(Estimated Returns to Employer Tenure.) ///
-mgroups("OLS" "IV" ///
-pattern(1 0 1 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
-}
-}
-*/
 }
 
 * 5
@@ -1727,34 +1500,25 @@ replace
 {
 *** linear
 {
- quietly {
+quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 * 変数を作る
 sort empid year
 gen initialemp=workexp-emptenure
-bysort empid: gen emptendif=1 ///
+** 1st stageに使うサンプルにフラグを立てて賃金とテニュアの差の変数を作成
+bysort empid (year): gen fst=1 ///
 if switch==0&_n!=1&emptenure>=1
-gen emptendif2=2*emptenure-1 if emptendif==1
-gen emptendif3=3*(emptenure^2)-3*emptenure+1 if emptendif==1
-bysort empid: gen empexpdif=1 ///
-if switch==0&_n!=1&emptenure>=1
-gen empexpdif2=2*workexp-1 if emptendif==1
-gen empexpdif3=3*(workexp^2)-3*workexp+1 if emptendif==1
-bysort empid: gen ojdif=1 if emptendif==1&emptenure==1
-replace ojdif=0 if emptendif==1&emptenure>1
-sort id year
-gen empwagedif=realwage-l.realwage if emptendif==1
-tabulate year, generate(dum)
-for X in num 1/11 \ Y in num 2004/2014 : rename dumX yY
-for X in num 2004/2014 : egen avgyX=mean(yX), by(id)
-for X in num 2004/2014 : gen yivX=yX-avgyX
-tabulate schooling, generate(edu)
-for X in num 1/5 \ Y in num 9 12 14 16 18 : rename eduX eduY
-tabulate size, generate(size)
-for X in num 1/5 \ Y in num 1/5 : rename sizeX sizeY
+replace fst=0 if fst==.
+gen emptendif2=2*emptenure-1 if fst==1
+gen emptendif3=3*(emptenure^2)-3*emptenure+1 if fst==1
+gen empexpdif2=2*workexp-1 if fst==1
+gen empexpdif3=3*(workexp^2)-3*workexp+1 if fst==1
+bysort empid (year): gen empwagedif=realwage-realwage[_n-1] if fst==1
 drop if initialemp<0
+tabulate year, generate(y)
+for X in num 1/11 \ Y in num 2004/2014 : rename yX yY
 drop if occ==1
 }
 
@@ -1806,27 +1570,18 @@ tsset id year
 * 変数を作る
 sort empid year
 gen initialemp=workexp-emptenure
-bysort empid: gen emptendif=1 ///
+** 1st stageに使うサンプルにフラグを立てて賃金とテニュアの差の変数を作成
+bysort empid (year): gen fst=1 ///
 if switch==0&_n!=1&emptenure>=1
-gen emptendif2=2*emptenure-1 if emptendif==1
-gen emptendif3=3*(emptenure^2)-3*emptenure+1 if emptendif==1
-bysort empid: gen empexpdif=1 ///
-if switch==0&_n!=1&emptenure>=1
-gen empexpdif2=2*workexp-1 if emptendif==1
-gen empexpdif3=3*(workexp^2)-3*workexp+1 if emptendif==1
-bysort empid: gen ojdif=1 if emptendif==1&emptenure==1
-replace ojdif=0 if emptendif==1&emptenure>1
-sort id year
-gen empwagedif=realwage-l.realwage if emptendif==1
-tabulate year, generate(dum)
-for X in num 1/11 \ Y in num 2004/2014 : rename dumX yY
-for X in num 2004/2014 : egen avgyX=mean(yX), by(id)
-for X in num 2004/2014 : gen yivX=yX-avgyX
-tabulate schooling, generate(edu)
-for X in num 1/5 \ Y in num 9 12 14 16 18 : rename eduX eduY
-tabulate size, generate(size)
-for X in num 1/5 \ Y in num 1/5 : rename sizeX sizeY
+replace fst=0 if fst==.
+gen emptendif2=2*emptenure-1 if fst==1
+gen emptendif3=3*(emptenure^2)-3*emptenure+1 if fst==1
+gen empexpdif2=2*workexp-1 if fst==1
+gen empexpdif3=3*(workexp^2)-3*workexp+1 if fst==1
+bysort empid (year): gen empwagedif=realwage-realwage[_n-1] if fst==1
 drop if initialemp<0
+tabulate year, generate(y)
+for X in num 1/11 \ Y in num 2004/2014 : rename yX yY
 drop if occ==1
 }
  

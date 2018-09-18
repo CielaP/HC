@@ -1,20 +1,26 @@
 \begin{table}[htbp]\centering
 \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
 \caption{Estimation Results.}
-\begin{tabular}{l*{2}{c}}
+\begin{tabular}{l*{3}{c}}
 \hline\hline
-            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         \\
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         \\
 \hline
-\_cons      &      0.1057\sym{***}&      0.1527\sym{***}\\
-            &    (0.0181)         &    (0.0212)         \\
+\_cons      &      0.1084\sym{***}&      0.1584\sym{***}&      0.1407\sym{***}\\
+            &    (0.0213)         &    (0.0247)         &    (0.0354)         \\
 [1em]
-Emp.ten.$^{2}\times 100$&                     &                     \\
-            &                     &                     \\
+Emp.ten.$^{2}\times 100$&                     &     -0.0098         &      0.0468         \\
+            &                     &    (0.0272)         &    (0.0953)         \\
 [1em]
-Experience$^{2}$&                     &                     \\
-            &                     &                     \\
+Emp.ten.$^{3}\times 1000$&                     &                     &     -0.0114         \\
+            &                     &                     &    (0.0174)         \\
+[1em]
+Experience$^{2}\times 100$&                     &     -0.0982\sym{***}&     -0.0485         \\
+            &                     &    (0.0285)         &    (0.1357)         \\
+[1em]
+Experience$^{3}\times 1000$&                     &                     &     -0.0055         \\
+            &                     &                     &    (0.0176)         \\
 \hline
-\(N\)       &       11428         &       10913         \\
+\(N\)       &        6942         &        6696         &        6696         \\
 \hline\hline
 \end{tabular}
 \end{table}
