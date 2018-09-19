@@ -1420,28 +1420,35 @@ replace
 
 * 4
 ** OLS->AS / テニュアをダミーで
-*** base=0, 1年以降, 3年以降, 5年以降, 10年以降
+*** tenure>=1, >=3, >=5, >=10, >=15
 {
 *** OLS
 {
-**** sample selection
 quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
 sort empid year
 * emptenureをダミーに変更
-replace emptenure=1 if emptenure>=1&emptenure<2
-replace emptenure=2 if emptenure>=2&emptenure<5
-replace emptenure=5 if emptenure>=5&emptenure<10
-replace emptenure=10 if emptenure>=10&emptenure<15
-replace emptenure=15 if emptenure>=15&emptenure<20
-replace emptenure=20 if emptenure>=20&emptenure<25
-replace emptenure=25 if emptenure>=25&emptenure<30
-replace emptenure=30 if emptenure>=30
+gen emp1=1 if emptenure>=1&emptenure<2
+replace emp1=0 if emp1==.
+gen emp2=2 if emptenure>=2&emptenure<5
+replace emp2=0 if emp2==.
+gen emp5=5 if emptenure>=5&emptenure<10
+replace emp5=0 if emp5==.
+gen emp10=10 if emptenure>=10&emptenure<15
+replace emp10=0 if emp10==.
+gen emp15=15 if emptenure>=15&emptenure<20
+replace emp15=0 if emp15==.
+gen emp20=20 if emptenure>=20&emptenure<25
+replace emp20=0 if emp20==.
+gen emp25=25 if emptenure>=25&emptenure<30
+replace emp25=0 if emp25==.
+gen emp30=30 if emptenure>=30
+replace emp30=0 if emp30==.
 }
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-i.emptenure ///
+emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
 c.workexp##c.workexp, vce(r)
 est sto olsempD
 }
@@ -1453,18 +1460,26 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 destring, replace
 tsset id year
 sort empid year
-sort empid year
 * emptenureをダミーに変更
-replace emptenure=3 if emptenure>=3&emptenure<5
-replace emptenure=5 if emptenure>=5&emptenure<10
-replace emptenure=10 if emptenure>=10&emptenure<15
-replace emptenure=15 if emptenure>=15&emptenure<20
-replace emptenure=20 if emptenure>=20&emptenure<25
-replace emptenure=25 if emptenure>=25&emptenure<30
-replace emptenure=30 if emptenure>=30
+gen emp1=1 if emptenure>=1&emptenure<2
+replace emp1=0 if emp1==.
+gen emp2=2 if emptenure>=2&emptenure<5
+replace emp2=0 if emp2==.
+gen emp5=5 if emptenure>=5&emptenure<10
+replace emp5=0 if emp5==.
+gen emp10=10 if emptenure>=10&emptenure<15
+replace emp10=0 if emp10==.
+gen emp15=15 if emptenure>=15&emptenure<20
+replace emp15=0 if emp15==.
+gen emp20=20 if emptenure>=20&emptenure<25
+replace emp20=0 if emp20==.
+gen emp25=25 if emptenure>=25&emptenure<30
+replace emp25=0 if emp25==.
+gen emp30=30 if emptenure>=30
+replace emp30=0 if emp30==.
 * 操作変数を作成
-egen avgemptenure=mean(emptenure), by(empid)
-gen emptenureiv=emptenure-avgemptenure
+for X in num 1 2 5 10 15 20 25 30: egen avgempX=mean(empX), by(empid)
+for X in num 1 2 5 10 15 20 25 30: gen empivX=empX-avgempX
 egen avgworkexp=mean(workexp), by(id)
 egen avgworkexp2=mean(workexp^2), by(id)
 egen avgworkexp3=mean(workexp^3), by(id)
@@ -1472,14 +1487,16 @@ gen workexpiv=workexp-avgworkexp
 gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(i.emptenure c.workexp##c.workexp = ///
-i.emptenureiv workexpiv workexpiv2), vce(r)
+(emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
+c.workexp##c.workexp = ///
+empiv1 empiv2 empiv5 empiv10 empiv15 empiv20 empiv25 empiv30 ///
+workexpiv workexpiv2), vce(r)
 est sto isvempD
 drop if _est_isvempD==0
 drop *iv* avg*
 * 必要な変数を再作成
-egen avgemptenure=mean(emptenure), by(empid)
-gen emptenureiv=emptenure-avgemptenure
+for X in num 1 2 5 10 15 20 25 30: egen avgempX=mean(empX), by(empid)
+for X in num 1 2 5 10 15 20 25 30: gen empivX=empX-avgempX
 egen avgworkexp=mean(workexp), by(id)
 egen avgworkexp2=mean(workexp^2), by(id)
 egen avgworkexp3=mean(workexp^3), by(id)
@@ -1489,9 +1506,35 @@ gen workexpiv3=workexp^3-avgworkexp3
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-(i.emptenure c.workexp##c.workexp = ///
-emptenureiv workexpiv workexpiv2), vce(r)
+(emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
+c.workexp##c.workexp = ///
+empiv1 empiv2 empiv5 empiv10 empiv15 empiv20 empiv25 empiv30 ///
+workexpiv workexpiv2), vce(r)
 est sto isvempD
+}
+ 
+*** output tex all results
+{
+quietly {
+esttab olsempD isvempD ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_dm.tex", ///
+se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+keep(emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
+workexp c.workexp#c.workexp) ///
+order(emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
+workexp c.workexp#c.workexp) ///
+coeflabel(emp1 "$1\leq T_{ij} < 2$" emp2 "$2\leq T_{ij} < 5$" ///
+emp5 "$5\leq T_{ij} < 10$" emp10 "$10\leq T_{ij} < 15$" ///
+emp15 "$15\leq T_{ij} < 20$" emp20 "$20\leq T_{ij} < 25$" ///
+emp25 "$25\leq T_{ij} < 30$" emp30 "$30\leq T_{ij}$" ///
+workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$") ///
+nodep nonote nomtitles ///
+title(Earnings Function Estimates, employer tenure is treated as dummy variables.) ///
+mgroups("OLS" "IV" ///
+pattern(1 1) ///
+prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+replace
+}
 }
 }
 
@@ -1523,7 +1566,7 @@ drop if occ==1
 }
 
 **** 1st step
-reg empwagedif i.year
+reg empwagedif i.year if fst==1
 est sto fst1
 gen coefsum1=_b[_cons]
 gen emptenB1=emptenure*_b[_cons] ///
@@ -1586,10 +1629,8 @@ drop if occ==1
 }
  
 **** 1st step
-reg empwagedif emptendif2 empexpdif2 i.year
+reg empwagedif emptendif2 empexpdif2 i.year if fst==1
 est sto fst2
-gen coefsum2=_b[_cons]
-gen coefemp22=_b[emptendif2]
 gen emptenB2=emptenure*_b[_cons] ///
 +_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2 ///
 +y2005*_b[2005b.year]+y2006*_b[2006.year]+y2007*_b[2007.year] ///
@@ -1626,21 +1667,90 @@ emprtn
 }
 }
 
+*** cubic
+ {
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+destring, replace
+tsset id year
+* 変数を作る
+sort empid year
+gen initialemp=workexp-emptenure
+** 1st stageに使うサンプルにフラグを立てて賃金とテニュアの差の変数を作成
+bysort empid (year): gen fst=1 ///
+if switch==0&_n!=1&emptenure>=1
+replace fst=0 if fst==.
+gen emptendif2=2*emptenure-1 if fst==1
+gen emptendif3=3*(emptenure^2)-3*emptenure+1 if fst==1
+gen empexpdif2=2*workexp-1 if fst==1
+gen empexpdif3=3*(workexp^2)-3*workexp+1 if fst==1
+bysort empid (year): gen empwagedif=realwage-realwage[_n-1] if fst==1
+drop if initialemp<0
+tabulate year, generate(y)
+for X in num 1/11 \ Y in num 2004/2014 : rename yX yY
+drop if occ==1
+}
+ 
+**** 1st step
+reg empwagedif emptendif2 empexpdif2 emptendif3 empexpdif3 i.year
+est sto fst3
+gen emptenB3=emptenure*_b[_cons] ///
++_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2 ///
++_b[emptendif3]*emptenure^3+_b[empexpdif3]*workexp^3 ///
++y2005*_b[2005b.year]+y2006*_b[2006.year]+y2007*_b[2007.year] ///
++y2008*_b[2008.year]+y2009*_b[2009.year]+y2010*_b[2010.year] ///
++y2011*_b[2011.year]+y2012*_b[2012.year]+y2013*_b[2013.year] ///
++y2014*_b[2014.year]
+gen intwemp3=realwage-emptenB3
+
+**** 2nd step
+reg intwemp3 i.marital i.union i.schooling ///
+i.size i.ind i.occ ///
+initialemp, nocons
+est sto snd3
+gen coefexp3=_b[initialemp]
+
+**** culc return
+{
+capture program drop coef
+program coef, rclass
+	suest fst3 snd3
+	lincom [fst3_mean]_b[_cons]-[snd3_mean]_b[initialemp]
+	return scalar diffse =r(se)
+end
+coef
+capture program drop emprtn
+program emprtn, rclass
+suest fst3 snd3
+	foreach X of numlist 2 5 10 15 20 25 {
+	lincom ([fst3_mean]_b[_cons]-[snd3_mean]_b[initialemp])*`X'+ ///
+	[fst3_mean]_b[emptendif2]*`X'*`X'+[fst3_mean]_b[emptendif3]*`X'*`X'*`X'
+	return scalar rtn`X' =r(se)
+	}
+end
+emprtn
+}
+}
+
 *** output tex all results
 {
 **** coefficients 
 quietly {
-esttab fst1 fst2 ///
+esttab fst1 fst2 fst3 ///
 using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\topel_emp.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-keep(_cons c.emptenure#c.emptenure ///
-c.workexp#c.workexp) ///
-order(_cons c.emptenure#c.emptenure ///
-c.workexp#c.workexp) ///
-coeflabel(c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
-c.workexp#c.workexp "Experience$^{2}$") ///
-transform(c.emptenure#c.emptenure 100*@ 100 ///
-c.workexp#c.workexp 100*@ 100) ///
+keep(_cons emptendif2 emptendif3 ///
+empexpdif2 empexpdif3) ///
+order(_cons emptendif2 emptendif3 ///
+empexpdif2 empexpdif3) ///
+coeflabel(emptendif2 "Emp.ten.$^{2}\times 100$" ///
+emptendif3 "Emp.ten.$^{3}\times 1000$" ///
+empexpdif2 "Experience$^{2}\times 100$" ///
+empexpdif3 "Experience$^{3}\times 1000$") ///
+transform(emptendif2 100*@ 100 ///
+emptendif3 1000*@ 1000 ///
+empexpdif2 100*@ 100 ///
+empexpdif3 1000*@ 1000) ///
 nodep nonote nomtitles ///
 title(Estimation Results.) ///
 replace
