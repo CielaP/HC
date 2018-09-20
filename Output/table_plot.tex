@@ -1,0 +1,504 @@
+\documentclass[uplatex, a4paper, 10pt]{extarticle}
+\usepackage[left=2em]{geometry}
+\usepackage{mymacro}
+\usepackage{document}
+\usepackage{dcolumn}
+\usepackage{mathrsfs}
+\usepackage{titlesec}
+\usepackage[titletoc,toc,title]{appendix}
+\usepackage{longtable}
+\usepackage[flushleft]{threeparttable}
+\usepackage{rotating}
+\usepackage{authblk}
+\usepackage{setspace}
+%\setstretch{1.1}
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\usepackage{nopageno}
+\usepackage{pdflscape}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Coefficients, Occupation Tenure are not Controlled
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!tp] \centering 
+\begin{threeparttable}
+\setlength\tabcolsep{16pt}
+\caption{Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled.}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+            &         OLS         &                     &                     &                     &                     &                     \\
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         &\multicolumn{1}{c}{(5)}         &\multicolumn{1}{c}{(6)}         \\
+\hline
+Employer tenure&      0.0117\sym{***}&      0.0116\sym{***}&      0.0193\sym{**} &      0.0061         &      0.0009         &      0.0086         \\
+            &    (0.0018)         &    (0.0040)         &    (0.0076)         &    (0.0051)         &    (0.0082)         &    (0.0129)         \\
+[1em]
+Emp.ten.$^{2}\times 100$&     -0.0083\sym{*}  &     -0.0073         &     -0.0967         &     -0.0197         &      0.0217         &     -0.0805         \\
+            &    (0.0046)         &    (0.0235)         &    (0.0745)         &    (0.0136)         &    (0.0526)         &    (0.1374)         \\
+[1em]
+Emp.ten.$^{3}\times 100$&                     &     -0.0000         &      0.0034         &                     &     -0.0008         &      0.0034         \\
+            &                     &    (0.0004)         &    (0.0027)         &                     &    (0.0009)         &    (0.0052)         \\
+[1em]
+Emp.ten.$^{4}\times 1000$&                     &                     &     -0.0000         &                     &                     &     -0.0000         \\
+            &                     &                     &    (0.0000)         &                     &                     &    (0.0000)         \\
+[1em]
+Old job     &      0.0824\sym{***}&      0.0878\sym{***}&      0.0739\sym{**} &      0.0529         &      0.0650         &      0.0542         \\
+            &    (0.0252)         &    (0.0273)         &    (0.0304)         &    (0.0392)         &    (0.0402)         &    (0.0429)         \\
+[1em]
+Total experience&      0.0257\sym{***}&      0.0032         &      0.0002         &      0.0458\sym{***}&      0.0220         &      0.0261         \\
+            &    (0.0024)         &    (0.0061)         &    (0.0126)         &    (0.0072)         &    (0.0152)         &    (0.0284)         \\
+[1em]
+Experience$^{2}$&     -0.0004\sym{***}&      0.0006\sym{**} &      0.0009         &     -0.0007\sym{***}&      0.0003         &      0.0001         \\
+            &    (0.0000)         &    (0.0003)         &    (0.0009)         &    (0.0001)         &    (0.0006)         &    (0.0020)         \\
+[1em]
+Exp.$^{3}\times 100$&                     &     -0.0014\sym{***}&     -0.0024         &                     &     -0.0013         &     -0.0009         \\
+            &                     &    (0.0003)         &    (0.0027)         &                     &    (0.0008)         &    (0.0058)         \\
+\hline
+\(N\)       &        9529         &        9529         &        9529         &        9529         &        9529         &        9529         \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\im The dependent variable is log real hourly wages. Other covariates include an intercept, education dummies, occupation and industry dummies, a union member dummy, a marital status dummy, firm size dummies, and regular employee dummy. Columns (1) and (2) denote the coefficients of earnings function (\ref{wage}) which is estimated by the OLS, and columns (3) and (4) denote those by AS's IV method.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Coefficients, Occupation Tenure are Controlled
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!tp] \centering 
+\begin{threeparttable}
+\setlength\tabcolsep{16pt}
+\caption{Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled.}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+            &         OLS         &                     &                     &                     &                     &                     \\
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         &\multicolumn{1}{c}{(5)}         &\multicolumn{1}{c}{(6)}         \\
+\hline
+Employer tenure&      0.0117\sym{***}&      0.0118\sym{***}&      0.0198\sym{***}&      0.0066         &      0.0006         &      0.0083         \\
+            &    (0.0018)         &    (0.0040)         &    (0.0076)         &    (0.0051)         &    (0.0082)         &    (0.0129)         \\
+[1em]
+Emp.ten.$^{2}\times 100$&     -0.0083\sym{*}  &     -0.0080         &     -0.1015         &     -0.0211         &      0.0260         &     -0.0756         \\
+            &    (0.0046)         &    (0.0235)         &    (0.0742)         &    (0.0138)         &    (0.0527)         &    (0.1381)         \\
+[1em]
+Emp.ten.$^{3}\times 100$&                     &     -0.0000         &      0.0036         &                     &     -0.0009         &      0.0033         \\
+            &                     &    (0.0004)         &    (0.0027)         &                     &    (0.0009)         &    (0.0053)         \\
+[1em]
+Emp.ten.$^{4}\times 1000$&                     &                     &     -0.0000         &                     &                     &     -0.0000         \\
+            &                     &                     &    (0.0000)         &                     &                     &    (0.0000)         \\
+[1em]
+Occupation tenure&     -0.0025\sym{*}  &     -0.0051         &      0.0034         &     -0.0069\sym{**} &     -0.0069         &     -0.0114         \\
+            &    (0.0015)         &    (0.0031)         &    (0.0050)         &    (0.0034)         &    (0.0064)         &    (0.0095)         \\
+[1em]
+Occ.ten.$^{2}\times 100$&      0.0064         &      0.0251         &     -0.0924\sym{*}  &      0.0165\sym{*}  &      0.0200         &      0.0844         \\
+            &    (0.0039)         &    (0.0197)         &    (0.0561)         &    (0.0087)         &    (0.0439)         &    (0.1154)         \\
+[1em]
+Occ.ten.$^{3}\times 100$&                     &     -0.0003         &      0.0044\sym{**} &                     &     -0.0001         &     -0.0027         \\
+            &                     &    (0.0003)         &    (0.0021)         &                     &    (0.0008)         &    (0.0045)         \\
+[1em]
+Old job     &      0.0843\sym{***}&      0.0900\sym{***}&      0.0736\sym{**} &      0.0562         &      0.0683\sym{*}  &      0.0583         \\
+            &    (0.0253)         &    (0.0274)         &    (0.0305)         &    (0.0391)         &    (0.0401)         &    (0.0430)         \\
+[1em]
+Total experience&      0.0267\sym{***}&      0.0051         &     -0.0001         &      0.0429\sym{***}&      0.0254         &      0.0303         \\
+            &    (0.0024)         &    (0.0063)         &    (0.0128)         &    (0.0076)         &    (0.0156)         &    (0.0292)         \\
+[1em]
+Experience$^{2}$&     -0.0005\sym{***}&      0.0005\sym{*}  &      0.0012         &     -0.0007\sym{***}&      0.0000         &     -0.0003         \\
+            &    (0.0000)         &    (0.0003)         &    (0.0010)         &    (0.0002)         &    (0.0007)         &    (0.0021)         \\
+[1em]
+Exp.$^{3}\times 100$&                     &     -0.0013\sym{***}&     -0.0039         &                     &     -0.0009         &     -0.0001         \\
+            &                     &    (0.0004)         &    (0.0029)         &                     &    (0.0009)         &    (0.0059)         \\
+\hline
+\(N\)       &        9529         &        9529         &        9529         &        9529         &        9529         &        9529         \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\im The dependent variable is log real hourly wages. Other covariates include an intercept, education dummies, occupation and industry dummies, a union member dummy, a marital status dummy, firm size dummies, and regular employee dummy. Columns (1) and (2) denote the coefficients of earnings function (\ref{wage}) which is estimated by the OLS, and columns (3) and (4) denote those by AS's IV method.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Coefficients, Main Table
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!tp] \centering 
+\begin{threeparttable}
+\setlength\tabcolsep{16pt}
+\caption{Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists.}
+\begin{tabular}{l*{4}{c}}
+\hline\hline
+            &         OLS         &                     &                     &                     \\
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         \\
+\hline
+Employer tenure&      0.0117\sym{***}&      0.0117\sym{***}&      0.0061         &      0.0066         \\
+            &    (0.0018)         &    (0.0018)         &    (0.0051)         &    (0.0051)         \\
+[1em]
+Emp.ten.$^{2}\times 100$&     -0.0083\sym{*}  &     -0.0083\sym{*}  &     -0.0197         &     -0.0211         \\
+            &    (0.0046)         &    (0.0046)         &    (0.0136)         &    (0.0138)         \\
+[1em]
+Occupation tenure&                     &     -0.0025\sym{*}  &                     &     -0.0069\sym{**} \\
+            &                     &    (0.0015)         &                     &    (0.0034)         \\
+[1em]
+Occ.ten.$^{2}\times 100$&                     &      0.0064         &                     &      0.0165\sym{*}  \\
+            &                     &    (0.0039)         &                     &    (0.0087)         \\
+[1em]
+Occ.ten.$^{3}\times 100$&                     &                     &                     &                     \\
+            &                     &                     &                     &                     \\
+[1em]
+Old job     &      0.0824\sym{***}&      0.0843\sym{***}&      0.0529         &      0.0562         \\
+            &    (0.0252)         &    (0.0253)         &    (0.0392)         &    (0.0391)         \\
+[1em]
+Total experience&      0.0257\sym{***}&      0.0267\sym{***}&      0.0458\sym{***}&      0.0429\sym{***}\\
+            &    (0.0024)         &    (0.0024)         &    (0.0072)         &    (0.0076)         \\
+[1em]
+Experience$^{2}$&     -0.0004\sym{***}&     -0.0005\sym{***}&     -0.0007\sym{***}&     -0.0007\sym{***}\\
+            &    (0.0000)         &    (0.0000)         &    (0.0001)         &    (0.0002)         \\
+[1em]
+Exp.$^{3}\times 100$&                     &                     &                     &                     \\
+            &                     &                     &                     &                     \\
+\hline
+\(N\)       &        9529         &        9529         &        9529         &        9529         \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\im The dependent variable is log real hourly wages. Other covariates include an intercept, education dummies, occupation and industry dummies, a union member dummy, a marital status dummy, firm size dummies, and regular employee dummy. Columns (1) and (2) denote the coefficients of earnings function (\ref{wage}) which is estimated by the OLS, and columns (3) and (4) denote those by AS's IV method.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Returns, Main Table
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!tp] \centering 
+\begin{threeparttable}
+\setlength\tabcolsep{16pt}
+\caption{Estimated Returns to Employer Tenure, using Sample up to 64-year-old, including Non-regular Workers and Specialists.}
+\begin{tabular}{l*{4}{c}}
+\hline\hline
+            &         OLS         &                     &                     &                     \\
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         \\
+\hline
+2 Years     &      0.1054\sym{***}&      0.1074\sym{***}&      0.0642\sym{*}  &      0.0685\sym{*}  \\
+            &    (0.0242)         &    (0.0243)         &    (0.0363)         &    (0.0363)         \\
+[1em]
+5 Years     &      0.1386\sym{***}&      0.1408\sym{***}&      0.0783\sym{**} &      0.0838\sym{**} \\
+            &    (0.0235)         &    (0.0236)         &    (0.0362)         &    (0.0364)         \\
+[1em]
+10 Years    &      0.1907\sym{***}&      0.1932\sym{***}&      0.0938\sym{**} &      0.1008\sym{**} \\
+            &    (0.0237)         &    (0.0238)         &    (0.0427)         &    (0.0430)         \\
+[1em]
+15 Years    &      0.2387\sym{***}&      0.2413\sym{***}&      0.0995\sym{*}  &      0.1073\sym{**} \\
+            &    (0.0245)         &    (0.0246)         &    (0.0511)         &    (0.0515)         \\
+[1em]
+20 Years    &      0.2825\sym{***}&      0.2853\sym{***}&      0.0953         &      0.1032\sym{*}  \\
+            &    (0.0250)         &    (0.0252)         &    (0.0591)         &    (0.0595)         \\
+[1em]
+25 Years    &      0.3222\sym{***}&      0.3251\sym{***}&      0.0813         &      0.0886         \\
+            &    (0.0253)         &    (0.0255)         &    (0.0678)         &    (0.0679)         \\
+\hline
+\(N\)       &        9529         &        9529         &        9529         &        9529         \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\im The dependent variable is log real hourly wages. Other covariates include an intercept, education dummies, occupation and industry dummies, a union member dummy, a marital status dummy, firm size dummies, and regular employee dummy. Columns (1) and (2) denote the coefficients of earnings function (\ref{wage}) which is estimated by the OLS, and columns (3) and (4) denote those by AS's IV method.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Returns, Dummy
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!tp] \centering 
+\begin{threeparttable}
+\setlength\tabcolsep{16pt}
+\caption{Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+            &         OLS         &                     \\
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         \\
+\hline
+$1\leq T_{ij} < 2$&      0.0079         &      0.0199         \\
+            &    (0.0304)         &    (0.0364)         \\
+[1em]
+$2\leq T_{ij} < 5$&      0.0299\sym{**} &      0.0198         \\
+            &    (0.0127)         &    (0.0175)         \\
+[1em]
+$5\leq T_{ij} < 10$&      0.0226\sym{***}&      0.0124         \\
+            &    (0.0051)         &    (0.0079)         \\
+[1em]
+$10\leq T_{ij} < 15$&      0.0161\sym{***}&      0.0084\sym{*}  \\
+            &    (0.0026)         &    (0.0046)         \\
+[1em]
+$15\leq T_{ij} < 20$&      0.0123\sym{***}&      0.0054         \\
+            &    (0.0017)         &    (0.0035)         \\
+[1em]
+$20\leq T_{ij} < 25$&      0.0103\sym{***}&      0.0035         \\
+            &    (0.0013)         &    (0.0030)         \\
+[1em]
+$25\leq T_{ij} < 30$&      0.0127\sym{***}&      0.0057\sym{**} \\
+            &    (0.0012)         &    (0.0027)         \\
+[1em]
+$30\leq T_{ij}$&      0.0095\sym{***}&      0.0044\sym{*}  \\
+            &    (0.0009)         &    (0.0025)         \\
+[1em]
+Total experience&      0.0248\sym{***}&      0.0453\sym{***}\\
+            &    (0.0024)         &    (0.0069)         \\
+[1em]
+Experience$^{2}$&     -0.0004\sym{***}&     -0.0008\sym{***}\\
+            &    (0.0000)         &    (0.0001)         \\
+\hline
+\(N\)       &        9892         &        9892         \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\im The dependent variable is log real hourly wages. Other covariates include an intercept, education dummies, occupation and industry dummies, a union member dummy, a marital status dummy, firm size dummies, and regular employee dummy. Columns (1) and (2) denote the coefficients of earnings function (\ref{wage}) which is estimated by the OLS, and columns (3) and (4) denote those by AS's IV method.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Coefficients, Tenure * Ability
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!tp] \centering 
+\begin{threeparttable}
+\setlength\tabcolsep{16pt}
+\caption{Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, the Interactions of Employer Tenure and Proxies of Ability are Added to e.q. (1).}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         &\multicolumn{1}{c}{(5)}         &\multicolumn{1}{c}{(6)}         \\
+\hline
+Employer tenure&      0.0083\sym{***}&      0.0058         &      0.0065\sym{***}&      0.0090\sym{*}  &      0.0092\sym{***}&      0.0195\sym{**} \\
+            &    (0.0023)         &    (0.0142)         &    (0.0021)         &    (0.0052)         &    (0.0028)         &    (0.0097)         \\
+[1em]
+Emp.ten.$^{2}\times 100$&     -0.0082\sym{*}  &     -0.0198         &     -0.0063         &     -0.0227         &     -0.0113\sym{**} &     -0.0001         \\
+            &    (0.0047)         &    (0.0136)         &    (0.0046)         &    (0.0140)         &    (0.0048)         &    (0.0146)         \\
+[1em]
+Old job     &      0.0841\sym{***}&      0.0526         &      0.0907\sym{***}&      0.0508         &      0.0849\sym{***}&      0.0499         \\
+            &    (0.0252)         &    (0.0393)         &    (0.0254)         &    (0.0392)         &    (0.0253)         &    (0.0411)         \\
+[1em]
+Total experience&      0.0258\sym{***}&      0.0456\sym{***}&      0.0247\sym{***}&      0.0467\sym{***}&      0.0247\sym{***}&      0.0490\sym{***}\\
+            &    (0.0024)         &    (0.0073)         &    (0.0024)         &    (0.0073)         &    (0.0024)         &    (0.0078)         \\
+[1em]
+Experience$^{2}$&     -0.0004\sym{***}&     -0.0007\sym{***}&     -0.0004\sym{***}&     -0.0007\sym{***}&     -0.0004\sym{***}&     -0.0008\sym{***}\\
+            &    (0.0000)         &    (0.0001)         &    (0.0000)         &    (0.0001)         &    (0.0000)         &    (0.0001)         \\
+[1em]
+Employer Tenure $\times$\\
+[1em]
+\quad High School &      0.0035\sym{**} &     -0.0006         &                     &                     &                     &                     \\
+            &    (0.0016)         &    (0.0145)         &                     &                     &                     &                     \\
+[1em]
+\quad Some College&      0.0064\sym{***}&      0.0071         &                     &                     &                     &                     \\
+            &    (0.0020)         &    (0.0155)         &                     &                     &                     &                     \\
+[1em]
+\quad Undergraduate&      0.0033\sym{*}  &     -0.0004         &                     &                     &                     &                     \\
+            &    (0.0017)         &    (0.0147)         &                     &                     &                     &                     \\
+[1em]
+\quad Above Undergraduate&     -0.0033         &      0.0045         &                     &                     &                     &                     \\
+            &    (0.0029)         &    (0.0177)         &                     &                     &                     &                     \\
+[1em]
+\quad Regular Employee&                     &                     &      0.0052\sym{***}&     -0.0025         &                     &                     \\
+            &                     &                     &    (0.0012)         &    (0.0024)         &                     &                     \\
+[1em]
+\quad $5\leq$ size $<30$&                     &                     &                     &                     &      0.0020         &     -0.0086         \\
+            &                     &                     &                     &                     &    (0.0026)         &    (0.0085)         \\
+[1em]
+\quad $30\leq$ size $<100$&                     &                     &                     &                     &      0.0024         &     -0.0085         \\
+            &                     &                     &                     &                     &    (0.0026)         &    (0.0095)         \\
+[1em]
+\quad $100\leq$ size $<500$&                     &                     &                     &                     &      0.0027         &     -0.0133         \\
+            &                     &                     &                     &                     &    (0.0025)         &    (0.0096)         \\
+[1em]
+\quad $500\leq$ size&                     &                     &                     &                     &      0.0055\sym{**} &     -0.0324\sym{***}\\
+            &                     &                     &                     &                     &    (0.0024)         &    (0.0097)         \\
+\hline
+\(N\)       &        9529         &        9529         &        9529         &        9529         &        9529         &        9529         \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\im The dependent variable is log real hourly wages. Other covariates include an intercept, education dummies, occupation and industry dummies, a union member dummy, a marital status dummy, firm size dummies, and regular employee dummy. Columns (1) and (2) denote the coefficients of earnings function (\ref{wage}) which is estimated by the OLS, and columns (3) and (4) denote those by AS's IV method.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Returns, Tenure * Ability
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!tp] \centering 
+\begin{threeparttable}
+\setlength\tabcolsep{16pt}
+\caption{Estimated Returns to Employer Tenure, using Sample up to 64-year-old, including Non-regular Workers and Specialists, the Interactions of Employer Tenure and Proxies of Ability are Added to e.q. (1).}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+            &Years of Education         &                     &                     &                     &                     &                     \\
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         &\multicolumn{1}{c}{(5)}         &\multicolumn{1}{c}{(6)}         \\
+\hline
+2 Years     &      0.1005\sym{***}&      0.0634         &      0.1036\sym{***}&      0.0680\sym{*}  &      0.1028\sym{***}&      0.0890\sym{**} \\
+            &    (0.0243)         &    (0.0457)         &    (0.0241)         &    (0.0365)         &    (0.0246)         &    (0.0410)         \\
+[1em]
+5 Years     &      0.1238\sym{***}&      0.0766         &      0.1219\sym{***}&      0.0903\sym{**} &      0.1280\sym{***}&      0.1475\sym{***}\\
+            &    (0.0245)         &    (0.0769)         &    (0.0235)         &    (0.0368)         &    (0.0258)         &    (0.0551)         \\
+[1em]
+10 Years    &      0.1593\sym{***}&      0.0907         &      0.1499\sym{***}&      0.1184\sym{***}&      0.1654\sym{***}&      0.2451\sym{***}\\
+            &    (0.0278)         &    (0.1415)         &    (0.0249)         &    (0.0435)         &    (0.0320)         &    (0.0926)         \\
+[1em]
+15 Years    &      0.1908\sym{***}&      0.0948         &      0.1748\sym{***}&      0.1351\sym{***}&      0.1971\sym{***}&      0.3425\sym{**} \\
+            &    (0.0327)         &    (0.2087)         &    (0.0278)         &    (0.0513)         &    (0.0408)         &    (0.1338)         \\
+[1em]
+20 Years    &      0.2182\sym{***}&      0.0891         &      0.1965\sym{***}&      0.1405\sym{**} &      0.2232\sym{***}&      0.4400\sym{**} \\
+            &    (0.0380)         &    (0.2767)         &    (0.0310)         &    (0.0579)         &    (0.0505)         &    (0.1758)         \\
+[1em]
+25 Years    &      0.2415\sym{***}&      0.0734         &      0.2150\sym{***}&      0.1346\sym{**} &      0.2437\sym{***}&      0.5374\sym{**} \\
+            &    (0.0435)         &    (0.3453)         &    (0.0344)         &    (0.0642)         &    (0.0606)         &    (0.2185)         \\
+\hline
+\(N\)       &        9529         &        9529         &        9529         &        9529         &        9529         &        9529         \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\im The dependent variable is log real hourly wages. Other covariates include an intercept, education dummies, occupation and industry dummies, a union member dummy, a marital status dummy, firm size dummies, and regular employee dummy. Columns (1) and (2) denote the coefficients of earnings function (\ref{wage}) which is estimated by the OLS, and columns (3) and (4) denote those by AS's IV method.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Coefficients, Subsamples
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{landscape}
+\begin{table}[!tp] \centering 
+\begin{threeparttable}
+\caption{Earnings Function Estimates, using Various Subsamples.}
+\begin{tabular}{l*{8}{c}}
+\hline\hline
+            &\multicolumn{2}{c}{Under 59-year-old}&\multicolumn{2}{c}{Large firms ($\geq500$)}&\multicolumn{2}{c}{Small Firms ($<500$)}&\multicolumn{2}{c}{Non-Professional}\\
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         &\multicolumn{1}{c}{(5)}         &\multicolumn{1}{c}{(6)}         &\multicolumn{1}{c}{(7)}         &\multicolumn{1}{c}{(8)}         \\
+\hline
+Employer tenure&      0.0098\sym{***}&      0.0020         &      0.0156\sym{***}&      0.0145         &      0.0106\sym{***}&      0.0049         &      0.0162\sym{***}&      0.0066         \\
+            &    (0.0020)         &    (0.0057)         &    (0.0031)         &    (0.0089)         &    (0.0022)         &    (0.0068)         &    (0.0018)         &    (0.0057)         \\
+[1em]
+Emp.ten.$^{2}\times 100$&      0.0000         &     -0.0064         &     -0.0151\sym{**} &     -0.0421\sym{*}  &     -0.0088         &     -0.0055         &     -0.0185\sym{***}&     -0.0206         \\
+            &    (0.0055)         &    (0.0163)         &    (0.0075)         &    (0.0239)         &    (0.0062)         &    (0.0185)         &    (0.0048)         &    (0.0148)         \\
+[1em]
+Old job     &      0.0983\sym{***}&      0.0585         &      0.0212         &      0.0293         &      0.1130\sym{***}&      0.0521         &      0.0540\sym{**} &      0.0366         \\
+            &    (0.0283)         &    (0.0449)         &    (0.0506)         &    (0.0672)         &    (0.0294)         &    (0.0475)         &    (0.0274)         &    (0.0437)         \\
+[1em]
+Total experience&      0.0227\sym{***}&      0.0411\sym{***}&      0.0248\sym{***}&      0.0545\sym{***}&      0.0250\sym{***}&      0.0401\sym{***}&      0.0205\sym{***}&      0.0447\sym{***}\\
+            &    (0.0028)         &    (0.0081)         &    (0.0040)         &    (0.0123)         &    (0.0030)         &    (0.0101)         &    (0.0026)         &    (0.0081)         \\
+[1em]
+Experience$^{2}$&     -0.0004\sym{***}&     -0.0006\sym{***}&     -0.0004\sym{***}&     -0.0008\sym{***}&     -0.0004\sym{***}&     -0.0007\sym{***}&     -0.0003\sym{***}&     -0.0007\sym{***}\\
+            &    (0.0001)         &    (0.0002)         &    (0.0001)         &    (0.0002)         &    (0.0001)         &    (0.0002)         &    (0.0000)         &    (0.0001)         \\
+\hline
+\(N\)       &        8579         &        8579         &        3646         &        3646         &        5883         &        5883         &        8090         &        8090         \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\im The dependent variable is log real hourly wages. Other covariates include an intercept, education dummies, occupation and industry dummies, a union member dummy, a marital status dummy, firm size dummies, and regular employee dummy. Columns (1) and (2) denote the coefficients of earnings function (\ref{wage}) which is estimated by the OLS, and columns (3) and (4) denote those by AS's IV method.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+\end{landscape}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Returns, Subsamples
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{landscape}
+\begin{table}[!tp] \centering 
+\begin{threeparttable}
+\caption{Estimated Returns to Employer Tenure, using Various Subsamples.}
+\begin{tabular}{l*{8}{c}}
+\hline\hline
+            &\multicolumn{2}{c}{Under 59-year-old}&\multicolumn{2}{c}{Large firms ($\geq500$)}&\multicolumn{2}{c}{Small Firms ($<500$)}&\multicolumn{2}{c}{Non-Professional}\\
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         &\multicolumn{1}{c}{(5)}         &\multicolumn{1}{c}{(6)}         &\multicolumn{1}{c}{(7)}         &\multicolumn{1}{c}{(8)}         \\
+\hline
+2 Years     &      0.1179\sym{***}&      0.0622         &      0.0518         &      0.0566         &      0.1338\sym{***}&      0.0616         &      0.0856\sym{***}&      0.0489         \\
+            &    (0.0271)         &    (0.0417)         &    (0.0493)         &    (0.0633)         &    (0.0280)         &    (0.0441)         &    (0.0264)         &    (0.0404)         \\
+[1em]
+5 Years     &      0.1472\sym{***}&      0.0668         &      0.0953\sym{**} &      0.0914         &      0.1637\sym{***}&      0.0751\sym{*}  &      0.1303\sym{***}&      0.0642         \\
+            &    (0.0263)         &    (0.0416)         &    (0.0485)         &    (0.0647)         &    (0.0270)         &    (0.0455)         &    (0.0258)         &    (0.0403)         \\
+[1em]
+10 Years    &      0.1961\sym{***}&      0.0718         &      0.1617\sym{***}&      0.1325\sym{*}  &      0.2099\sym{***}&      0.0954\sym{*}  &      0.1973\sym{***}&      0.0816\sym{*}  \\
+            &    (0.0266)         &    (0.0489)         &    (0.0493)         &    (0.0766)         &    (0.0273)         &    (0.0575)         &    (0.0261)         &    (0.0479)         \\
+[1em]
+15 Years    &      0.2451\sym{***}&      0.0737         &      0.2207\sym{***}&      0.1526\sym{*}  &      0.2518\sym{***}&      0.1130         &      0.2552\sym{***}&      0.0886         \\
+            &    (0.0274)         &    (0.0591)         &    (0.0510)         &    (0.0892)         &    (0.0282)         &    (0.0730)         &    (0.0269)         &    (0.0581)         \\
+[1em]
+20 Years    &      0.2940\sym{***}&      0.0723         &      0.2720\sym{***}&      0.1516         &      0.2893\sym{***}&      0.1278         &      0.3037\sym{***}&      0.0854         \\
+            &    (0.0281)         &    (0.0702)         &    (0.0523)         &    (0.0983)         &    (0.0287)         &    (0.0894)         &    (0.0275)         &    (0.0682)         \\
+[1em]
+25 Years    &      0.3430\sym{***}&      0.0678         &      0.3158\sym{***}&      0.1296         &      0.3225\sym{***}&      0.1398         &      0.3431\sym{***}&      0.0718         \\
+            &    (0.0285)         &    (0.0836)         &    (0.0530)         &    (0.1055)         &    (0.0289)         &    (0.1080)         &    (0.0278)         &    (0.0787)         \\
+\hline
+\(N\)       &        8579         &        8579         &        3646         &        3646         &        5883         &        5883         &        8090         &        8090         \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\im The dependent variable is log real hourly wages. Other covariates include an intercept, education dummies, occupation and industry dummies, a union member dummy, a marital status dummy, firm size dummies, and regular employee dummy. Columns (1) and (2) denote the coefficients of earnings function (\ref{wage}) which is estimated by the OLS, and columns (3) and (4) denote those by AS's IV method.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+\end{landscape}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Coefficients, Topel
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[!tp] \centering 
+\begin{threeparttable}
+\caption{Estimation Results, using the Method of 2SFD Estimation.}
+\begin{tabular}{l*{3}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         \\
+\hline
+\_cons      &      0.1084\sym{***}&      0.1584\sym{***}&      0.1407\sym{***}\\
+            &    (0.0213)         &    (0.0247)         &    (0.0354)         \\
+[1em]
+Emp.ten.$^{2}\times 100$&                     &     -0.0098         &      0.0468         \\
+            &                     &    (0.0272)         &    (0.0953)         \\
+[1em]
+Emp.ten.$^{3}\times 1000$&                     &                     &     -0.0114         \\
+            &                     &                     &    (0.0174)         \\
+[1em]
+Experience$^{2}\times 100$&                     &     -0.0982\sym{***}&     -0.0485         \\
+            &                     &    (0.0285)         &    (0.1357)         \\
+[1em]
+Experience$^{3}\times 1000$&                     &                     &     -0.0055         \\
+            &                     &                     &    (0.0176)         \\
+\hline
+\(N\)       &        6942         &        6696         &        6696         \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\im The dependent variable is log real hourly wages. Other covariates include an intercept, education dummies, occupation and industry dummies, a union member dummy, a marital status dummy, firm size dummies, and regular employee dummy. Columns (1) and (2) denote the coefficients of earnings function (\ref{wage}) which is estimated by the OLS, and columns (3) and (4) denote those by AS's IV method.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\end{document}

@@ -998,12 +998,27 @@ esttab olsempsc isvempsc olsregular isvregular olsempsi isvempsi ///
 using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_ab.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
-oj workexp c.workexp#c.workexp) ///
+oj workexp c.workexp#c.workexp ///
+12.schooling#c.emptenure 14.schooling#c.emptenure ///
+16.schooling#c.emptenure 18.schooling#c.emptenure ///
+1.regular#c.emptenure  ///
+2.size#c.emptenure 3.size#c.emptenure 4.size#c.emptenure 5.size#c.emptenure ) ///
 order(emptenure c.emptenure#c.emptenure ///
-oj workexp c.workexp#c.workexp) ///
+oj workexp c.workexp#c.workexp ///
+12.schooling#c.emptenure 14.schooling#c.emptenure ///
+16.schooling#c.emptenure 18.schooling#c.emptenure ///
+1.regular#c.emptenure  ///
+2.size#c.emptenure 3.size#c.emptenure 4.size#c.emptenure 5.size#c.emptenure ) ///
 coeflabel(emptenure "Employer tenure" ///
 c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
-oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$") ///
+oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
+12.schooling#c.emptenure "High School" ///
+14.schooling#c.emptenure "Some College" ///
+16.schooling#c.emptenure "Undergraduate" ///
+18.schooling#c.emptenure "Above Undergraduate" ///
+1.regular#c.emptenure "Regular Employee" ///
+2.size#c.emptenure "$5\leq$ size $<30$" 3.size#c.emptenure "$30\leq$ size $<100$" ///
+4.size#c.emptenure "$100\leq$ size $<500$" 5.size#c.emptenure  "$500\leq$ size") ///
 transform(c.emptenure#c.emptenure 100*@ 100) ///
 nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Sample up to 64-year-old, ///
@@ -1038,7 +1053,7 @@ replace
 }
 
 * 3
-** OLS->AS / 60歳以下, 大企業, 中小企業, 専門職以外, 正社員
+** OLS->AS / 60歳以下, 大企業, 中小企業, 専門職以外
 {
 *** under 60-year-old
 {
@@ -1410,18 +1425,17 @@ olsempSm isvempSm olsempPr isvempPr ///
 using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
+oj workexp c.workexp#c.workexp) ///
 order(emptenure c.emptenure#c.emptenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
+oj workexp c.workexp#c.workexp) ///
 coeflabel(emptenure "Employer tenure" ///
 c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
 oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$") ///
-transform(c.emptenure#c.emptenure 100*@ 100 ///
-c.workexp#c.workexp#c.workexp 100*@ 100) ///
+transform(c.emptenure#c.emptenure 100*@ 100) ///
 nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Various Subsamples.) ///
 mgroups("Under 59-year-old" "Large firms ($\geq500$)" ///
-"Small Firms ($<500$)" "Non-Professional" "Regular Employee" ///
+"Small Firms ($<500$)" "Non-Professional" ///
 pattern(1 0 1 0 1 0 1 01 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
 replace
