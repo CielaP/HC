@@ -35,15 +35,15 @@ tsset id year
 **** empten
 {
 ***** 2nd
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
 est sto olsemp2
 ***** 3rd
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 c.emptenure##c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp, vce(r)
 est sto olsemp3
 ***** 4th
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp##c.workexp##c.workexp, vce(r)
 est sto olsemp4
@@ -52,16 +52,16 @@ est sto olsemp4
 **** empten+occten
 {
 ***** 2nd
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 c.emptenure##c.emptenure oj c.occtenure##c.occtenure c.workexp##c.workexp, vce(r)
 est sto olsempocc2
 ***** 3rd
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 c.emptenure##c.emptenure##c.emptenure oj ///
 c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp, vce(r)
 est sto olsempocc3
 ***** 4th
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
 c.occtenure##c.occtenure##c.occtenure##c.occtenure ///
 c.workexp##c.workexp##c.workexp##c.workexp, vce(r)
@@ -94,7 +94,7 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
 est sto isvemp2
@@ -117,7 +117,7 @@ egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
 est sto isvemp2
@@ -143,7 +143,7 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 emptenureiv3 ojiv workexpiv workexpiv2 workexpiv3), vce(r)
 est sto isvemp3
@@ -166,7 +166,7 @@ egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 emptenureiv3 ojiv workexpiv workexpiv2 workexpiv3), vce(r)
 est sto isvemp3
@@ -196,7 +196,7 @@ gen workexpiv3=workexp^3-avgworkexp3
 gen workexpiv4=workexp^4-avgworkexp4
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp##c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
@@ -225,7 +225,7 @@ egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp##c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
@@ -262,7 +262,7 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj ///
 c.occtenure##c.occtenure c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv ///
@@ -293,7 +293,7 @@ egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj ///
 c.occtenure##c.occtenure c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv ///
@@ -327,7 +327,7 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure##c.emptenure oj ///
 c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 emptenureiv3 ojiv ///
@@ -357,7 +357,7 @@ gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure##c.emptenure oj ///
 c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 emptenureiv3 ojiv ///
@@ -397,7 +397,7 @@ gen workexpiv3=workexp^3-avgworkexp3
 gen workexpiv4=workexp^4-avgworkexp4
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
 c.occtenure##c.occtenure##c.occtenure##c.occtenure ///
 c.workexp##c.workexp##c.workexp##c.workexp = ///
@@ -435,7 +435,7 @@ egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
 c.occtenure##c.occtenure##c.occtenure##c.occtenure ///
 c.workexp##c.workexp##c.workexp##c.workexp = ///
@@ -465,7 +465,8 @@ est sto isvempr2
 coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled, Quadratic Form of Tenure Variables.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_2.pdf", replace
  
 ***** 3rd
@@ -484,7 +485,8 @@ est sto isvempr3
 coefplot (olsempr3, label(OLS)) (isvempr3, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled, Cubic Form of Tenure Variables.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_3.pdf", replace
 
 ***** 4th
@@ -507,9 +509,10 @@ est sto isvempr4
 coefplot (olsempr4, label(OLS)) (isvempr4, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled, Quartic Form of Tenure Variables.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_4.pdf", replace
- }
+}
  
 **** empten+occten
 {
@@ -527,7 +530,8 @@ est sto isvempoccr2
 coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, Quadratic Form of Tenure Variables.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_2.pdf", replace
 
 ***** 3rd
@@ -546,7 +550,8 @@ est sto isvempoccr3
 coefplot (olsempr3, label(OLS)) (isvempr3, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, Cubic Form of Tenure Variables.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_3.pdf", replace
 
 ***** 4th
@@ -569,7 +574,8 @@ est sto isvempoccr4
 coefplot (olsempr4, label(OLS)) (isvempr4, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, Quartic Form of Tenure Variables.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_4.pdf", replace
 }
 }
@@ -591,8 +597,6 @@ coeflabel(emptenure "Employer tenure" ///
 c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
 c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
-occtenure "Occupation tenure" c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
-c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
 oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
 c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$") ///
 transform(c.emptenure#c.emptenure 100*@ 100 ///
@@ -602,8 +606,9 @@ c.occtenure#c.occtenure 100*@ 100 ///
 c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
 c.workexp#c.workexp#c.workexp 100*@ 100) ///
 nodep nonote nomtitles ///
-title(Earnings Function Estimates, using to 64-year-old, ///
-including Non-regular Workers and Specialists.) ///
+title(Earnings Function Estimates, using Sample up to 64-year-old, ///
+including Non-regular Workers and Specialists, ///
+Variables of Occupation Tenure are not Controlled.) ///
 mgroups("OLS" "IV" ///
 pattern(1 0 0 1 0 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
@@ -638,8 +643,9 @@ c.occtenure#c.occtenure 100*@ 100 ///
 c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
 c.workexp#c.workexp#c.workexp 100*@ 100) ///
 nodep nonote nomtitles ///
-title(Earnings Function Estimates, using to 64-year-old, ///
-including Non-regular Workers and Specialists.) ///
+title(Earnings Function Estimates, using Sample up to 64-year-old, ///
+including Non-regular Workers and Specialists, ///
+Variables of Occupation Tenure are Controlled.) ///
 mgroups("OLS" "IV" ///
 pattern(1 0 0 1 0 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
@@ -668,7 +674,7 @@ c.occtenure#c.occtenure 100*@ 100 ///
 c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
 c.workexp#c.workexp#c.workexp 100*@ 100) ///
 nodep nonote nomtitles ///
-title(Earnings Function Estimates, using to 64-year-old, ///
+title(Earnings Function Estimates, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists.) ///
 mgroups("OLS" "IV" ///
 pattern(1 0 1 0) ///
@@ -687,7 +693,8 @@ coeflabel(3._at "2 Years" ///
 16._at "15 Years" ///
 21._at "20 Years" 26._at "25 Years") ///
 nodep nonote nomtitles ///
-title(Estimated Returns to Employer Tenure.) ///
+title(Estimated Returns to Employer Tenure, using Sample up to 64-year-old, ///
+including Non-regular Workers and Specialists.) ///
 mgroups("OLS" "IV" ///
 pattern(1 0 1 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
@@ -753,8 +760,10 @@ egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 tabulate schooling, generate(edu)
 for X in num 1/5 \ Y in num 9 12 14 16 18 : rename eduX eduY
-for X in num 9 12 14 16 18 : gen empscivX=emptenureiv*eduX
-* 再推定
+sort empid year
+for X in num 9 12 14 16 18 : egen avgempscX=mean(eduX*emptenure), by(empid)
+for X in num 9 12 14 16 18 : gen empscivX=emptenure*eduX-avgempscX
+* 推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
 (c.emptenure##c.emptenure ///
 c.emptenure#i.schooling oj ///
@@ -780,9 +789,11 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-for X in num 9 12 14 16 18 : gen empscivX=emptenureiv*eduX
+sort empid year
+for X in num 9 12 14 16 18 : egen avgempscX=mean(eduX*emptenure), by(empid)
+for X in num 9 12 14 16 18 : gen empscivX=emptenure*eduX-avgempscX
 }
- * 再推定
+* 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
 (c.emptenure##c.emptenure ///
 c.emptenure#i.schooling oj ///
@@ -813,13 +824,17 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
+tabulate regular, generate(rg)
+rename (rg1 rg2) (rg0 rg1)
+sort empid year
+for X in num 0/1 : egen avgemprgX=mean(rgX*emptenure), by(empid)
+for X in num 0/1 : gen emprgivX=emptenure*rgX-avgemprgX
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
 (c.emptenure##c.emptenure ///
 c.emptenure#i.regular oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ///
-regulariv ojiv ///
+emprgiv0 emprgiv1 ojiv ///
 workexpiv workexpiv2), vce(r)
 est sto isvregular
 drop if _est_isvregular==0
@@ -839,7 +854,9 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-gen regulariv=emptenureiv*regular
+sort empid year
+for X in num 0/1 : egen avgemprgX=mean(rgX*emptenure), by(empid)
+for X in num 0/1 : gen emprgivX=emptenure*rgX-avgemprgX
 }
  * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
@@ -847,7 +864,7 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooli
 c.emptenure#i.regular oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ///
-regulariv ojiv ///
+emprgiv0 emprgiv1 ojiv ///
 workexpiv workexpiv2), vce(r)
 est sto isvregular
 
@@ -873,7 +890,9 @@ gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 tabulate size, generate(si)
-for X in num 1/5 : gen empscivX=emptenureiv*siX
+sort empid year
+for X in num 1/5 : egen avgempsX=mean(siX*emptenure), by(empid)
+for X in num 1/5 : gen empscivX=emptenure*siX-avgempsX
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
 (c.emptenure##c.emptenure ///
 c.emptenure#i.size oj ///
@@ -899,7 +918,9 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-for X in num 1/5 : gen empscivX=emptenureiv*siX
+sort empid year
+for X in num 1/5 : egen avgempsX=mean(siX*emptenure), by(empid)
+for X in num 1/5 : gen empscivX=emptenure*siX-avgempsX
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
@@ -912,7 +933,7 @@ workexpiv workexpiv2), vce(r)
 est sto isvempsi
 }
 
- *** culc. return
+*** culc. return
  {
 **** schooling
 est res olsempsc
@@ -928,7 +949,8 @@ est sto isvempnsc
 coefplot (olsempnsc, label(OLS)) (isvempnsc, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, the Interactions of Employer Tenure and Years of Education are Added to e.q. (1).")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_sc.pdf", replace
  
 **** regular
@@ -945,7 +967,8 @@ est sto isvempnst
 coefplot (olsempnst, label(OLS)) (isvempnst, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, the Interactions of Employer Tenure and Regular Employee are Added to e.q. (1).")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_rg.pdf", replace
  
 **** size
@@ -962,9 +985,10 @@ est sto isvempnsi
 coefplot (olsempnsi, label(OLS)) (isvempnsi, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, the Interactions of Employer Tenure and Size of Firm are Added to e.q. (1).")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_si.pdf", replace
- }
+}
  
 *** output tex all results
 {
@@ -982,7 +1006,9 @@ c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
 oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$") ///
 transform(c.emptenure#c.emptenure 100*@ 100) ///
 nodep nonote nomtitles ///
-title(Earnings Function Estimates, adding the Interaction of Employer Tenure and Ability.) ///
+title(Earnings Function Estimates, using Sample up to 64-year-old, ///
+including Non-regular Workers and Specialists, ///
+the Interactions of Employer Tenure and Proxies of Ability are Added to e.q. (1).) ///
 mgroups("Years of Education" "Regular Employee" "Firm Size" ///
 pattern(1 0 1 0 1 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
@@ -1000,7 +1026,9 @@ coeflabel(3._at "2 Years" ///
 16._at "15 Years" ///
 21._at "20 Years" 26._at "25 Years") ///
 nodep nonote nomtitles ///
-title(Estimated Returns to Employer Tenure.) ///
+title(Estimated Returns to Employer Tenure, using Sample up to 64-year-old, ///
+including Non-regular Workers and Specialists, ///
+the Interactions of Employer Tenure and Proxies of Ability are Added to e.q. (1).) ///
 mgroups("Years of Education" "Regular Employee" "Firm Size" ///
 pattern(1 0 1 0 1 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
@@ -1010,7 +1038,7 @@ replace
 }
 
 * 3
-** OLS->AS / 60歳以下, 大企業, 中小企業, 専門職以外
+** OLS->AS / 60歳以下, 大企業, 中小企業, 専門職以外, 正社員
 {
 *** under 60-year-old
 {
@@ -1022,8 +1050,8 @@ destring, replace
 tsset id year
 drop if age>=60
 }
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r) l(90)
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
+c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
 est sto olsemp59
 }
 
@@ -1050,7 +1078,7 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
@@ -1074,7 +1102,7 @@ egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
@@ -1096,7 +1124,8 @@ est sto isvempn59
 coefplot (olsempn59, label(OLS)) (isvempn59, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 60-year-old, including Non-regular Workers and Specialists.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_59.pdf", replace
  }
  }
@@ -1111,7 +1140,7 @@ destring, replace
 tsset id year
 drop if size<5
 }
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r) l(90)
 est sto olsempLa
 }
@@ -1139,7 +1168,7 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
@@ -1163,7 +1192,7 @@ egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
@@ -1185,7 +1214,8 @@ est sto isvempnLa
 coefplot (olsempnLa, label(OLS)) (isvempnLa, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, only Large Firms ($\geq500$).")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_La.pdf", replace
  }
  }
@@ -1200,8 +1230,8 @@ destring, replace
 tsset id year
 drop if size==5
 }
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r) l(90)
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
+c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
 est sto olsempSm
 }
 
@@ -1228,7 +1258,7 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
@@ -1252,7 +1282,7 @@ egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
@@ -1274,7 +1304,8 @@ est sto isvempnSm
 coefplot (olsempnSm, label(OLS)) (isvempnSm, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, only Small Firms ($<500$).")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_Sm.pdf", replace
  }
  }
@@ -1289,8 +1320,8 @@ destring, replace
 tsset id year
 drop if occ==10
 }
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r) l(90)
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
+c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
 est sto olsempPr
 }
 
@@ -1318,7 +1349,7 @@ gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 gen regulariv=emptenureiv*regular
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
@@ -1342,7 +1373,7 @@ egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 }
 * 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
@@ -1364,7 +1395,8 @@ est sto isvempnPr
 coefplot (olsempnPr, label(OLS)) (isvempnPr, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-title("Earnings Function Estimation.") yline(0) rescale(100)
+yline(0) rescale(100) ////
+title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers, not including Specialists.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_Pr.pdf", replace
 }
 }
@@ -1389,8 +1421,8 @@ c.workexp#c.workexp#c.workexp 100*@ 100) ///
 nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Various Subsamples.) ///
 mgroups("Under 59-year-old" "Large firms ($\geq500$)" ///
-"Small Firms ($<500$)" ///
-pattern(1 0 1 0 1 0 1 0) ///
+"Small Firms ($<500$)" "Non-Professional" "Regular Employee" ///
+pattern(1 0 1 0 1 0 1 01 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
 replace
 }
@@ -1407,10 +1439,10 @@ coeflabel(3._at "2 Years" ///
 16._at "15 Years" ///
 21._at "20 Years" 26._at "25 Years") ///
 nodep nonote nomtitles ///
-title(Estimated Returns to Employer Tenure.) ///
+title(Estimated Returns to Employer Tenure, using Various Subsamples.) ///
 mgroups("Under 59-year-old" "Large firms ($\geq500$)" ///
-"Small Firms ($<500$)" ///
-pattern(1 0 1 0 1 0 1 0 1 0) ///
+"Small Firms ($<500$)" "Non-Professional" ///
+pattern(1 0 1 0 1 0 1 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
 replace
 }
@@ -1424,6 +1456,19 @@ replace
 {
 *** OLS
 {
+**** 基本の式との比較用
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+destring, replace
+tsset id year
+sort empid year
+replace emptenure=40 if emptenure>=40
+}
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
+i.emptenure c.workexp##c.workexp, vce(r)
+est sto Dm
+
+**** IVと同じ式
 quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
@@ -1447,7 +1492,7 @@ replace emp25=0 if emp25==.
 gen emp30=30 if emptenure>=30
 replace emp30=0 if emp30==.
 }
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
 c.workexp##c.workexp, vce(r)
 est sto olsempD
@@ -1486,7 +1531,7 @@ egen avgworkexp3=mean(workexp^3), by(id)
 gen workexpiv=workexp-avgworkexp
 gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
 c.workexp##c.workexp = ///
 empiv1 empiv2 empiv5 empiv10 empiv15 empiv20 empiv25 empiv30 ///
@@ -1505,7 +1550,7 @@ gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
 }
 * 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 (emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
 c.workexp##c.workexp = ///
 empiv1 empiv2 empiv5 empiv10 empiv15 empiv20 empiv25 empiv30 ///
@@ -1515,6 +1560,25 @@ est sto isvempD
  
 *** output tex all results
 {
+**** 基本の式とダミーの比較
+{
+est res Dm
+coefplot, vertical yline(0) nolabel keep(*.emptenure) ///
+ciopts(recast(rline) lpattern(dash)) recast(connected)  rescale(100) ///
+xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
+rename(1.emptenure=1 2.emptenure=2 3.emptenure=3 4.emptenure=4 5.emptenure=5 ///
+6.emptenure=6 7.emptenure=7 8.emptenure=8 9.emptenure=9 10.emptenure=10 ///
+11.emptenure=11 12.emptenure=12 13.emptenure=13 14.emptenure=14 15.emptenure=15 ///
+16.emptenure=16 17.emptenure=17 18.emptenure=18 19.emptenure=19 20.emptenure=20 ///
+21.emptenure=21 22.emptenure=22 23.emptenure=23 24.emptenure=24 25.emptenure=25 ///
+26.emptenure=26 27.emptenure=27 28.emptenure=28 29.emptenure=29 30.emptenure=30 ///
+31.emptenure=31 32.emptenure=32 33.emptenure=33 34.emptenure=34 35.emptenure=35 ///
+36.emptenure=36 37.emptenure=37 38.emptenure=38 39.emptenure=39 40.emptenure=40)  ///
+title("Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables")
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_dm.pdf", replace
+}
+
+**** OLSとIVの比較
 quietly {
 esttab olsempD isvempD ///
 using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_dm.tex", ///
@@ -1529,7 +1593,7 @@ emp15 "$15\leq T_{ij} < 20$" emp20 "$20\leq T_{ij} < 25$" ///
 emp25 "$25\leq T_{ij} < 30$" emp30 "$30\leq T_{ij}$" ///
 workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$") ///
 nodep nonote nomtitles ///
-title(Earnings Function Estimates, employer tenure is treated as dummy variables.) ///
+title(Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables) ///
 mgroups("OLS" "IV" ///
 pattern(1 1) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
@@ -1577,8 +1641,8 @@ gen emptenB1=emptenure*_b[_cons] ///
 gen intwemp1=realwage-emptenB
 
 **** 2nd step
-reg intwemp1 i.marital i.union i.schooling ///
-i.size i.ind i.occ ///
+reg intwemp1 i.union i.marital i.schooling i.regular ///
+i.occ i.ind i.size ///
 initialemp, nocons
 est sto snd1
 gen coefexp1=_b[initialemp]
@@ -1640,8 +1704,8 @@ gen emptenB2=emptenure*_b[_cons] ///
 gen intwemp2=realwage-emptenB2
 
 **** 2nd step
-reg intwemp2 i.marital i.union i.schooling ///
-i.size i.ind i.occ ///
+reg intwemp2 i.union i.marital i.schooling i.regular ///
+i.occ i.ind i.size ///
 initialemp, nocons
 est sto snd2
 gen coefexp2=_b[initialemp]
@@ -1704,8 +1768,8 @@ gen emptenB3=emptenure*_b[_cons] ///
 gen intwemp3=realwage-emptenB3
 
 **** 2nd step
-reg intwemp3 i.marital i.union i.schooling ///
-i.size i.ind i.occ ///
+reg intwemp3 i.union i.marital i.schooling i.regular ///
+i.occ i.ind i.size ///
 initialemp, nocons
 est sto snd3
 gen coefexp3=_b[initialemp]
@@ -1752,7 +1816,7 @@ emptendif3 1000*@ 1000 ///
 empexpdif2 100*@ 100 ///
 empexpdif3 1000*@ 1000) ///
 nodep nonote nomtitles ///
-title(Estimation Results.) ///
+title(Estimation Results, using the Method of 2SFD Estimation.) ///
 replace
 }
 }
