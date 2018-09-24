@@ -24,7 +24,8 @@ set more off
 ** JHPSのid=元のid
 ** JHPSの配偶者のid=元のid+10000
 ** KHPSのid=元のid+20000
-** KHPSの配偶者のid=元のid+30000
+** KHPSの配偶者(含new_cohort)のid=元のid+30000
+** KHPSのnew_cohortのid=元のid+40000
 */
 ** cohort dummy: JHPS2009=9, KHPS2004=4, KHPS2007=7, KHPS2012=12
 
@@ -1036,8 +1037,8 @@ gen head=earnmost
 gen switch=0
 * 使わない変数を落とす
 drop v*
-* idを+20000
-replace id=id+20000
+* idを+40000
+replace id=id+40000
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new_pr.dta", replace
 
 ** 配偶者
@@ -1570,8 +1571,8 @@ replace earnmost=0 if earnmost!=1
 gen switch=0
 * 使わない変数を落とす
 drop v*
-* idを+20000
-replace id=id+20000
+* idを+40000
+replace id=id+40000
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new_pr.dta", replace
 
 ** 配偶者
@@ -2271,6 +2272,11 @@ gen sp =1 if (id>=10000&id<20000)|id>=30000
 replace sp=0 if sp==.
 *** 配偶者を落とす
 drop if sp==1
+*** new_cohortのフラグを作成
+gen new =1 if id>=40000
+replace new=0 if new==.
+*** new_cohortを落とす
+drop if new==1
 }
 
 
