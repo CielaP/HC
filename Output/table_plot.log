@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2017.3.29)  20 SEP 2018 19:55
+This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2017.3.29)  21 SEP 2018 16:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -973,11 +973,18 @@ LaTeX Warning: Float too large for page by 49.17528pt on input line 73.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 76.
+(c:/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 76.
 
-LaTeX Warning: Reference `wage' on page 1 undefined on input line 127.
+
+LaTeX Warning: Reference `wage' on page 1 undefined on input line 134.
 
 
-Overfull \hbox (60.37004pt too wide) in paragraph at lines 80--130
+Overfull \hbox (60.37004pt too wide) in paragraph at lines 87--137
  [] 
  []
 
@@ -988,19 +995,19 @@ File: plot_as_empocc_3.pdf Graphic file (type pdf)
 File: plot_as_empocc_4.pdf Graphic file (type pdf)
  <plot_as_empocc_4.pdf>
 
-LaTeX Warning: Float too large for page by 49.17528pt on input line 136.
+LaTeX Warning: Float too large for page by 49.17528pt on input line 143.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-LaTeX Warning: Reference `wage' on page 1 undefined on input line 184.
+LaTeX Warning: Reference `wage' on page 1 undefined on input line 191.
 
 
-LaTeX Warning: Reference `wage' on page 1 undefined on input line 226.
+LaTeX Warning: Reference `wage' on page 1 undefined on input line 233.
 
 
-LaTeX Warning: Reference `wage' on page 1 undefined on input line 280.
+LaTeX Warning: Reference `wage' on page 1 undefined on input line 287.
 
 File: plot_as_dm.pdf Graphic file (type pdf)
 <plot_as_dm.pdf>
@@ -1008,21 +1015,21 @@ File: plot_as_dm.pdf Graphic file (type pdf)
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-LaTeX Warning: Reference `wage' on page 1 undefined on input line 351.
+LaTeX Warning: Reference `wage' on page 1 undefined on input line 365.
 
 
-Overfull \hbox (105.70341pt too wide) in paragraph at lines 294--354
+Overfull \hbox (105.70341pt too wide) in paragraph at lines 308--368
  [] 
  []
 
 
-LaTeX Warning: Float too large for page by 18.11998pt on input line 354.
+LaTeX Warning: Float too large for page by 18.11998pt on input line 368.
 
 
-LaTeX Warning: Reference `wage' on page 1 undefined on input line 394.
+LaTeX Warning: Reference `wage' on page 1 undefined on input line 408.
 
 
-Overfull \hbox (54.53667pt too wide) in paragraph at lines 362--397
+Overfull \hbox (54.53667pt too wide) in paragraph at lines 376--411
  [] 
  []
 
@@ -1033,20 +1040,22 @@ File: plot_as_emp_rg.pdf Graphic file (type pdf)
 File: plot_as_emp_si.pdf Graphic file (type pdf)
  <plot_as_emp_si.pdf>
 
-LaTeX Warning: Float too large for page by 49.17528pt on input line 403.
+LaTeX Warning: Float too large for page by 49.17528pt on input line 417.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[1] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11]
+[1
 
-LaTeX Warning: Reference `wage' on page 12 undefined on input line 440.
+] [2] [3] [4] [5] [6] [7] [8] [9] [10] [11] [12]
 
-[12]
-
-LaTeX Warning: Reference `wage' on page 13 undefined on input line 483.
+LaTeX Warning: Reference `wage' on page 13 undefined on input line 460.
 
 [13]
+
+LaTeX Warning: Reference `wage' on page 14 undefined on input line 503.
+
+[14]
 File: plot_as_emp_59.pdf Graphic file (type pdf)
  <plot_as_emp_59.pdf>
 File: plot_as_emp_La.pdf Graphic file (type pdf)
@@ -1056,27 +1065,31 @@ File: plot_as_emp_Sm.pdf Graphic file (type pdf)
 File: plot_as_emp_Pr.pdf Graphic file (type pdf)
 
 <plot_as_emp_Pr.pdf>
-
-LaTeX Warning: Reference `wage' on page 14 undefined on input line 536.
-
-[14
-
-
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 534.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 534.
 
 
+LaTeX Warning: Reference `wage' on page 15 undefined on input line 565.
 
-] [15] (./table_plot.aux)
+[15
+
+
+
+
+] [16] (./table_plot.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 32742 strings out of 493683
- 781467 string characters out of 6152642
- 947463 words of memory out of 5000000
- 35775 multiletter control sequences out of 15000+600000
- 14929 words of font info for 64 fonts, out of 8000000 for 9000
+ 32767 strings out of 493683
+ 781849 string characters out of 6152642
+ 950463 words of memory out of 5000000
+ 35796 multiletter control sequences out of 15000+600000
+ 15237 words of font info for 65 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  69i,12n,98p,10416b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on table_plot.dvi (15 pages, 34324 bytes).
+Output written on table_plot.dvi (16 pages, 37008 bytes).
