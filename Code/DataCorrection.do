@@ -2232,7 +2232,14 @@ forvalues X = 2005(1)2014{
 *gen oj=1 if switch==0&emptenure>0
 gen oj=1 if switch==0
 replace oj=0 if oj==.
+
+*** empidの作成
+sort id year
+by id: gen empid = 1 if _n==1|switch==1|emptenure<emptenure[_n-1]
+replace empid=sum(empid)
 }
+
+save  "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc_AllSample.dta", replace
 
 * 10
 ** サンプルの制限
@@ -2265,10 +2272,6 @@ replace realwage=. if workinghour<500
 *** 実質時給をlog化
 replace realwage=log(realwage)
 drop paymethod-overworkperweek cohort workinghour-wage
-*** empidの作成
-sort id year
-by id: gen empid = 1 if _n==1|switch==1|emptenure<emptenure[_n-1]
-replace empid=sum(empid)
 *** 配偶者サンプルのフラグを作成
 gen sp =1 if (id>=10000&id<20000)|id>=30000
 replace sp=0 if sp==.
