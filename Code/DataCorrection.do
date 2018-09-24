@@ -2146,6 +2146,8 @@ drop _merge lagunemprate infrate
 }
 }
 
+save  "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc_TenureCheck.dta", replace
+
 * 9
 ** テニュア変数の作成
 {
