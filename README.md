@@ -23,7 +23,7 @@ Folders:
   - jhps_hc: 推定用データ(DataCorrection.doにより作成)
 
  Intermediate:
- 　- JHPS/KHPS 2004--2014 -> jhps_hcの過程で生成されたデータ
+  - JHPS/KHPS 2004--2014 -> jhps_hcの過程で生成されたデータ
 
  Output:
   - table, plot等の最終的なアウトプット
