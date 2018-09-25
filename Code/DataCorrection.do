@@ -1847,8 +1847,7 @@ mvdecode edbg, mv(9)
 gen schooling=9 if edbg==1
 replace schooling=12 if edbg==2
 replace schooling=14 if edbg==3 | edbg==6
-replace schooling=16 if edbg==4
-replace schooling=18 if edbg==5
+replace schooling=16 if edbg==4 | edbg==5
 keep id schooling
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingJHPS.dta", replace
 
@@ -1859,8 +1858,7 @@ mvdecode edbg, mv(9)
 gen schooling=9 if edbg==1
 replace schooling=12 if edbg==2
 replace schooling=14 if edbg==3 | edbg==6
-replace schooling=16 if edbg==4
-replace schooling=18 if edbg==5
+replace schooling=16 if edbg==4 | edbg==5
 keep id schooling
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS.dta", replace
 
@@ -1870,8 +1868,7 @@ mvdecode edbg, mv(9)
 gen schooling=9 if edbg==1
 replace schooling=12 if edbg==2
 replace schooling=14 if edbg==3 | edbg==6
-replace schooling=16 if edbg==4
-replace schooling=18 if edbg==5
+replace schooling=16 if edbg==4 | edbg==5
 keep id schooling
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2007.dta", replace
 
@@ -1881,8 +1878,7 @@ mvdecode edbg, mv(9)
 gen schooling=9 if edbg==1
 replace schooling=12 if edbg==2
 replace schooling=14 if edbg==3 | edbg==6
-replace schooling=16 if edbg==4
-replace schooling=18 if edbg==5
+replace schooling=16 if edbg==4 | edbg==5
 keep id schooling
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\SchoolingKHPS_new_2012.dta", replace
 

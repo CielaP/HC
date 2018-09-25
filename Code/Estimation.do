@@ -759,17 +759,17 @@ gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 tabulate schooling, generate(edu)
-for X in num 1/5 \ Y in num 9 12 14 16 18 : rename eduX eduY
+for X in num 1/5 \ Y in num 9 12 14 16: rename eduX eduY
 sort empid year
-for X in num 9 12 14 16 18 : egen avgempscX=mean(eduX*emptenure), by(empid)
-for X in num 9 12 14 16 18 : gen empscivX=emptenure*eduX-avgempscX
+for X in num 9 12 14 16: egen avgempscX=mean(eduX*emptenure), by(empid)
+for X in num 9 12 14 16: gen empscivX=emptenure*eduX-avgempscX
 * 推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
 (c.emptenure##c.emptenure ///
 c.emptenure#i.schooling oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ///
-empsciv9 empsciv12 empsciv14 empsciv16 empsciv18 ojiv ///
+empsciv9 empsciv12 empsciv14 empsciv16 ojiv ///
 workexpiv workexpiv2), vce(r)
 est sto isvempsc
 drop if _est_isvempsc==0
@@ -790,8 +790,8 @@ gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 sort empid year
-for X in num 9 12 14 16 18 : egen avgempscX=mean(eduX*emptenure), by(empid)
-for X in num 9 12 14 16 18 : gen empscivX=emptenure*eduX-avgempscX
+for X in num 9 12 14 16: egen avgempscX=mean(eduX*emptenure), by(empid)
+for X in num 9 12 14 16: gen empscivX=emptenure*eduX-avgempscX
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
@@ -799,7 +799,7 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooli
 c.emptenure#i.schooling oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ///
-empsciv9 empsciv12 empsciv14 empsciv16 empsciv18 ojiv ///
+empsciv9 empsciv12 empsciv14 empsciv16 ojiv ///
 workexpiv workexpiv2), vce(r)
 est sto isvempsc
 
@@ -1000,13 +1000,13 @@ se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
 oj workexp c.workexp#c.workexp ///
 12.schooling#c.emptenure 14.schooling#c.emptenure ///
-16.schooling#c.emptenure 18.schooling#c.emptenure ///
+16.schooling#c.emptenure ///
 1.regular#c.emptenure  ///
 2.size#c.emptenure 3.size#c.emptenure 4.size#c.emptenure 5.size#c.emptenure ) ///
 order(emptenure c.emptenure#c.emptenure ///
 oj workexp c.workexp#c.workexp ///
 12.schooling#c.emptenure 14.schooling#c.emptenure ///
-16.schooling#c.emptenure 18.schooling#c.emptenure ///
+16.schooling#c.emptenure ///
 1.regular#c.emptenure  ///
 2.size#c.emptenure 3.size#c.emptenure 4.size#c.emptenure 5.size#c.emptenure ) ///
 coeflabel(emptenure "Employer tenure" ///
@@ -1014,8 +1014,7 @@ c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
 oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
 12.schooling#c.emptenure "High School" ///
 14.schooling#c.emptenure "Some College" ///
-16.schooling#c.emptenure "Undergraduate" ///
-18.schooling#c.emptenure "Above Undergraduate" ///
+16.schooling#c.emptenure "College" ///
 1.regular#c.emptenure "Regular Employee" ///
 2.size#c.emptenure "$5\leq$ size $<30$" 3.size#c.emptenure "$30\leq$ size $<100$" ///
 4.size#c.emptenure "$100\leq$ size $<500$" 5.size#c.emptenure  "$500\leq$ size") ///
