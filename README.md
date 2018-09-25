@@ -21,6 +21,9 @@ Folders:
 
  Input:
   - jhps_hc: 推定用データ(DataCorrection.doにより作成)
+  - jhps_hc_old: 以前の推定用データ
+  - jhps_hc_TenureCheck.dta: DataCorrection.do内においてテニュア変数作成前のデータ
+  - jhps_hc_AllSample.dta: DataCorrection.do内においてテニュア変数作成後サンプル制限前のデータ
 
  Intermediate:
   - JHPS/KHPS 2004--2014 -> jhps_hcの過程で生成されたデータ
