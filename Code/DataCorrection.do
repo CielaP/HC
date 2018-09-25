@@ -2067,6 +2067,7 @@ for num 8 9: mvdecode owner, mv(X)
 *ind
 for num 88 99: mvdecode ind, mv(X)
 *size
+** 1=1~4, 2=5~29, 3=30~99, 4=100~499, 5=500~, 6: 官公庁
 replace size=1 if (size==1|size==2)&(year==2004)
 replace size=2 if (size==2|size==3)&(year==2004)
 replace size=3 if (size==5|size==6)&(year==2004)
