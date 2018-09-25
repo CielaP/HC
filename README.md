@@ -12,15 +12,19 @@ Directory: C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submit
 Folders:
 
  Code: 
-  -- DataCorrection.do: データ整理
+  - DataCorrection.do: データ整理
   - Estimation.do: 推定
   - TenureCheck: 以前と今回のデータ間でのテニュア変数の齟齬をチェック
 
- OriginalData: JHPS/KHPS 2004--2014
+ OriginalData:
+  - JHPS/KHPS 2004--2014
 
- Input: jhps_hc (推定用データ)
+ Input:
+  - jhps_hc: 推定用データ(DataCorrection.doにより作成)
 
- Intermediate: 途中で生成されたデータ
+ Intermediate:
+ 　- JHPS/KHPS 2004--2014 -> jhps_hcの過程で生成されたデータ
 
- Output: 最終的なアウトプット
+ Output:
+  - table, plot等の最終的なアウトプット
 
