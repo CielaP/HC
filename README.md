@@ -1,9 +1,9 @@
 # HC
 Object: Code for submitting the paper, HC
  
- ・配偶者とnew cohortの情報を使ってサンプル数を増やす->サンプルの代表性が失われたためnew cohortのみ追加
+ - 配偶者とnew cohortの情報を使ってサンプル数を増やす->サンプルの代表性が失われたためnew cohortのみ追加
  
- ・投稿時にコードを送るための準備, 論文に使うコードのみを保存
+ - 投稿時にコードを送るための準備, 論文に使うコードのみを保存
 
 
 Directory: C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submittion
@@ -12,7 +12,7 @@ Directory: C:\Users\Ayaka Nakamura\Dropbox\materials\Works\Master\program\Submit
 Folders:
 
  Code: 
-  - DataCorrection.do: データ整理
+  -- DataCorrection.do: データ整理
   - Estimation.do: 推定
   - TenureCheck: 以前と今回のデータ間でのテニュア変数の齟齬をチェック
 
