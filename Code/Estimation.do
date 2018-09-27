@@ -1820,7 +1820,8 @@ keep(_cons emptendif2 emptendif3 ///
 empexpdif2 empexpdif3) ///
 order(_cons emptendif2 emptendif3 ///
 empexpdif2 empexpdif3) ///
-coeflabel(emptendif2 "Emp.ten.$^{2}\times 100$" ///
+coeflabel(_cons "Constant" ///
+emptendif2 "Emp.ten.$^{2}\times 100$" ///
 emptendif3 "Emp.ten.$^{3}\times 1000$" ///
 empexpdif2 "Experience$^{2}\times 100$" ///
 empexpdif3 "Experience$^{3}\times 1000$") ///

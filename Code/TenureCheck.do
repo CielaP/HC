@@ -18,9 +18,9 @@ set more off
 * 賃金の変数が同じか比較
 
 /*
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc_old.dta", clear
 * jhps_hc_oldをjhps_hcの形式に合わせて保存しなおす
 ** 元のoldデータのディレクトリ上では変更してない
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc_old.dta", clear
 *** KHPSのidをid+20000に変更
 replace id=id+20000 if id<9000
 *** JHPSのidを元のidに戻す
@@ -28,6 +28,8 @@ replace id=id-9000 if id<20000
 rename empst regular
 drop *iv *iv? avg*
 sort id year
+replace size=0 if size<5
+replace size=1 if size==5
 save  "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc_old.dta", replace
 */
 

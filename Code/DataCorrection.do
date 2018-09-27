@@ -2068,17 +2068,21 @@ for num 8 9: mvdecode owner, mv(X)
 for num 88 99: mvdecode ind, mv(X)
 *size
 ** 1=1~4, 2=5~29, 3=30~99, 4=100~499, 5=500~, 6: 官公庁
+** 大企業=500~, 中小企業=~499
 replace size=1 if (size==1|size==2)&(year==2004)
 replace size=2 if (size==2|size==3)&(year==2004)
 replace size=3 if (size==5|size==6)&(year==2004)
 replace size=4 if (size==7|size==8)&(year==2004)
 replace size=5 if (size==9|size==10)&(year==2004)
 replace size=6 if (size==11)&(year==2004)
+replace size=0 if size<5
+replace size=1 if size==5
 for num  8 9 88 99: mvdecode size, mv(X)
 *switch
 for num 88 99: mvdecode switch, mv(X)
 replace switch=0 if switch<=3 | switch==7 | switch==8
 replace switch=1 if switch>=4&switch<=6
+replace switch=0 if switch==.
 *employed 1=勤め人
 for num 8 9: mvdecode employed, mv(X)
 replace employed=0 if employed<=4 | employed==6
@@ -2274,11 +2278,13 @@ gen sp =1 if (id>=10000&id<20000)|id>=30000
 replace sp=0 if sp==.
 *** 配偶者を落とす
 drop if sp==1
+/*
 *** new_cohortのフラグを作成
 gen new =1 if id>=40000
 replace new=0 if new==.
 *** new_cohortを落とす
 drop if new==1
+*/
 }
 
 
