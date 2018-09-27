@@ -589,22 +589,26 @@ using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
+oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp ///
+c.workexp#c.workexp#c.workexp#c.workexp) ///
 order(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
+oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp ///
+c.workexp#c.workexp#c.workexp#c.workexp) ///
 coeflabel(emptenure "Employer tenure" ///
 c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
 c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
 oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
-c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$") ///
+c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
+c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 1000$") ///
 transform(c.emptenure#c.emptenure 100*@ 100 ///
 c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
 c.emptenure#c.emptenurec.emptenure#c.emptenure 1000*@ 1000 ///
 c.occtenure#c.occtenure 100*@ 100 ///
 c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
-c.workexp#c.workexp#c.workexp 100*@ 100) ///
+c.workexp#c.workexp#c.workexp 100*@ 100 ///
+c.workexp#c.workexp#c.workexp 1000*@ 1000) ///
 nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists, ///
@@ -623,25 +627,33 @@ se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
 occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
+c.occtenure#c.occtenure#c.occtenure#c.occtenure ///
+oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp ///
+c.workexp#c.workexp#c.workexp#c.workexp) ///
 order(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
 occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
+c.occtenure#c.occtenure#c.occtenure#c.occtenure ///
+oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp ///
+c.workexp#c.workexp#c.workexp#c.workexp) ///
 coeflabel(emptenure "Employer tenure" ///
 c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
 c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
 c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
 occtenure "Occupation tenure" c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
 c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
+c.occtenure#c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{4}\times 1000$" ///
 oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
-c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$") ///
+c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
+c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 1000$") ///
 transform(c.emptenure#c.emptenure 100*@ 100 ///
 c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
 c.emptenure#c.emptenurec.emptenure#c.emptenure 1000*@ 1000 ///
 c.occtenure#c.occtenure 100*@ 100 ///
 c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
-c.workexp#c.workexp#c.workexp 100*@ 100) ///
+c.occtenure#c.occtenure#c.occtenure#c.occtenure 1000*@ 1000 ///
+c.workexp#c.workexp#c.workexp 100*@ 100 ///
+c.workexp#c.workexp#c.workexp#c.workexp 1000*@ 1000) ///
 nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists, ///
@@ -937,58 +949,145 @@ est sto isvempsi
 *** culc. return
  {
 **** schooling
+{
+***** =9
 est res olsempsc
 margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
-est sto olsempnsc
+est sto olsempnsc9
 est res isvempsc
 margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
-est sto isvempnsc
-coefplot (olsempnsc, label(OLS)) (isvempnsc, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
+est sto isvempnsc9
+
+***** =12
+est res olsempsc
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]+ ///
+emptenure*_b[12.schooling#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempnsc12
+est res isvempsc
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]+ ///
+emptenure*_b[12.schooling#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempnsc12
+
+***** =14
+est res olsempsc
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]+ ///
+emptenure*_b[14.schooling#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempnsc14
+est res isvempsc
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]+ ///
+emptenure*_b[14.schooling#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempnsc14
+
+***** =16
+est res olsempsc
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]+ ///
+emptenure*_b[16.schooling#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempnsc16
+est res isvempsc
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]+ ///
+emptenure*_b[16.schooling#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempnsc16
+
+***** plot
+coefplot (olsempnsc9, label(OLS)) (isvempnsc9, label(IV)), bylabel(Junior High School) ///
+|| (olsempnsc12, label(OLS)) (isvempnsc12, label(IV)), bylabel(High School) ///
+|| (olsempnsc14, label(OLS)) (isvempnsc14, label(IV)), bylabel(Some College) ///
+|| (olsempnsc16, label(OLS)) (isvempnsc16, label(IV)), bylabel(College) ///
+||, at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, the Interactions of Employer Tenure and Years of Education are Added to e.q. (1).")
+yline(0) rescale(100)
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_sc.pdf", replace
+}
  
 **** regular
+{
+***** =0
 est res olsregular
 margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
-est sto olsempnst
+est sto olsempnst0
 est res isvregular
 margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
-est sto isvempnst
-coefplot (olsempnst, label(OLS)) (isvempnst, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
+est sto isvempnst0
+
+***** =1
+est res olsregular
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]+ ///
+emptenure*_b[1.regular#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempnst1
+est res isvregular
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]+ ///
+emptenure*_b[1.regular#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempnst1
+
+***** plot
+coefplot (olsempnst0, label(OLS)) (isvempnst0, label(IV)), bylabel(Non-Regular) ///
+|| (olsempnst1, label(OLS)) (isvempnst1, label(IV)), bylabel(Regular) ///
+||, at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, the Interactions of Employer Tenure and Regular Employee are Added to e.q. (1).")
+yline(0) rescale(100)
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_rg.pdf", replace
- 
+}
+
 **** size
+{
+***** =0
 est res olsempsi
 margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
-est sto olsempnsi
+est sto olsempnsi0
 est res isvempsi
 margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
-est sto isvempnsi
-coefplot (olsempnsi, label(OLS)) (isvempnsi, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
+est sto isvempnsi0
+
+***** =1
+est res olsempsi
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]+ ///
+emptenure*_b[1.size#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempnsi1
+est res isvempsi
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]+ ///
+emptenure*_b[1.size#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempnsi1
+
+***** plot
+coefplot (olsempnsi0, label(OLS)) (isvempnsi0, label(IV)), bylabel(size<500) ///
+|| (olsempnsi1, label(OLS)) (isvempnsi1, label(IV)), bylabel(size>=500) ///
+||, at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, the Interactions of Employer Tenure and Size of Firm are Added to e.q. (1).")
+yline(0) rescale(100)
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_si.pdf", replace
+}
 }
  
 *** output tex all results
@@ -1031,8 +1130,9 @@ replace
 
 **** return
 quietly {
-esttab olsempnsc isvempnsc olsempnst isvempnst olsempnsi isvempnsi ///
-using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_teturn_ab.tex", ///
+esttab olsempnsc9 isvempnsc9 olsempnsc12 isvempnsc12 ///
+olsempnsc14 isvempnsc14 olsempnsc16 isvempnsc16 ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_teturn_ab1.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -1043,8 +1143,26 @@ nodep nonote nomtitles ///
 title(Estimated Returns to Employer Tenure, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists, ///
 the Interactions of Employer Tenure and Proxies of Ability are Added to e.q. (1).) ///
-mgroups("Years of Education" "Regular Employee" "Firm Size" ///
-pattern(1 0 1 0 1 0) ///
+mgroups("Years of Education" ///
+pattern(1 0 0 0 0 0 0 0) ///
+prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+replace
+
+esttab olsempnst0 isvempnst0 olsempnst1 isvempnst1 ///
+olsempnsi0 isvempnsi0 olsempnsi1 isvempnsi1 ///
+using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_teturn_ab2.tex", ///
+se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
+coeflabel(3._at "2 Years" ///
+6._at "5 Years" 11._at "10 Years" ///
+16._at "15 Years" ///
+21._at "20 Years" 26._at "25 Years") ///
+nodep nonote nomtitles ///
+title(Estimated Returns to Employer Tenure, using Sample up to 64-year-old, ///
+including Non-regular Workers and Specialists, ///
+the Interactions of Employer Tenure and Proxies of Ability are Added to e.q. (1).) ///
+mgroups("Regular Employee" "Firm Size" ///
+pattern(1 0 0 0 1 0 0 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
 replace
 }
@@ -1135,12 +1253,6 @@ margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
 est sto isvempn59
-coefplot (olsempn59, label(OLS)) (isvempn59, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 60-year-old, including Non-regular Workers and Specialists.")
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_59.pdf", replace
  }
  }
  
@@ -1225,12 +1337,6 @@ margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
 est sto isvempnLa
-coefplot (olsempnLa, label(OLS)) (isvempnLa, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, only Large Firms ($\geq500$).")
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_La.pdf", replace
  }
  }
  
@@ -1315,12 +1421,6 @@ margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
 est sto isvempnSm
-coefplot (olsempnSm, label(OLS)) (isvempnSm, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, only Small Firms ($<500$).")
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_Sm.pdf", replace
  }
  }
 
@@ -1406,17 +1506,21 @@ margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
 est sto isvempnPr
-coefplot (olsempnPr, label(OLS)) (isvempnPr, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers, not including Specialists.")
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_Pr.pdf", replace
 }
 }
 
 *** output tex all results
 {
+**** plot
+coefplot (olsempn59, label(OLS)) (isvempn59, label(IV)), bylabel(Under 60-year-old) ///
+|| (olsempnPr, label(OLS)) (isvempnPr, label(IV)), bylabel(Non-Professional) ///
+|| (olsempnLa, label(OLS)) (isvempnLa, label(IV)), bylabel(Large Firm (Size>=500)) ///
+|| (olsempnSm, label(OLS)) (isvempnSm, label(IV)), bylabel(Small Firm (Size<500)) ///
+||, at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
+xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
+yline(0) rescale(100)
+graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_rob.pdf", replace
+
 **** coefficients
 quietly {
 esttab olsemp59 isvemp59 olsempLa isvempLa ///
@@ -1629,7 +1733,7 @@ sort empid year
 gen initialemp=workexp-emptenure
 ** 1st stageに使うサンプルにフラグを立てて賃金とテニュアの差の変数を作成
 bysort empid (year): gen fst=1 ///
-if switch==0&_n!=1&emptenure>=1
+if _n!=1&emptenure>=1
 replace fst=0 if fst==.
 gen emptendif2=2*emptenure-1 if fst==1
 gen emptendif3=3*(emptenure^2)-3*emptenure+1 if fst==1
@@ -1640,6 +1744,7 @@ drop if initialemp<0
 tabulate year, generate(y)
 for X in num 1/11 \ Y in num 2004/2014 : rename yX yY
 drop if occ==1
+replace fst=0 if fst==.|emptendif2==.
 }
 
 **** 1st step
@@ -1692,7 +1797,7 @@ sort empid year
 gen initialemp=workexp-emptenure
 ** 1st stageに使うサンプルにフラグを立てて賃金とテニュアの差の変数を作成
 bysort empid (year): gen fst=1 ///
-if switch==0&_n!=1&emptenure>=1
+if _n!=1&emptenure>=1
 replace fst=0 if fst==.
 gen emptendif2=2*emptenure-1 if fst==1
 gen emptendif3=3*(emptenure^2)-3*emptenure+1 if fst==1
