@@ -2154,6 +2154,7 @@ save  "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\
 {
 *** テニュア変数の基準
 **** 労働時間が年間800時間以上&転職していない -> +1
+***** サンプルが落ちている期間も就業を継続していたと仮定する
 **** 労働時間が年間800時間未満- > stay
 **** 転職した -> 0
 
@@ -2163,7 +2164,7 @@ tsset id year
 *** emptenure
 forvalues X = 2005(1)2014{ 
 	**** 労働時間800時間以上&転職してない->+1
-	replace emptenure=emptenure[_n-1]+1 ///
+	replace emptenure=emptenure[_n-1]+(year-year[_n-1]) ///
 		if morethan800==1 & switch==0 & year==`X'
 	**** 労働時間800時間未満&転職してない->+-0
 	replace emptenure=emptenure[_n-1] ///
@@ -2179,11 +2180,13 @@ drop empten2* intten
 *** workexp
 forvalues X = 2005(1)2014{ 
 	**** 労働時間800時間以上->+1
-	bysort id (year): replace workexp=workexp[_n-1]+1 ///
+	bysort id (year): replace workexp=workexp[_n-1]+(year-year[_n-1]) ///
 		if morethan800==1 & _n!=1 & year==`X'
 	**** 労働時間800時間未満->+-0
 	bysort id (year): replace workexp=workexp[_n-1] ///
 		if morethan800==0 & _n!=1 & year==`X'
+	**** 最初のobservationは変更しない
+	bysort id (year): replace workexp=intexp if _n==1
 }
 drop workexp2* intexp
 
@@ -2195,7 +2198,7 @@ replace occswitch=1 if occswitch==.
 
 forvalues X = 2005(1)2014{ 
 	**** 労働時間800時間以上&転職してない->+1
-	replace occtenure=occtenure[_n-1]+1 ///
+	replace occtenure=occtenure[_n-1]+(year-year[_n-1]) ///
 		if morethan800==1 & occswitch==0 & year==`X'
 	**** 労働時間800時間未満&転職してない->+-0
 	replace occtenure=occtenure[_n-1] ///
@@ -2204,7 +2207,7 @@ forvalues X = 2005(1)2014{
 	replace occtenure=0 ///
 		if occswitch==1 & occ!=. & occ[_n-1]!=. & year==`X'
 	**** 最初のobservationは変更しない
-	bysort id (year): replace occtenure=workexp if _n==1
+	bysort id (year): replace occtenure=emptenure if _n==1
 }
 
 /*
