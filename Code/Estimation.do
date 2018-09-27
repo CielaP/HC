@@ -759,7 +759,7 @@ gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 tabulate schooling, generate(edu)
-for X in num 1/5 \ Y in num 9 12 14 16: rename eduX eduY
+for X in num 1/4 \ Y in num 9 12 14 16: rename eduX eduY
 sort empid year
 for X in num 9 12 14 16: egen avgempscX=mean(eduX*emptenure), by(empid)
 for X in num 9 12 14 16: gen empscivX=emptenure*eduX-avgempscX
@@ -890,15 +890,16 @@ gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 tabulate size, generate(si)
+for X in num 1/2 \ Y in num 0/1: rename siX siY
 sort empid year
-for X in num 1/5 : egen avgempsX=mean(siX*emptenure), by(empid)
-for X in num 1/5 : gen empscivX=emptenure*siX-avgempsX
+for X in num 0/1 : egen avgempsX=mean(siX*emptenure), by(empid)
+for X in num 0/1 : gen empscivX=emptenure*siX-avgempsX
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
 (c.emptenure##c.emptenure ///
 c.emptenure#i.size oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ///
-empsciv1 empsciv2 empsciv3 empsciv4 empsciv5 ojiv ///
+empsciv0 empsciv1 ojiv ///
 workexpiv workexpiv2), vce(r)
 est sto isvempsi
 drop if _est_isvempsi==0
@@ -919,8 +920,8 @@ gen workexpiv3=workexp^3-avgworkexp3
 egen avgoj=mean(oj), by(empid)
 gen ojiv=oj-avgoj
 sort empid year
-for X in num 1/5 : egen avgempsX=mean(siX*emptenure), by(empid)
-for X in num 1/5 : gen empscivX=emptenure*siX-avgempsX
+for X in num 0/1 : egen avgempsX=mean(siX*emptenure), by(empid)
+for X in num 0/1 : gen empscivX=emptenure*siX-avgempsX
 }
 * 再推定
 ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling i.size ///
@@ -928,7 +929,7 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.regular i.schooli
 c.emptenure#i.size oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ///
-empsciv1 empsciv2 empsciv3 empsciv4 empsciv5 ojiv ///
+empsciv0 empsciv1 ojiv ///
 workexpiv workexpiv2), vce(r)
 est sto isvempsi
 }
@@ -1002,13 +1003,13 @@ oj workexp c.workexp#c.workexp ///
 12.schooling#c.emptenure 14.schooling#c.emptenure ///
 16.schooling#c.emptenure ///
 1.regular#c.emptenure  ///
-2.size#c.emptenure 3.size#c.emptenure 4.size#c.emptenure 5.size#c.emptenure ) ///
+1.size#c.emptenure) ///
 order(emptenure c.emptenure#c.emptenure ///
 oj workexp c.workexp#c.workexp ///
 12.schooling#c.emptenure 14.schooling#c.emptenure ///
 16.schooling#c.emptenure ///
 1.regular#c.emptenure  ///
-2.size#c.emptenure 3.size#c.emptenure 4.size#c.emptenure 5.size#c.emptenure ) ///
+1.size#c.emptenure) ///
 coeflabel(emptenure "Employer tenure" ///
 c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
 oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
@@ -1016,8 +1017,7 @@ oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" /
 14.schooling#c.emptenure "Some College" ///
 16.schooling#c.emptenure "College" ///
 1.regular#c.emptenure "Regular Employee" ///
-2.size#c.emptenure "$5\leq$ size $<30$" 3.size#c.emptenure "$30\leq$ size $<100$" ///
-4.size#c.emptenure "$100\leq$ size $<500$" 5.size#c.emptenure  "$500\leq$ size") ///
+1.size#c.emptenure "$500\leq$ size") ///
 transform(c.emptenure#c.emptenure 100*@ 100) ///
 nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Sample up to 64-year-old, ///
@@ -1152,7 +1152,7 @@ quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
-drop if size<5
+drop if size<1
 }
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r) l(90)
@@ -1165,7 +1165,7 @@ quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
-drop if size<5
+drop if size<1
 * 操作変数を作成
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
@@ -1242,7 +1242,7 @@ quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
-drop if size==5
+drop if size==1
 }
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
@@ -1255,7 +1255,7 @@ quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
-drop if size==5
+drop if size==1
 * 操作変数を作成
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
