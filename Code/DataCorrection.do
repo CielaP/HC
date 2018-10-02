@@ -93,17 +93,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009_sp.dta"
 gen year=2009
 * ageを作成
-mvdecode byear, mv(9999)
+mvdecode byear, mv(9999) /* 欠損値を作成 */
 mvdecode bmonth, mv(99)
-replace byear=2020 if byear==.
+replace byear=2020 if byear==. /* 欠損値をあり得ない値に変更 */
 replace bmonth=0 if bmonth==.
-replace bmonth=bmonth+10
-tostring byear bmonth, replace
-gen bday=byear+bmonth+"15"
-destring bday, replace
-replace bday=bday-1000
-gen age=floor((20090130-bday)/10000)
-replace age=. if age<0
+replace bmonth=bmonth+10 /* 誕生月を+10 */
+tostring byear bmonth, replace /* 誕生年月を文字列に変更 */
+gen bday=byear+bmonth+"15" /* 生年月日の文字列を作成(誕生日は15日と仮定) */
+destring bday, replace /* 文字列を数字に戻す */
+replace bday=bday-1000 /* 誕生月を+10した分を戻す */
+gen age=floor((20090130-bday)/10000) /* 調査日時点での年齢を計算 */
+replace age=. if age<0 /* 欠損値だったサンプルの年齢を欠損値に */
 drop byear bmonth bday
 * emptenureを作成
 for num 8888 9999: mvdecode empsinceyear, mv(X)
@@ -457,7 +457,7 @@ gen year=2013
 mvdecode byear, mv(9999)
 mvdecode bmonth, mv(99)
 replace byear=2020 if byear==.
-replace bmonth=0 if bmonth==.
+replace bmonth=0 if bmonth==. 
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
@@ -2260,6 +2260,10 @@ gen realwage=0
 merge m:1 year using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\InflateUnempRate.dta"
 replace realwage=wage/infrate*100
 drop _merge lagunemprate infrate
+*** 時給250円以下を欠損値にする
+replace realwage=. if realwage<250
+*** 実質時給をlog化
+replace realwage=log(realwage)
 }
 }
 
@@ -2381,16 +2385,12 @@ drop employed
 drop if size==6
 keep if owner==1 | owner==2 | owner==3
 drop owner
-*** 時給250円以下を落とす
-drop if realwage<250
 *** テニュア変数がマイナスのもの, 変な値のものを欠損値にする
-replace emptenure=. if emptenure<0| emptenure>50
+replace emptenure=. if emptenure<0| emptenure>workexp
 replace workexp=. if workexp<0
 replace occtenure=. if occtenure<0
 *** 年間労働時間500時間未満の時給を欠損値にする
 replace realwage=. if workinghour<500
-*** 実質時給をlog化
-replace realwage=log(realwage)
 drop paymethod-overworkperweek cohort workinghour-wage
 *** 配偶者サンプルのフラグを作成
 gen sp =1 if (id>=10000&id<20000)|id>=30000

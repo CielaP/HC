@@ -16,7 +16,7 @@ set more off
 * Estimation
 ** 1. OLS->AS / 基本の推定式1-4次項まで
 ** 2. OLS->AS / ability*tenure
-** 3. OLS->AS / 60歳以下, 大企業, 中小企業, 専門職以外
+** 3. OLS->AS / 60歳以下, 大企業, 中小企業, 専門職以外, 正社員
 ** 4. OLS->AS / テニュアをダミーで
 ** 5. Topel / 基本の推定式1-4次項まで
 
@@ -466,7 +466,7 @@ coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled, Quadratic Form of Tenure Variables.")
+title("Using All Samples, Occupation Tenure is not Controlled, Quadratic Form of Tenure.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_2.pdf", replace
  
 ***** 3rd
@@ -486,7 +486,7 @@ coefplot (olsempr3, label(OLS)) (isvempr3, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled, Cubic Form of Tenure Variables.")
+title("Using All Samples, Occupation Tenure is not Controlled, Cubic Form of Tenure.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_3.pdf", replace
 
 ***** 4th
@@ -510,7 +510,7 @@ coefplot (olsempr4, label(OLS)) (isvempr4, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled, Quartic Form of Tenure Variables.")
+title("Using All Samples, Occupation Tenure is not Controlled, Quartic Form of Tenure.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_4.pdf", replace
 }
  
@@ -531,7 +531,7 @@ coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, Quadratic Form of Tenure Variables.")
+title("Using All Samples, Occupation Tenure is Controlled, Quadratic Form of Tenure.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_2.pdf", replace
 
 ***** 3rd
@@ -551,7 +551,7 @@ coefplot (olsempr3, label(OLS)) (isvempr3, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, Cubic Form of Tenure Variables.")
+title("Using All Samples, Occupation Tenure is Controlled, Cubic Form of Tenure.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_3.pdf", replace
 
 ***** 4th
@@ -575,7 +575,7 @@ coefplot (olsempr4, label(OLS)) (isvempr4, label(IV)), ///
 at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 yline(0) rescale(100) ////
-title("Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled, Quartic Form of Tenure Variables.")
+title("Using All Samples, Occupation Tenure is Controlled, Quartic Form of Tenure.")
 graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_4.pdf", replace
 }
 }
@@ -1256,6 +1256,91 @@ est sto isvempn59
  }
  }
  
+*** non-professional
+{
+**** OLS
+{
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+destring, replace
+tsset id year
+drop if occ==10
+}
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
+c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
+est sto olsempPr
+}
+
+**** AS
+{
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+destring, replace
+tsset id year
+drop if occ==10
+* 操作変数を作成
+sort empid year
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+egen avgoj=mean(oj), by(empid)
+gen ojiv=oj-avgoj
+gen regulariv=emptenureiv*regular
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
+(c.emptenure##c.emptenure oj ///
+c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
+est sto isvempPr
+drop if _est_isvempPr==0
+drop *iv *iv? avg*
+* 必要な変数を再作成
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+egen avgoj=mean(oj), by(empid)
+gen ojiv=oj-avgoj
+}
+* 再推定
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
+(c.emptenure##c.emptenure oj ///
+c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
+est sto isvempPr
+}
+
+**** culc. return
+{
+est res olsempPr
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempnPr
+est res isvempPr
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempnPr
+}
+}
+
 *** large firms
 {
 **** OLS
@@ -1424,7 +1509,7 @@ est sto isvempnSm
  }
  }
 
-*** non-professional
+*** regular employee
 {
 **** OLS
 {
@@ -1432,11 +1517,11 @@ quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
-drop if occ==10
+drop if regular==0
 }
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
 c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
-est sto olsempPr
+est sto olsempRg
 }
 
 **** AS
@@ -1445,7 +1530,7 @@ quietly {
 use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
 destring, replace
 tsset id year
-drop if occ==10
+drop if regular==0
 * 操作変数を作成
 sort empid year
 egen avgemptenure=mean(emptenure), by(empid)
@@ -1467,8 +1552,8 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size 
 (c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
-est sto isvempPr
-drop if _est_isvempPr==0
+est sto isvempRg
+drop if _est_isvempRg==0
 drop *iv *iv? avg*
 * 必要な変数を再作成
 egen avgemptenure=mean(emptenure), by(empid)
@@ -1491,21 +1576,106 @@ ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size 
 (c.emptenure##c.emptenure oj ///
 c.workexp##c.workexp = ///
 emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
-est sto isvempPr
+est sto isvempRg
 }
 
 **** culc. return
 {
-est res olsempPr
+est res olsempRg
 margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
-est sto olsempnPr
-est res isvempPr
+est sto olsempnRg
+est res isvempRg
 margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
 c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
 at(emptenure=(0(1)25)) noe post
-est sto isvempnPr
+est sto isvempnRg
+}
+}
+
+*** non-regular employee
+{
+**** OLS
+{
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+destring, replace
+tsset id year
+drop if regular==1
+}
+reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
+c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
+est sto olsempNrg
+}
+
+**** AS
+{
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
+destring, replace
+tsset id year
+drop if regular==1
+* 操作変数を作成
+sort empid year
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+egen avgoj=mean(oj), by(empid)
+gen ojiv=oj-avgoj
+gen regulariv=emptenureiv*regular
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
+(c.emptenure##c.emptenure oj ///
+c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
+est sto isvempNrg
+drop if _est_isvempNrg==0
+drop *iv *iv? avg*
+* 必要な変数を再作成
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+egen avgoj=mean(oj), by(empid)
+gen ojiv=oj-avgoj
+}
+* 再推定
+ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
+(c.emptenure##c.emptenure oj ///
+c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
+est sto isvempNrg
+}
+
+**** culc. return
+{
+est res olsempNrg
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempnNrg
+est res isvempNrg
+margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempnNrg
 }
 }
 
@@ -1513,6 +1683,7 @@ est sto isvempnPr
 {
 **** plot
 coefplot (olsempn59, label(OLS)) (isvempn59, label(IV)), bylabel(Under 60-year-old) ///
+|| (olsempnRg, label(OLS)) (isvempnRg, label(IV)), bylabel(Regular Employee) ///
 || (olsempnPr, label(OLS)) (isvempnPr, label(IV)), bylabel(Non-Professional) ///
 || (olsempnLa, label(OLS)) (isvempnLa, label(IV)), bylabel(Large Firm (Size>=500)) ///
 || (olsempnSm, label(OLS)) (isvempnSm, label(IV)), bylabel(Small Firm (Size<500)) ///
@@ -1524,7 +1695,7 @@ graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Subm
 **** coefficients
 quietly {
 esttab olsemp59 isvemp59 olsempLa isvempLa ///
-olsempSm isvempSm olsempPr isvempPr ///
+olsempSm isvempSm olsempPr isvempPr olsempRg isvempRg ///
 using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(emptenure c.emptenure#c.emptenure ///
@@ -1547,7 +1718,7 @@ replace
 **** return
 quietly {
 esttab olsempn59 isvempn59 olsempnLa isvempnLa ///
-olsempnSm isvempnSm olsempnPr isvempnPr ///
+olsempSm isvempSm olsempPr isvempPr olsempRg isvempRg ///
 using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
@@ -1594,19 +1765,19 @@ sort empid year
 * emptenureをダミーに変更
 gen emp1=1 if emptenure>=1&emptenure<2
 replace emp1=0 if emp1==.
-gen emp2=2 if emptenure>=2&emptenure<5
+gen emp2=1 if emptenure>=2&emptenure<5
 replace emp2=0 if emp2==.
-gen emp5=5 if emptenure>=5&emptenure<10
+gen emp5=1 if emptenure>=5&emptenure<10
 replace emp5=0 if emp5==.
-gen emp10=10 if emptenure>=10&emptenure<15
+gen emp10=1 if emptenure>=10&emptenure<15
 replace emp10=0 if emp10==.
-gen emp15=15 if emptenure>=15&emptenure<20
+gen emp15=1 if emptenure>=15&emptenure<20
 replace emp15=0 if emp15==.
-gen emp20=20 if emptenure>=20&emptenure<25
+gen emp20=1 if emptenure>=20&emptenure<25
 replace emp20=0 if emp20==.
-gen emp25=25 if emptenure>=25&emptenure<30
+gen emp25=1 if emptenure>=25&emptenure<30
 replace emp25=0 if emp25==.
-gen emp30=30 if emptenure>=30
+gen emp30=1 if emptenure>=30
 replace emp30=0 if emp30==.
 }
 reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
@@ -1625,19 +1796,19 @@ sort empid year
 * emptenureをダミーに変更
 gen emp1=1 if emptenure>=1&emptenure<2
 replace emp1=0 if emp1==.
-gen emp2=2 if emptenure>=2&emptenure<5
+gen emp2=1 if emptenure>=2&emptenure<5
 replace emp2=0 if emp2==.
-gen emp5=5 if emptenure>=5&emptenure<10
+gen emp5=1 if emptenure>=5&emptenure<10
 replace emp5=0 if emp5==.
-gen emp10=10 if emptenure>=10&emptenure<15
+gen emp10=1 if emptenure>=10&emptenure<15
 replace emp10=0 if emp10==.
-gen emp15=15 if emptenure>=15&emptenure<20
+gen emp15=1 if emptenure>=15&emptenure<20
 replace emp15=0 if emp15==.
-gen emp20=20 if emptenure>=20&emptenure<25
+gen emp20=1 if emptenure>=20&emptenure<25
 replace emp20=0 if emp20==.
-gen emp25=25 if emptenure>=25&emptenure<30
+gen emp25=1 if emptenure>=25&emptenure<30
 replace emp25=0 if emp25==.
-gen emp30=30 if emptenure>=30
+gen emp30=1 if emptenure>=30
 replace emp30=0 if emp30==.
 * 操作変数を作成
 for X in num 1 2 5 10 15 20 25 30: egen avgempX=mean(empX), by(empid)
@@ -1940,6 +2111,343 @@ replace
 }
 }
 }
-  
+ 
+ 
+* 6
+** 戸田さんとの比較
+{
+*** Sampleを作る
+{
+**** male, employed, 2004--2007, 20--60, regularのみ
+use  "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc_TenureCheck.dta", clear
+*** パネル化
+tsset id year
+*** emptenure
+forvalues X = 2005(1)2014{ 
+	**** 転職してない->+1
+	replace emptenure=emptenure[_n-1]+(year-year[_n-1]) ///
+		if switch==0 & year==`X'
+	**** 転職した->0.5
+	replace emptenure=0.5 ///
+		if switch==1 & year==`X'
+	**** 最初のobservationは変更しない
+	bysort id (year): replace emptenure=intten if _n==1
+}
+drop empten2* intten
+*** workexp
+replace workexp=age-schooling-6
+drop workexp2* intexp
+*** empidの作成
+sort id year
+by id: gen empid = 1 if _n==1|switch==1|emptenure<emptenure[_n-1]
+replace empid=sum(empid)
+*** 2004--2007のみ残す
+keep if year<=2007
+*** regularのみ残す
+keep if regular==1
+*** 18歳～64歳のみ残す
+keep if age>=20 & age<=60
+*** 女性を落とす
+drop if sex==2
+drop sex
+*** 雇用されていない人を落とす
+drop if employed==0
+drop employed
+*** 官公庁を落とす
+drop if size==6
+keep if owner==1 | owner==2 | owner==3
+drop owner
+*** テニュア変数がマイナスのもの, 変な値のものを欠損値にする
+replace emptenure=. if emptenure<0|emptenure>age|emptenure>workexp
+replace workexp=. if workexp<0
 
-  
+save  "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_toda.dta", replace
+}
+/*
+mean(推定に使ったもの)
+サンプル数: 4456
+勤続年数: 14.277
+労働経験: 23.117
+対数賃金: 7.638
+勤続年数だけ2年も違う, その他の変数は概ね戸田さんと同じ
+*/
+
+*** AS
+{
+*** OLS
+{
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_toda.dta", clear
+destring, replace
+tsset id year
+}
+
+***** 1st
+reg realwage i.occ i.ind i.union schooling i.size ///
+c.emptenure c.workexp, vce(r)
+est sto olsemp1
+***** 2nd
+reg realwage i.occ i.ind i.union schooling i.size ///
+c.emptenure##c.emptenure c.workexp##c.workexp, vce(r)
+est sto olsemp2
+***** 3rd
+reg realwage i.occ i.ind i.union schooling i.size ///
+c.emptenure##c.emptenure##c.emptenure c.workexp##c.workexp##c.workexp, vce(r)
+est sto olsemp3
+***** 4th
+reg realwage i.occ i.ind i.union schooling i.size ///
+c.emptenure##c.emptenure##c.emptenure##c.emptenure ///
+c.workexp##c.workexp##c.workexp##c.workexp, vce(r)
+est sto olsemp4
+}
+
+*** AS
+{
+***** 1st
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_toda.dta", clear
+destring, replace
+tsset id year
+* 操作変数を作成
+sort empid year
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+ivregress 2sls realwage i.occ i.ind i.union schooling i.size ///
+(c.emptenure c.workexp = ///
+emptenureiv workexpiv), vce(r)
+est sto isvemp1
+drop if _est_isvemp1==0
+drop *iv *iv? avg*
+* 必要な変数を再作成
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+}
+* 再推定
+ivregress 2sls realwage i.occ i.ind i.union schooling i.size ///
+(c.emptenure c.workexp = ///
+emptenureiv workexpiv), vce(r)
+est sto isvemp1
+
+***** 2nd
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_toda.dta", clear
+destring, replace
+tsset id year
+* 操作変数を作成
+sort empid year
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+ivregress 2sls realwage i.occ i.ind i.union schooling i.size ///
+(c.emptenure##c.emptenure c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 workexpiv workexpiv2), vce(r)
+est sto isvemp2
+drop if _est_isvemp2==0
+drop *iv *iv? avg*
+* 必要な変数を再作成
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+}
+* 再推定
+ivregress 2sls realwage i.occ i.ind i.union schooling i.size ///
+(c.emptenure##c.emptenure c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 workexpiv workexpiv2), vce(r)
+est sto isvemp2
+
+***** 3rd
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_toda.dta", clear
+destring, replace
+tsset id year
+* 操作変数を作成
+sort empid year
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+ivregress 2sls realwage i.occ i.ind i.union schooling i.size ///
+(c.emptenure##c.emptenure##c.emptenure c.workexp##c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 emptenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
+est sto isvemp3
+drop if _est_isvemp3==0
+drop *iv *iv? avg*
+* 必要な変数を再作成
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+}
+* 再推定
+ivregress 2sls realwage i.occ i.ind i.union schooling i.size ///
+(c.emptenure##c.emptenure##c.emptenure c.workexp##c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 emptenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
+est sto isvemp3
+
+***** 4th
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_toda.dta", clear
+destring, replace
+tsset id year
+* 操作変数を作成
+sort empid year
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+egen avgemptenure4=mean(emptenure^4), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+gen emptenureiv4=emptenure^4-avgemptenure4
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+egen avgworkexp4=mean(workexp^4), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+gen workexpiv4=workexp^4-avgworkexp4
+ivregress 2sls realwage i.occ i.ind i.union schooling i.size ///
+(c.emptenure##c.emptenure##c.emptenure##c.emptenure ///
+c.workexp##c.workexp##c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ///
+workexpiv workexpiv2 workexpiv3 workexpiv4), vce(r)
+est sto isvemp4
+drop if _est_isvemp4==0
+drop *iv *iv? avg*
+* 必要な変数を再作成
+egen avgemptenure=mean(emptenure), by(empid)
+egen avgemptenure2=mean(emptenure^2), by(empid)
+egen avgemptenure3=mean(emptenure^3), by(empid)
+egen avgemptenure4=mean(emptenure^4), by(empid)
+gen emptenureiv=emptenure-avgemptenure
+gen emptenureiv2=emptenure^2-avgemptenure2
+gen emptenureiv3=emptenure^3-avgemptenure3
+gen emptenureiv4=emptenure^4-avgemptenure4
+egen avgworkexp=mean(workexp), by(id)
+egen avgworkexp2=mean(workexp^2), by(id)
+egen avgworkexp3=mean(workexp^3), by(id)
+egen avgworkexp4=mean(workexp^4), by(id)
+gen workexpiv=workexp-avgworkexp
+gen workexpiv2=workexp^2-avgworkexp2
+gen workexpiv3=workexp^3-avgworkexp3
+gen workexpiv4=workexp^4-avgworkexp4
+}
+* 再推定
+ivregress 2sls realwage i.occ i.ind i.union schooling i.size ///
+(c.emptenure##c.emptenure##c.emptenure##c.emptenure ///
+c.workexp##c.workexp##c.workexp##c.workexp = ///
+emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ///
+workexpiv workexpiv2 workexpiv3 workexpiv4), vce(r)
+est sto isvemp4
+}
+
+*** return
+{
+***** 2nd
+est res olsemp2
+margins, exp(emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempr2
+est res isvemp2
+margins, exp(emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempr2
+ 
+***** 3rd
+est res olsemp3
+margins, exp(emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
++c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempr3
+est res isvemp3
+margins, exp(emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
++c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempr3
+
+***** 4th
+est res olsemp4
+margins, exp(emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
++c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure] ///
++c.emptenure#c.emptenure#c.emptenure#c.emptenure* ///
+_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto olsempr4
+est res isvemp4
+margins, exp(emptenure*_b[emptenure]+ ///
+c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
++c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure] ///
++c.emptenure#c.emptenure#c.emptenure#c.emptenure* ///
+_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]) ///
+at(emptenure=(0(1)25)) noe post
+est sto isvempr4
+}
+/*
+OLSは係数リターンともに比較的戸田さんと似ている
+IVは係数, 有意水準が付くタイミング, リターンどれも似ているとは言い難い
+*/
+
+*** Topel
+{
+}
+}
