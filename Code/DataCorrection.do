@@ -93,20 +93,30 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009_sp.dta"
 gen year=2009
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20090130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 * emptenureを作成
+for num 8888 9999: mvdecode empsinceyear, mv(X)
+for num 88 99: mvdecode empsincemonth, mv(X)
+replace empsinceyear=2020 if empsinceyear==.
+replace empsincemonth=0 if empsincemonth==.
 replace empsincemonth=empsincemonth+10
 tostring empsinceyear empsincemonth, replace
 gen eday=empsinceyear+empsincemonth+"15"
 destring eday, replace
 replace eday=eday-1000
 gen emptenure=floor((20090130-eday)/10000)
+replace emptenure=. if emptenure<0
 drop empsinceyear empsincemonth eday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2009.dta", replace
 
@@ -205,12 +215,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010_sp.dta"
 gen year=2010
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20100130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010.dta", replace
 
@@ -280,12 +295,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011_sp.dta"
 gen year=2011
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20110130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2011.dta", replace
 
@@ -354,12 +374,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012_sp.dta"
 gen year=2012
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20120130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2012.dta", replace
 
@@ -429,12 +454,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013_sp.dta"
 gen year=2013
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20130130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2013.dta", replace
 
@@ -504,12 +534,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014_sp.dta"
 gen year=2014
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20140130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2014.dta", replace
 
@@ -648,20 +683,30 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004_sp.dta"
 gen year=2004
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20040130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 * emptenureを作成
+for num 8888 9999: mvdecode empsinceyear, mv(X)
+for num 88 99: mvdecode empsincemonth, mv(X)
+replace empsinceyear=2020 if empsinceyear==.
+replace empsincemonth=0 if empsincemonth==.
 replace empsincemonth=empsincemonth+10
 tostring empsinceyear empsincemonth, replace
 gen eday=empsinceyear+empsincemonth+"15"
 destring eday, replace
 replace eday=eday-1000
 gen emptenure=floor((20040130-eday)/10000)
+replace emptenure=. if emptenure<0
 drop empsinceyear empsincemonth eday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", replace
 
@@ -764,12 +809,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005_sp.dta"
 gen year=2005
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20050130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2005.dta", replace
 
@@ -872,12 +922,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006_sp.dta"
 gen year=2006
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20060130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2006.dta", replace
 
@@ -980,12 +1035,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_sp.dta"
 gen year=2007
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20070130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007.dta", replace
 
@@ -1091,20 +1151,30 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new_sp.dta"
 gen year=2007
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20070130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 * emptenureを作成
+for num 8888 9999: mvdecode empsinceyear, mv(X)
+for num 88 99: mvdecode empsincemonth, mv(X)
+replace empsinceyear=2020 if empsinceyear==.
+replace empsincemonth=0 if empsincemonth==.
 replace empsincemonth=empsincemonth+10
 tostring empsinceyear empsincemonth, replace
 gen eday=empsinceyear+empsincemonth+"15"
 destring eday, replace
 replace eday=eday-1000
 gen emptenure=floor((20070130-eday)/10000)
+replace emptenure=. if emptenure<0
 drop empsinceyear empsincemonth eday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", replace
 
@@ -1206,12 +1276,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008_sp.dta"
 gen year=2008
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20080130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2008.dta", replace
 
@@ -1283,12 +1358,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009_sp.dta"
 gen year=2009
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20090130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2009.dta", replace
 
@@ -1360,12 +1440,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010_sp.dta"
 gen year=2010
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20100130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2010.dta", replace
 
@@ -1437,12 +1522,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011_sp.dta"
 gen year=2011
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20110130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2011.dta", replace
 
@@ -1513,12 +1603,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_sp.dta"
 gen year=2012
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20120130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012.dta", replace
 
@@ -1625,20 +1720,30 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new_sp.dta"
 gen year=2012
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20120130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 * emptenureを作成
+for num 8888 9999: mvdecode empsinceyear, mv(X)
+for num 88 99: mvdecode empsincemonth, mv(X)
+replace empsinceyear=2020 if empsinceyear==.
+replace empsincemonth=0 if empsincemonth==.
 replace empsincemonth=empsincemonth+10
 tostring empsinceyear empsincemonth, replace
 gen eday=empsinceyear+empsincemonth+"15"
 destring eday, replace
 replace eday=eday-1000
 gen emptenure=floor((20120130-eday)/10000)
+replace emptenure=. if emptenure<0
 drop empsinceyear empsincemonth eday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", replace
 
@@ -1709,12 +1814,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013_sp.dta"
 gen year=2013
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20130130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2013.dta", replace
 
@@ -1786,12 +1896,17 @@ use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 append using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014_sp.dta"
 gen year=2014
 * ageを作成
+mvdecode byear, mv(9999)
+mvdecode bmonth, mv(99)
+replace byear=2020 if byear==.
+replace bmonth=0 if bmonth==.
 replace bmonth=bmonth+10
 tostring byear bmonth, replace
 gen bday=byear+bmonth+"15"
 destring bday, replace
 replace bday=bday-1000
 gen age=floor((20140130-bday)/10000)
+replace age=. if age<0
 drop byear bmonth bday
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2014.dta", replace
 
@@ -2051,6 +2166,7 @@ replace workexp=workexp2010 if morethan800==0&cohort==9&year==2009
 }
 
 * 8
+** データクリーニング/欠損値の修正・賃金データ作成・失業率のマージ
 {
 ** 欠損値の修正
 {
