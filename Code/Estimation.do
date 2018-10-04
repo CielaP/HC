@@ -2449,5 +2449,191 @@ IVは係数, 有意水準が付くタイミング, リターンどれも似て�
 
 *** Topel
 {
+*** linear
+{
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_toda.dta", clear
+destring, replace
+tsset id year
+* 変数を作る
+sort empid year
+gen initialemp=workexp-emptenure
+** 1st stageに使うサンプルにフラグを立てて賃金とテニュアの差の変数を作成
+bysort empid (year): gen fst=1 ///
+if _n!=1&emptenure>=1
+replace fst=0 if fst==.
+gen emptendif2=2*emptenure-1 if fst==1
+gen emptendif3=3*(emptenure^2)-3*emptenure+1 if fst==1
+gen empexpdif2=2*workexp-1 if fst==1
+gen empexpdif3=3*(workexp^2)-3*workexp+1 if fst==1
+bysort empid (year): gen empwagedif=realwage-realwage[_n-1] if fst==1
+drop if initialemp<0
+tabulate year, generate(y)
+for X in num 1/4 \ Y in num 2004/2007 : rename yX yY
+drop if occ==1
+replace fst=0 if fst==.|emptendif2==.
 }
+
+**** 1st step
+reg empwagedif if fst==1
+est sto fst1
+gen coefsum1=_b[_cons]
+gen emptenB1=emptenure*_b[_cons]
+gen intwemp1=realwage-emptenB
+
+**** 2nd step
+reg intwemp1 i.union ///
+i.occ i.ind i.size ///
+initialemp, nocons
+est sto snd1
+gen coefexp1=_b[initialemp]
+
+**** culc return
+{
+capture program drop coef
+program coef, rclass
+	suest fst1 snd1
+	lincom [fst1_mean]_b[_cons]-[snd1_mean]_b[initialemp]
+	return scalar diffse =r(se)
+end
+coef
+capture program drop emprtn
+program emprtn, rclass
+suest fst1 snd1
+	foreach X of numlist 2 5 10 15 20 25 {
+	lincom ([fst1_mean]_b[_cons]-[snd1_mean]_b[initialemp])*`X'
+	return scalar rtn`X' =r(se)
+	}
+end
+emprtn
+}
+}
+
+*** qadratic
+ {
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_toda.dta", clear
+destring, replace
+tsset id year
+* 変数を作る
+sort empid year
+gen initialemp=workexp-emptenure
+** 1st stageに使うサンプルにフラグを立てて賃金とテニュアの差の変数を作成
+bysort empid (year): gen fst=1 ///
+if _n!=1&emptenure>=1
+replace fst=0 if fst==.
+gen emptendif2=2*emptenure-1 if fst==1
+gen emptendif3=3*(emptenure^2)-3*emptenure+1 if fst==1
+gen empexpdif2=2*workexp-1 if fst==1
+gen empexpdif3=3*(workexp^2)-3*workexp+1 if fst==1
+bysort empid (year): gen empwagedif=realwage-realwage[_n-1] if fst==1
+drop if initialemp<0
+tabulate year, generate(y)
+for X in num 1/4 \ Y in num 2004/2007 : rename yX yY
+drop if occ==1
+}
+ 
+**** 1st step
+reg empwagedif emptendif2 empexpdif2 if fst==1
+est sto fst2
+gen emptenB2=emptenure*_b[_cons] ///
++_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2
+gen intwemp2=realwage-emptenB2
+
+**** 2nd step
+reg intwemp2 i.union ///
+i.occ i.ind i.size ///
+initialemp, nocons
+est sto snd2
+gen coefexp2=_b[initialemp]
+
+**** culc return
+{
+capture program drop coef
+program coef, rclass
+	suest fst2 snd2
+	lincom [fst2_mean]_b[_cons]-[snd2_mean]_b[initialemp]
+	return scalar diffse =r(se)
+end
+coef
+capture program drop emprtn
+program emprtn, rclass
+suest fst2 snd2
+	foreach X of numlist 2 5 10 15 20 25 {
+	lincom ([fst2_mean]_b[_cons]-[snd2_mean]_b[initialemp])*`X'+[fst2_mean]_b[emptendif2]*`X'*`X'
+	return scalar rtn`X' =r(se)
+	}
+end
+emprtn
+}
+}
+
+*** cubic
+ {
+quietly {
+use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_toda.dta", clear
+destring, replace
+tsset id year
+* 変数を作る
+sort empid year
+gen initialemp=workexp-emptenure
+** 1st stageに使うサンプルにフラグを立てて賃金とテニュアの差の変数を作成
+bysort empid (year): gen fst=1 ///
+if switch==0&_n!=1&emptenure>=1
+replace fst=0 if fst==.
+gen emptendif2=2*emptenure-1 if fst==1
+gen emptendif3=3*(emptenure^2)-3*emptenure+1 if fst==1
+gen empexpdif2=2*workexp-1 if fst==1
+gen empexpdif3=3*(workexp^2)-3*workexp+1 if fst==1
+bysort empid (year): gen empwagedif=realwage-realwage[_n-1] if fst==1
+drop if initialemp<0
+tabulate year, generate(y)
+for X in num 1/4 \ Y in num 2004/2007 : rename yX yY
+drop if occ==1
+}
+ 
+**** 1st step
+reg empwagedif emptendif2 empexpdif2 emptendif3 empexpdif3
+est sto fst3
+gen emptenB3=emptenure*_b[_cons] ///
++_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2 ///
++_b[emptendif3]*emptenure^3+_b[empexpdif3]*workexp^3
+gen intwemp3=realwage-emptenB3
+
+**** 2nd step
+reg intwemp3 i.union ///
+i.occ i.ind i.size ///
+initialemp, nocons
+est sto snd3
+gen coefexp3=_b[initialemp]
+
+**** culc return
+{
+capture program drop coef
+program coef, rclass
+	suest fst3 snd3
+	lincom [fst3_mean]_b[_cons]-[snd3_mean]_b[initialemp]
+	return scalar diffse =r(se)
+end
+coef
+capture program drop emprtn
+program emprtn, rclass
+suest fst3 snd3
+	foreach X of numlist 2 5 10 15 20 25 {
+	lincom ([fst3_mean]_b[_cons]-[snd3_mean]_b[initialemp])*`X'+ ///
+	[fst3_mean]_b[emptendif2]*`X'*`X'+[fst3_mean]_b[emptendif3]*`X'*`X'*`X'
+	return scalar rtn`X' =r(se)
+	}
+end
+emprtn
+}
+}
+}
+/*
+本当に教育年数コントロールしていないのか疑問
+(してもしなくても結果はほぼ変わらない)
+戸田さんとはtenureの係数について異なる: 有意にならない, 大きすぎる
+勤続年数10年以降でリターンがかなり違う
+*/
+
 }
