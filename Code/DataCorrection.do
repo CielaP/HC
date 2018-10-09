@@ -29,6 +29,8 @@ set more off
 */
 ** cohort dummy: JHPS2009=9, KHPS2004=4, KHPS2007=7, KHPS2012=12
 
+log using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\DataCorrection.smcl", replace
+
 * 1--4
 ** new cohort: データ整理+学歴勤務履歴データの抽出
 {
@@ -2408,3 +2410,5 @@ drop if new==1
 
 
 save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", replace
+
+log close
