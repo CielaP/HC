@@ -36,15 +36,15 @@ local SvyY=$SVYY
 disp "Survey year is `SvyY'"
 
 *Read original data files
-disp "`Original'JHPS`SvyY'.csv"
-import delimited "`Original'JHPS`SvyY'.csv", clear 
+disp "`Original'\JHPS`SvyY'.csv"
+import delimited "`Original'\JHPS`SvyY'.csv", clear 
 count
 
 *Generate main variables**************
 
 **Survey year & month
 ge year=`SvyY'
-sum year
+sum year /* check that correct variable are generated */
 ge month = 1
 gen svyym=ym(year, month) /* date and time function */
 format svyym %tmM,_CY /* format of the survey date = 1, SvyY */
@@ -53,8 +53,13 @@ disp %tm r(min) /* comfirm: min of the survey date -> must be SvyY/1 */
 disp %tm r(max) /* comfirm: max of the survey date -> must be SvyY/1 */
 
 ***** ***** ***** ***** ***** ***** kokokara ***** ***** ***** ***** ***** ***** 
-**Rename variable names
-do Renamevar`SvyY'.do
+** Rename variable names
+*** repondent
+do "$Path\Code\Renamevar`SvyY'_rp.do"
+tab sex   /*Check that data are read correctly*/
+sum byear
+*** spouse
+do "$Path\Code\Renamevar`SvyY'_sp.do"
 tab sex   /*Check that data are read correctly*/
 sum byear
 
