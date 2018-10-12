@@ -53,6 +53,7 @@ forvalues m = 1/`n' {
 }
 
 * 2: Bind data of the all years
+/* kokomo loop dekirukamo? */
 use "$Inter\JHPS2009.dta",  clear
 *** JHPS
 forvalues n = 2010/2014{
@@ -77,6 +78,8 @@ do "$Path\Code\ConstructVar.do"
 
 * 5: Sample selection and save data
 do "$Path\Code\SampleSelection.do"
+
+save "$Input\jhps_hc.dta", replace
 
 * Create Figures
 do "$STATAPATH\do\histogram.do"
