@@ -45,7 +45,8 @@ tab head marital, sum(dhead) mean miss
 
 *** Q = Are you main breadwinner?
 ge dearnmost=.
-replace dearnmost=1 if dhead==1&earnif==2
+replace earnmost=1 if dhead==1&earnif==2
+replace dearnmost=1 if earnmost==1
 replace dearnmost=0 if dearnmost!=1
 label var dearnmost "Beradwinner dummy"
 tab earnmost marital, sum(dearnmost) mean miss
@@ -64,7 +65,7 @@ rename ( `varlist' ) ///
 				v173 v174 v175 v176 v177 v178 ///
 				v180 v181 v182 ///
 				) 
-
+drop dhead dearnmost
 
 * 2. rename varname of spouse
 rename ( ///
@@ -79,25 +80,34 @@ rename ( ///
 
 ** replace id
 replace id = id+10000
-* 続柄が配偶者のサンプルのみ残す
+* keep sample of spouse
 keep if marital==1
-* 世帯主ダミー作成
-** 世帯主ですか
-replace head=0 if head!=2
-replace head=1 if head==2
-** 主たる生計維持者
-replace earnmost=1 if earnmost==2|head==1&earnif==2
-replace earnmost=0 if earnmost!=1
+** make household head dummy
+*** Q = Are you head of household?
+gen dhead=head
+replace dhead=0 if head!=2
+replace dhead=1 if head==2
+label var dhead "HH head dummy"
+tab head marital, sum(dhead) mean miss
+
+*** Q = Are you main breadwinner?
+ge dearnmost=.
+replace earnmost=2 if dhead==1&earnif==2
+replace dearnmost=1 if earnmost==2
+replace dearnmost=0 if dearnmost!=1
+label var dearnmost "Beradwinner dummy"
+tab earnmost marital, sum(dearnmost) mean miss
 
 ** save as matrix
-mkmat `varlist', matrix(spo)
+mkmat `varlist' dhead dearnmost, matrix(spo)
 
 * 3. bind 1 and 2
-mat sp = pri \ spo
+mat ps = pri \ spo
 mat dir
 
 * save matrix as dta
 drop _all
-svmat double sp, name(col)
+svmat double ps, name(col)
+gen switch=0
 qui sum
 save "$Inter\JHPS`SvyY'.dta", replace
