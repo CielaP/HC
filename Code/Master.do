@@ -6,7 +6,7 @@
 * 
 * This file runs the following files:
 * - DataCreation.do: 
-* - RenamevarYYYY.do: 
+* - Renamevar`currentData'.do: 
 * - Mergevar.do: 
 * - 
 ******************************************************************
@@ -27,31 +27,31 @@ adopath + $Inter
 * 1: Data cleaning
 ** tent
 global SVYY 2009
+global CurrentData JHPS
 
 ** set the lists of data set and corresponding year lists
-global data "JHPS KHPS" /* list of the data set */
-global ylist jy ky /* list of the name of year lists */
+global DataSet "JHPS KHPS" /* list of the data set */
+global YearList JHPSyear KHPSyear /* list of the name of year lists */
 numlist "2009/2014"
-global jy "`r(numlist)'" /* list of year of JHPS */
+global JHPSyear "`r(numlist)'" /* list of year of JHPS */
 numlist "2004/2014"
-global ky "`r(numlist)'" /* list of year of KHPS */
+global KHPSyear "`r(numlist)'" /* list of year of KHPS */
 local n: word count $data /* set counter */
-disp "data list: $data, year list: $ylist"
+disp "data list: $DataSet, year list: $YearList"
 
 forvalues m = 1/`n' {
-	global cdata: word `m' of $data /* select data set */
-	disp "$cdata"
-	local cylist: word `m' of $ylist /* select year list according to data set */
-	disp "`cylist'"
-	local numyear: word count $`cylist'  /* set counter */
-	disp "`numyear'"
-		forvalues k = 1/`numyear'{ /* loop reading do-file within year list */
-			global SVYY: word `k' of $`cylist' /* set a survey year */
-			disp $SVYY
+	global CurrentData: word `m' of $DataSet /* select data set */
+	local currentYearList: word `m' of $YearList /* select year list according to data set */
+	local numyear: word count $`currentYearList'  /* set counter */
+	dis "Current data: $CurrentData, year list: `currentYearList', number of year: `numyear' "
+		forv	alues k = 1/`numyear'{ /* loop reading do-file within year list */
+			global SVYY: word `k' of $`currentYearList' /* set a survey year */
+			disp "Current survey year: $SVYY"
 			*do "$Path\Code\DataCleaning.do"
 		}
 }
 
+***** ***** ***** ***** ***** ***** kokokara ***** ***** ***** ***** ***** ***** 
 * 2: Bind data of the all years
 /* kokomo loop dekirukamo? */
 use "$Inter\JHPS2009.dta",  clear
@@ -71,6 +71,7 @@ forvalues n = 2007 2012{
 
 * 3: Merge schooling and experience
 do "$Path\Code\MergeVar.do"
+
 
 * 4: Construct tenure variables
 do "$Path\Code\ConstructVar.do"

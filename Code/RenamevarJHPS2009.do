@@ -12,8 +12,13 @@
 ********************************************************
 set mat 11000
 
+* Set survey year
+local SvyY=$SVYY
+local currentData $CurrentData
+disp "Current data set is `currentData'`SvyY'"
+
 * set list of variables
-local varlist ///
+local varList ///
 				id marital sex byear bmonth ///
 				head earnif earnmost ///
 				edbg workstatus ///
@@ -21,7 +26,7 @@ local varlist ///
 				empsinceyear empsincemonth union ///
 				paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
 				workdaypermonth workhourperweek overworkperweek
-disp "`varlist'"
+disp "`varList'"
 
 
 * 1. rename varname of repondent
@@ -34,7 +39,8 @@ rename ( ///
 				v173 v174 v175 v176 v177 v178 ///
 				v180 v181 v182 ///
 				) ///
-			  ( `varlist' )
+			  ( `varList' )
+sum `varList'
 
 ** make household head dummy
 *** Q = Are you head of household?
@@ -52,10 +58,10 @@ label var dearnmost "Beradwinner dummy"
 tab earnmost marital, sum(dearnmost) mean miss
 
 ** save as matrix
-mkmat `varlist' dhead dearnmost, matrix(pri)
+mkmat `varList' dhead dearnmost, matrix(pri)
 
 ** restore variable names
-rename ( `varlist' ) ///
+rename ( `varList' ) ///
 				( ///
 				v1 v4 v5 v6 v7 ///
 				v101 v102 v103 ///
@@ -76,12 +82,15 @@ rename ( ///
 				v300 v301 v302 ///
 				v306 v307 v308 v309 v310 v311 ///
 				v313 v314 v315) ///
-			  ( `varlist' )
+			  ( `varList' )
+sum `varList'
 
 ** replace id
 replace id = id+10000
+sum id
 * keep sample of spouse
 keep if marital==1
+count
 ** make household head dummy
 *** Q = Are you head of household?
 gen dhead=head
@@ -99,7 +108,7 @@ label var dearnmost "Beradwinner dummy"
 tab earnmost marital, sum(dearnmost) mean miss
 
 ** save as matrix
-mkmat `varlist' dhead dearnmost, matrix(spo)
+mkmat `varList' dhead dearnmost, matrix(spo)
 
 * 3. bind 1 and 2
 mat ps = pri \ spo
@@ -110,4 +119,4 @@ drop _all
 svmat double ps, name(col)
 gen switch=0
 qui sum
-save "$Inter\JHPS`SvyY'.dta", replace
+save "$Inter/`currentData'`SvyY'.dta", replace

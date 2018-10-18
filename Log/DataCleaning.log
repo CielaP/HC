@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
+> tion\Log\DataCleaning.log
+  log type:  text
+ opened on:  18 Oct 2018, 19:12:22
+
+. 
+. *qui{
+. 
+. * Set survey year
+. local SvyY=$SVYY
+
+. local currentData $CurrentData
+
+. disp "Current data set is `currentData'`SvyY'"
+Current data set is KHPS2014
+
+. 
+. * Read original data files
+. disp "`original'/`currentData'`SvyY'.csv"
+C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Original
+> Data/KHPS2014.csv
+
+. import delimited "`original'/`currentData'`SvyY'.csv", clear 
+(957 vars, 3,312 obs)
+
+. count
+  3,312
+
+. 
+. 
+. * Rename variable names
+. do "`path'\Code\Renamevar`currentData'`SvyY'.do"
+file
+    C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Co
+    > de\RenamevarKHPS2014.do not found
+r(601);
+
+end of do-file
+
+r(601);
+
