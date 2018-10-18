@@ -27,7 +27,7 @@ disp "`path', `original', `input', `output', `inter' "
 
 * Open Log file
 cap log close /* close any log files that accidentally have been left open. */
-log using "`path'\Log\DataCleaning.log", replace
+*log using "`path'\Log\DataCleaning.log", replace
 
 *qui{
 
@@ -195,26 +195,26 @@ sum bonus obonus
 sum yearlypaid oyearlypaid
 
 ** annual income according to the pay method
-gen income=0
+gen annualIncome=0
 *** monthly: monthlypaid*12+bonus
-replace income=monthlypaid*12+bonus if paymethod==1|paymethod==2
-sum income if paymethod==1|paymethod==2
+replace annualIncome=monthlypaid*12+bonus if paymethod==1|paymethod==2
+sum annualIncome if paymethod==1|paymethod==2
 *** daily: dailypaid*workdaypermonth*12+bonus
-replace income=dailypaid*workdaypermonth*12+bonus if paymethod==3
-sum income if paymethod==3
+replace annualIncome=dailypaid*workdaypermonth*12+bonus if paymethod==3
+sum annualIncome if paymethod==3
 *** hourly: hourlypaid*workhourperweek*52+bonus
-replace income=hourlypaid*workinghour+bonus if paymethod==4
-sum income if paymethod==4
+replace annualIncome=hourlypaid*workinghour+bonus if paymethod==4
+sum annualIncome if paymethod==4
 *** yearly: yearlypaid+bonus
-replace income=yearlypaid+bonus if paymethod==5
-sum income if paymethod==5
+replace annualIncome=yearlypaid+bonus if paymethod==5
+sum annualIncome if paymethod==5
 *** unknown method: missing value
-replace income=. if paymethod==.
-misstable sum income paymethod
-sum income, de
+replace annualIncome=. if paymethod==.
+misstable sum annualIncome paymethod
+sum annualIncome, de
 
-** hourly wage: income/workinghour
-gen hourlywage=income/workinghour
+** hourly wage: annualIncome/workinghour
+gen hourlywage=annualIncome/workinghour
 sum hourlywage, de
 
 ** Realize hourly wage + merge unemployment rate and inflation rate
@@ -222,7 +222,7 @@ local inter $Inter
 gen realwage=0
 merge m:1 year using "`inter'\InflateUnempRate.dta"
 replace realwage=hourlywage/infrate*100
-sum realwage hourlywage income
+sum realwage hourlywage annualIncome
 drop if _merge==2
 drop _merge lagunemprate infrate
 
@@ -241,6 +241,6 @@ save "`inter'/`currentData'`SvyY'.dta", replace
 
 
 *}
-log close 
+*log close 
 
 set more on

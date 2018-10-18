@@ -26,7 +26,7 @@ adopath + $Inter
  
 * 1: Data cleaning
 ** tent
-global SVYY 2009
+global SVYY 2010
 global CurrentData JHPS
 
 ** set the lists of data set and corresponding year lists

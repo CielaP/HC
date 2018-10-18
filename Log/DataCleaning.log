@@ -41,3 +41,63 @@ end of do-file
 
 r(601);
 
+. do "C:\Users\AYAKAN~1\AppData\Local\Temp\STD1fb0_000000.tmp"
+
+.  
+. * 1: Data cleaning
+. ** tent
+. global SVYY 2010
+
+. global CurrentData JHPS
+
+. 
+end of do-file
+
+. do "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Co
+> de\DataCleaning.do"
+
+. *******************************************************
+. *Title: DataCleaning
+. *Date: Oct 12th, 2018
+. *Written by Ayaka Nakamura
+. *
+. *This file creates analysis data for ...
+. *
+. * Step 1:  (base)
+. * Step 2: 
+. * Step 3: 
+. ********************************************************
+. 
+. *version 14 /*if needed*/
+. clear all
+
+. set more off
+
+. set trace off
+
+. *set mem 1g /*not requiered after version 12*/
+. pause off
+
+. 
+. * Define folder location
+. local path $Path
+
+. local original $Original
+
+. local input $Input
+
+. local output $Output
+
+. local inter $Inter
+
+. disp "`path', `original', `input', `output', `inter' "
+C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion, C:\User
+> s\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData,
+>  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input
+> , C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Outp
+> ut, C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
+> termediate 
+
+. 
+. * Open Log file
+. cap log close /* close any log files that accidentally have been left open. */
