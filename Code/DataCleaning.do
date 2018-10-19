@@ -2,19 +2,16 @@
 *Title: DataCleaning
 *Date: Oct 12th, 2018
 *Written by Ayaka Nakamura
-*
-*This file creates analysis data for ...
-*
-* Step 1:  (base)
-* Step 2: 
-* Step 3: 
+* 
+* This file creates data cleaned by year
+* 
+* 1. Rename variable names
+* 2. Generate main variables
 ********************************************************
 
-*version 14 /*if needed*/
 clear all
 set more off
 set trace off
-*set mem 1g /*not requiered after version 12*/
 pause off
 
 * Define folder location
@@ -42,12 +39,13 @@ import delimited "`original'/`currentData'`SvyY'.csv", clear
 count
 
 
-* Rename variable names
-do "`path'\Code\Renamevar`currentData'`SvyY'.do"
+* 1. Rename variable names
+do "`path'\Code\Renamevar_Varlist`currentData'`SvyY'.do"
+do "`path'\Code\Renamevar.do"
 tab sex   /* Check that data are read correctly */
 
 
-* Generate main variables
+* 2. Generate main variables
 ** Survey year & month
 ge year=`SvyY'
 sum year /* check that correct variable are generated */
@@ -236,11 +234,8 @@ sum orealwage realwage
 }
 
 
-*Save Data
+* Save Data
 save "`inter'/`currentData'`SvyY'.dta", replace
-
 
 *}
 *log close 
-
-set more on

@@ -1,45 +1,44 @@
 *******************************************************
-*Title: RenamevarJHPS2011
-*Date: Oct 6th, 2018
+*Title: Renamevar
+*Date: Oct 19th, 2018
 *Written by Ayaka Nakamura
 *
-*This file changes variables' name in 2011 survey
+*This file rename variables and save cleaned data as dta
 * 
-* 1. rename varname of repondent
-* 2. rename varname of spouse
+* 1. rename varname of repondent and make head dummy
+* 2. rename varname of spouse and make head dummy
 * 3. bind 1 and 2
-* 
 ********************************************************
-set mat 11000
 
-* Set survey year
+/* definition of id
+** JHPS(principal): id=original id
+** JHPS(spouse): id=original id+10000
+** KHPS(principal): id=original id+20000
+** KHPS(spouse,including new_cohort): id=original id+30000
+** KHPS(new_cohort): id=original id+40000
+*/
+
+* set survey year
 local SvyY=$SVYY
-local currentData $CurrentData
+local currentData KHPS
 disp "Current data set is `currentData'`SvyY'"
 
 * set list of variables
-local varList ///
-				id marital sex byear bmonth ///
-				head earnif earnmost ///
-				workstatus ///
-				occ owner ind size employed regular ///
-				switch union ///
-				paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
-				workdaypermonth workhourperweek overworkperweek
-disp "`varList'"
+local varList $VarList
+local renameListPri $RenameListPri
+local renameListSpo $RenameListSpo
+local matVarList $MatVarList
 
 
 * 1. rename varname of repondent
-rename ( ///
-				v1 v4 v5 v6 v7 ///
-				v101 v102 v103 ///
-				v169 ///
-				v176 v177 v178 v179 v182 v183 ///
-				v219 v190 ///
-				v192 v193 v194 v195 v196 v197 ///
-				v199 v200 v201) ///
-				( `varList' )
+rename ( `renameListPri') ( `varList' )
 sum `varList'
+
+** replace id
+if "`currentData'"=="KHPS"{
+	replace id = id+20000
+}
+sum id
 
 ** make household head dummy
 *** Q = Are you head of household?
@@ -53,34 +52,19 @@ ge dearnmost=.
 replace earnmost=1 if dhead==1&earnif==2
 replace dearnmost=1 if earnmost==1
 replace dearnmost=0 if dearnmost!=1
-label var dearnmost "Beradwinner dummy"
+label var dearnmost "Breadwinner dummy"
 tab earnmost marital, sum(dearnmost) mean miss
 
-** save as matrix
-mkmat `varList' dhead dearnmost, matrix(pri)
+** save variable as matrix
+mkmat `matVarList', matrix(pri)
 
 ** restore variable names
-rename ( `varList' ) ///
-				( ///
-				v1 v4 v5 v6 v7 ///
-				v101 v102 v103 ///
-				v169 ///
-				v176 v177 v178 v179 v182 v183 ///
-				v219 v190 ///
-				v192 v193 v194 v195 v196 v197 ///
-				v199 v200 v201)
+rename ( `varList' ) ( `renameListPri' )
 drop dhead dearnmost
 
+
 * 2. rename varname of spouse
-rename rename ( ///
-				v1 v4  v12 v13 v14 ///
-				v101 v102 v103 ///
-				v382 ///
-				v389 v390 v391 v392 v395 v396 ///
-				v432 v403 ///
-				v405 v406 v407 v408 v409 v410 ///
-				v412 v413 v414) ///
-				( `varList' )
+rename (  `renameListSpo' ) ( `varList' )
 sum `varList'
 
 ** replace id
@@ -89,7 +73,8 @@ sum id
 * keep sample of spouse
 keep if marital==1
 count
-** make household head dummy
+
+* make household head dummy
 *** Q = Are you head of household?
 gen dhead=head
 replace dhead=0 if head!=2
@@ -105,14 +90,15 @@ replace dearnmost=0 if dearnmost!=1
 label var dearnmost "Beradwinner dummy"
 tab earnmost marital, sum(dearnmost) mean miss
 
-** save as matrix
-mkmat `varList' dhead dearnmost, matrix(spo)
+** save variable as matrix
+mkmat `matVarList', matrix(spo)
+
 
 * 3. bind 1 and 2
 mat ps = pri \ spo
 mat dir
 
-* save matrix as dta
+** save matrix as dta
 drop _all
 svmat double ps, name(col)
 qui sum

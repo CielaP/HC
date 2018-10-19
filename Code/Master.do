@@ -1,15 +1,23 @@
 *****************************************************************
 * Title: Master
 * Date: Oct 6th, 2018
-* Written by Nobu Kikuchi
-* Modified by Ayaka Nakamura
+* Written by Ayaka Nakamura
 * 
 * This file runs the following files:
-* - DataCreation.do: 
-* - Renamevar`currentData'.do: 
-* - Mergevar.do: 
+* - DataCleaning.do: 
+* 		- Renamevar`currentData'.do: 
+* 			- HeadDummy_pri.do
+* 			- HeadDummy_spo.do
+* - MergeVar.do: 
 * - 
-******************************************************************
+* 
+* Step
+* 1: Data cleaning
+* 2: Bind data of the all years
+* 3: Merge schooling and experience
+* 4: Construct tenure variables
+* 5: Sample selection and save data
+*****************************************************************
 
 * Set Directories
 global Path "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion"
@@ -26,7 +34,7 @@ adopath + $Inter
  
 * 1: Data cleaning
 ** tent
-global SVYY 2010
+global SVYY 2009
 global CurrentData JHPS
 
 ** set the lists of data set and corresponding year lists
@@ -44,7 +52,7 @@ forvalues m = 1/`n' {
 	local currentYearList: word `m' of $YearList /* select year list according to data set */
 	local numyear: word count $`currentYearList'  /* set counter */
 	dis "Current data: $CurrentData, year list: `currentYearList', number of year: `numyear' "
-		forv	alues k = 1/`numyear'{ /* loop reading do-file within year list */
+		forvalues k = 1/`numyear'{ /* loop reading do-file within year list */
 			global SVYY: word `k' of $`currentYearList' /* set a survey year */
 			disp "Current survey year: $SVYY"
 			*do "$Path\Code\DataCleaning.do"
@@ -74,7 +82,7 @@ do "$Path\Code\MergeVar.do"
 
 
 * 4: Construct tenure variables
-do "$Path\Code\ConstructVar.do"
+do "$Path\Code\ConstructTen.do"
 
 
 * 5: Sample selection and save data
