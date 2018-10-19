@@ -5,9 +5,8 @@
 * 
 * This file runs the following files:
 * - DataCleaning.do: 
-* 		- Renamevar`currentData'.do: 
-* 			- HeadDummy_pri.do
-* 			- HeadDummy_spo.do
+* 		- Renamevar_Varlist`currentData'`SvyY'.do: 
+* 		- Renamevar.do: 
 * - MergeVar.do: 
 * - 
 * 
@@ -19,6 +18,7 @@
 * 5: Sample selection and save data
 *****************************************************************
 
+*  0. Preparation
 * Set Directories
 global Path "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion"
 global Original "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData"
@@ -32,7 +32,6 @@ adopath + $Input
 adopath + $Output
 adopath + $Inter
  
-* 1: Data cleaning
 ** tent
 global SVYY 2009
 global CurrentData JHPS
@@ -44,16 +43,22 @@ numlist "2009/2014"
 global JHPSyear "`r(numlist)'" /* list of year of JHPS */
 numlist "2004/2014"
 global KHPSyear "`r(numlist)'" /* list of year of KHPS */
-local n: word count $data /* set counter */
+local n: word count $DataSet /* set counter of data set */
 disp "data list: $DataSet, year list: $YearList"
 
+
+* 1: Data cleaning
 forvalues m = 1/`n' {
-	global CurrentData: word `m' of $DataSet /* select data set */
-	local currentYearList: word `m' of $YearList /* select year list according to data set */
-	local numyear: word count $`currentYearList'  /* set counter */
+	/* select data set */
+	global CurrentData: word `m' of $DataSet
+	/* select year list according to data set */
+	local currentYearList: word `m' of $YearList
+	/* set counter of year list */
+	local numyear: word count $`currentYearList'
 	dis "Current data: $CurrentData, year list: `currentYearList', number of year: `numyear' "
 		forvalues k = 1/`numyear'{ /* loop reading do-file within year list */
-			global SVYY: word `k' of $`currentYearList' /* set a survey year */
+			/* set a survey year */
+			global SVYY: word `k' of $`currentYearList'
 			disp "Current survey year: $SVYY"
 			*do "$Path\Code\DataCleaning.do"
 		}

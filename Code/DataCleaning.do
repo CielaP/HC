@@ -51,13 +51,16 @@ ge year=`SvyY'
 sum year /* check that correct variable are generated */
 ge month = 1
 gen svyym=ym(year, month) /* date and time function */
-format svyym %tmM,_CY /* format of the survey date = 1, SvyY */
+/* format of the survey date = 1, SvyY */
+format svyym %tmM,_CY
 qui sum
-disp %tm r(min) /* comfirm: min of the survey date -> must be SvyY/1 */
-disp %tm r(max) /* comfirm: max of the survey date -> must be SvyY/1 */
+/* comfirm: min and max of the survey date -> must be SvyY/1 */
+disp %tm r(min)
+disp %tm r(max)
 
 ** Age
-mvdecode byear, mv(9999) /* Recode missing values */
+/* Recode missing values */
+mvdecode byear, mv(9999)
 mvdecode bmonth, mv(99)
 sum byear
 gen bym=ym(byear, bmonth)
