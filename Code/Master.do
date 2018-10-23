@@ -32,31 +32,33 @@ adopath + $Input
 adopath + $Output
 adopath + $Inter
  
-** tent
-global SVYY 2009
+***************************
+/* tent */
+global SVYY 2011
 global CurrentData JHPS
+***************************
 
 ** set the lists of data set and corresponding year lists
 global DataSet "JHPS KHPS" /* list of the data set */
-global YearList JHPSyear KHPSyear /* list of the name of year lists */
 numlist "2009/2014"
-global JHPSyear "`r(numlist)'" /* list of year of JHPS */
+global JHPSyear "`r(numlist)'" /* list of year in JHPS */
 numlist "2004/2014"
-global KHPSyear "`r(numlist)'" /* list of year of KHPS */
-local n: word count $DataSet /* set counter of data set */
+global KHPSyear "`r(numlist)'" /* list of year in KHPS */
+global YearList JHPSyear KHPSyear /* list of the name of year lists */
 disp "data list: $DataSet, year list: $YearList"
 
 
 * 1: Data cleaning
-forvalues m = 1/`n' {
+local n: word count $DataSet /* set counter of data set */
+forvalues m = 1/`n' { /* loop within data set */
 	/* select data set */
 	global CurrentData: word `m' of $DataSet
 	/* select year list according to data set */
 	local currentYearList: word `m' of $YearList
 	/* set counter of year list */
-	local numyear: word count $`currentYearList'
-	dis "Current data: $CurrentData, year list: `currentYearList', number of year: `numyear' "
-		forvalues k = 1/`numyear'{ /* loop reading do-file within year list */
+	local numYear: word count $`currentYearList'
+	dis "Current data: $CurrentData, year list: `currentYearList', number of year: `numYear' "
+		forvalues k = 1/`numYear'{ /* loop reading do-file within year list */
 			/* set a survey year */
 			global SVYY: word `k' of $`currentYearList'
 			disp "Current survey year: $SVYY"

@@ -29,7 +29,7 @@ cap log close /* close any log files that accidentally have been left open. */
 *qui{
 
 * Set survey year
-local SvyY=$SVYY
+local SvyY $SVYY
 local currentData $CurrentData
 disp "Current data set is `currentData'`SvyY'"
 

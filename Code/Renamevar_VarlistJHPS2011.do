@@ -32,7 +32,7 @@ sum $RenameListPri
 
 ** variable number of spouse
 global RenameListSpo ///
-				v1 v4  v12 v13 v14 //
+				v1 v4  v12 v13 v14 ///
 				v101 v102 v103 ///
 				v382 ///
 				v389 v390 v391 v392 v395 v396 ///
