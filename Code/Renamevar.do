@@ -33,8 +33,8 @@ local matVarList $MatVarList
 
 * 1. rename varname and make head dummy
 local n: word count `renameList' /* set counter of renameList */
-forvalues i = 1/`n' { /* loop within data set */
-	/* select data set */
+forvalues i = 1/`n' { /* loop within rename list */
+	/* select list */
 	local currentRenameList: word `i' of `renameList'
 	dis "rename variables of `currentRenameList' "
 	
@@ -97,70 +97,4 @@ drop _all
 svmat double ps, name(col)
 qui sum
 save "$Inter/`currentData'`SvyY'.dta", replace
-
-
-/* the past code (Save temporarily)
-* 1. rename varname of repondent
-rename ( `renameListPri') ( `varList' )
-sum `varList'
-
-** replace id
-if "`currentData'"=="KHPS"{
-	replace id = id+20000
-}
-sum id
-
-/* HHダミーを作成する関数作ってpri=1, spo=2とか番号を引数にしたら短くなる? */
-** make household head dummy
-*** Q = Are you head of household?
-gen dhead=head
-replace dhead=0 if head!=1
-label var dhead "HH head dummy"
-tab head marital, sum(dhead) mean miss
-
-*** Q = Are you main breadwinner?
-ge dearnmost=.
-replace earnmost=1 if dhead==1&earnif==2
-replace dearnmost=1 if earnmost==`i'
-replace dearnmost=0 if dearnmost!=`i'
-label var dearnmost "Breadwinner dummy"
-tab earnmost marital, sum(dearnmost) mean miss
-
-** save variable as matrix
-mkmat `matVarList', matrix(pri)
-
-** restore variable names
-rename ( `varList' ) ( `renameListPri' )
-drop dhead dearnmost
-
-
-* 2. rename varname of spouse
-rename (  `renameListSpo' ) ( `varList' )
-sum `varList'
-
-** replace id
-replace id = id+10000
-sum id
-* keep sample of spouse
-keep if marital==1
-count
-
-* make household head dummy
-*** Q = Are you head of household?
-gen dhead=head
-replace dhead=0 if head!=2
-replace dhead=1 if head==2
-label var dhead "HH head dummy"
-tab head marital, sum(dhead) mean miss
-
-*** Q = Are you main breadwinner?
-ge dearnmost=.
-replace earnmost=2 if dhead==1&earnif==2
-replace dearnmost=1 if earnmost==2
-replace dearnmost=0 if dearnmost!=1
-label var dearnmost "Beradwinner dummy"
-tab earnmost marital, sum(dearnmost) mean miss
-
-** save variable as matrix
-mkmat `matVarList', matrix(spo)
-*/
+mat drop _all

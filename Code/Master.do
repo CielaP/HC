@@ -68,20 +68,20 @@ forvalues m = 1/`n' { /* loop within data set */
 
 ***** ***** ***** ***** ***** ***** kokokara ***** ***** ***** ***** ***** ***** 
 * 2: Bind data of the all years
-/* kokomo loop dekirukamo? */
 use "$Inter\JHPS2009.dta",  clear
 *** JHPS
-forvalues n = 2010/2014{
-	append using "$Inter\JHPS`n'.dta"
+forvalues year = 2010/2014{
+	append using "$Inter\JHPS`year'.dta"
 }
 *** KHPS
-forvalues n = 2004/2014{
-	append using "$Inter\KHPS`n'.dta"
+forvalues year = 2004/2014{
+	append using "$Inter\KHPS`year'.dta"
 }
 *** new cohort
-forvalues n = 2007 2012{
-	append using "$Inter\KHPS`n'_new.dta"
+forvalues year = 2007 2012{
+	append using "$Inter\KHPS`year'_new.dta"
 }
+save "`inter'\JHPSKHPS_2004_2014.dta", replace
 
 
 * 3: Merge schooling and experience
