@@ -50,6 +50,7 @@ tab edbg schooling
 keep id schooling
 save "`inter'\Schooling.dta", replace
 
+
 /* 労働経験を聞いている年の変数名変更ファイルを作らないと回らない */
 ** working experience
 local expData JHPS2010 KHPS2004 KHPS2007_new KHPS2012_new
@@ -77,17 +78,18 @@ forvalues data_i = 1/`num_k' { /* loop within data set */
 	
 	** save data
 	qui sum
-	save "$Inter\Workexp`currentExpData'.dta", replace
+	save "$Inter\InitialWorkexp`currentExpData'.dta", replace
 }
 
 *** bind all data
-use "`inter'/WorkexpJHPS2010.dta", clear
+use "`inter'/InitialWorkexpJHPS2010.dta", clear
 forvalues data_i = 2/`num_k' { /* loop within data set */
 	local currentExpData: word `data_i' of `expData'
-	append using "`inter'/Workexp`currentExpData'.dta"
+	append using "`inter'/InitialWorkexp`currentExpData'.dta"
 }
 sort id
-save "`inter'\Workexp.dta", replace
+save "`inter'\InitialWorkexp.dta", replace
+
 
 ** employer tenure
 local empData JHPS2009 KHPS2004 KHPS2007_new KHPS2012_new
@@ -101,8 +103,18 @@ forvalues data_i = 1/`num_k' { /* loop within data set */
 	sort id
 	*** save data
 	qui sum
-	save "$Inter\Empten`currentEmpData'.dta", replace
+	save "$Inter\InitialEmpten`currentEmpData'.dta", replace
 }
+
+*** bind all data
+use "`inter'/InitialEmptenJHPS2009.dta", clear
+forvalues data_i = 2/`num_k' { /* loop within data set */
+	local currentEmpData: word `data_i' of `empData'
+	append using "`inter'/InitialEmpten`currentEmpData'.dta"
+}
+sort id
+save "`inter'\InitialEmpten.dta", replace
+
 
 
 * 2. Merge 1 to other survey years
@@ -117,101 +129,23 @@ merge m:1 id using "`inter'\Schooling.dta"
 drop _merge
 
 ** merge experience using id
-merge m:1 id using "`inter'\Workexp.dta"
+merge m:1 id using "`inter'\InitialWorkexp.dta"
 drop _merge
 
 ** merge employer tenure using id
+merge m:1 id using "`inter'\InitialEmpten.dta"
+drop _merge
 
+
+
+* 3. 
+/* 
+以下の条件式をローカル変数としてコホート判別できる
+local isJHPS id<20000
+local isOldKHPS id>=20000&id<40000
+local isNewKHPS id>=40000
+ */
  
- ** idと労働経験年数を抽出
-{
-*** JHPS労働経験年数
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\JHPS2010.dta", clear
-for num 18/65: gen weX=0
-for num 18/65: mvdecode casX, mv(9)
-for num 18/65: mvdecode regX, mv(9)
-for num 18/65: mvdecode selfX, mv(9)
-for num 18/65: mvdecode sideX, mv(9)
-for num 18/65: mvdecode fmwX, mv(9)
-for num 18/65: replace weX=1 if casX!=. | regX!=. | selfX!=. | sideX!=. | fmwX!=. 
-egen workexp2010=rowtotal(we18-we65)
-keep id workexp2010 year
-sort id
-save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpJHPS.dta", replace
-
-*** KHPS労働経験年数
-***** old cohort
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2004.dta", clear
-for num 18/65: gen weX=0
-for num 18/65: mvdecode casX, mv(9)
-for num 18/65: mvdecode regX, mv(9)
-for num 18/65: mvdecode selfX, mv(9)
-for num 18/65: mvdecode sideX, mv(9)
-for num 18/65: mvdecode fmwX, mv(9)
-for num 18/65: replace weX=1 if casX!=. | regX!=. | selfX!=. | sideX!=. | fmwX!=. 
-egen workexp2004=rowtotal(we18-we65)
-keep id workexp2004 year
-sort id
-save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS.dta", replace
-
-***** new cohort 2007
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2007_new.dta", clear
-for num 18/65: gen weX=0
-for num 18/65: mvdecode casX, mv(9)
-for num 18/65: mvdecode regX, mv(9)
-for num 18/65: mvdecode selfX, mv(9)
-for num 18/65: mvdecode sideX, mv(9)
-for num 18/65: mvdecode fmwX, mv(9)
-for num 18/65: replace weX=1 if casX!=. | regX!=. | selfX!=. | sideX!=. | fmwX!=. 
-egen workexp2007=rowtotal(we18-we65)
-keep id workexp2007 year
-sort id
-save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2007.dta", replace
-
-***** new cohort 2012
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\KHPS2012_new.dta", clear
-for num 18/65: gen weX=0
-for num 18/65: mvdecode casX, mv(9)
-for num 18/65: mvdecode regX, mv(9)
-for num 18/65: mvdecode selfX, mv(9)
-for num 18/65: mvdecode sideX, mv(9)
-for num 18/65: mvdecode fmwX, mv(9)
-for num 18/65: replace weX=1 if casX!=. | regX!=. | selfX!=. | sideX!=. | fmwX!=. 
-egen workexp2012=rowtotal(we18-we65)
-keep id workexp2012 year
-sort id
-save "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2012.dta", replace
-}
-
-
-** 学歴と就業履歴をサンプルにマージ
-{
-** idでサンプルに入ったときの労働経験をマージ
-merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\Cohort.dta"
-drop _merge
-merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpJHPS.dta"
-drop _merge
-merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS.dta"
-drop _merge
-merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2007.dta"
-drop _merge
-merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\WorkexpKHPS_new_2012.dta"
-drop _merge
-
-** idでサンプルに入ったときの勤続年数をマージ
-merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenJHPS.dta"
-drop _merge
-rename emptenure empten2009
-merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS.dta"
-drop _merge
-rename emptenure empten2004
-merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2007.dta"
-drop _merge
-rename emptenure empten2007
-merge m:1 id using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate\EmptenKHPS_new_2012.dta"
-drop _merge
-rename emptenure empten2012
-
 ** データに入った年のサンプルにのみ労働経験年数を作成(他の年はworkexp=0)
 *** experience
 gen intexp=workexp2004 if workexp2004!=.
@@ -238,4 +172,4 @@ tsset id year
 *** JHPSは2010の労働経験年数をもとに2009の労働経験年数を作成
 replace workexp=workexp2010-1 if morethan800==1&cohort==9&year==2009
 replace workexp=workexp2010 if morethan800==0&cohort==9&year==2009
-}
+
