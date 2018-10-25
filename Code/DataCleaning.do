@@ -40,9 +40,6 @@ count
 
 
 * 1. Rename variable names
-local initialYearExp JHPS2010 KHPS2004
-local initialYearEmp JHPS2009 KHPS2004
-
 do "`path'\Code\Renamevar_Varlist`currentData'`SvyY'.do"
 do "`path'\Code\Renamevar.do"
 tab sex   /* Check that data are read correctly */
@@ -78,9 +75,12 @@ sum age, de
 ** Working experience and employer tenure
 /// The first year survey creates variables from responses
 /// and creates missing values ​​for other years 
+local initialYearExp JHPS2010 KHPS2004
+local initialYearEmp JHPS2009 KHPS2004
 
 *** working experience
-if `currentData'`SvyY'=="initialYearExp"{
+/// これじゃ条件判定できないから修正しないと
+if "`currentData'`SvyY'"=="initialYearExp"{
 	/* construct initial workexp for initial survey year */
 	**** recode missing value (9) to 0 for each employment status
 	local empStatus cas regu self side fmw
@@ -111,7 +111,7 @@ else {
 
 
 *** employer tenure
-if `currentData'`SvyY'=="initialYearEmp"{
+if "`currentData'`SvyY'"=="initialYearEmp"{
 	/* construct initial emptenure for initial survey year */
 	**** recode missing value
 	forvalues X of numlist 8888 9999{

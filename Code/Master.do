@@ -13,7 +13,7 @@
 * Step
 * 1: Data cleaning
 * 2: Bind data of the all years
-* 3: Merge schooling and experience
+* 3: Merge schooling
 * 4: Construct tenure variables
 * 5: Sample selection and save data
 *****************************************************************
@@ -58,34 +58,36 @@ forvalues m = 1/`n' { /* loop within data set */
 	/* set counter of year list */
 	local numYear: word count $`currentYearList'
 	dis "Current data: $CurrentData, year list: `currentYearList', number of year: `numYear' "
-		forvalues k = 1/`numYear'{ /* loop reading do-file within year list */
-			/* set a survey year */
-			global SVYY: word `k' of $`currentYearList'
-			disp "Current survey year: $SVYY"
-			*do "$Path\Code\DataCleaning.do"
-		}
+	
+	forvalues k = 1/`numYear'{ /* loop reading do-file within year list */
+		/* set a survey year */
+		global SVYY: word `k' of $`currentYearList'
+		disp "Current survey year: $SVYY"
+		*do "$Path\Code\DataCleaning.do"
+	}
 }
 
 ***** ***** ***** ***** ***** ***** kokokara ***** ***** ***** ***** ***** ***** 
 * 2: Bind data of the all years
 use "$Inter\JHPS2009.dta",  clear
 *** JHPS
-forvalues year = 2010/2014{
-	append using "$Inter\JHPS`year'.dta"
+forvalues year_t = 2010/2014{
+	append using "$Inter\JHPS`year_t'.dta"
 }
 *** KHPS
-forvalues year = 2004/2014{
-	append using "$Inter\KHPS`year'.dta"
+forvalues year_t = 2004/2014{
+	append using "$Inter\KHPS`year_t'.dta"
 }
 *** new cohort
-forvalues year = 2007 2012{
-	append using "$Inter\KHPS`year'_new.dta"
+forvalues year_t = 2007 2012{
+	append using "$Inter\KHPS`year_t'_new.dta"
 }
+qui sum
 save "`inter'\JHPSKHPS_2004_2014.dta", replace
 
 
-* 3: Merge schooling and experience
-do "$Path\Code\MergeVar.do"
+* 3: Merge schooling
+do "$Path\Code\MergeSchooling.do"
 
 
 * 4: Construct tenure variables
@@ -97,6 +99,8 @@ do "$Path\Code\SampleSelection.do"
 
 save "$Input\jhps_hc.dta", replace
 
+
+/*
 * Create Figures
 do "$STATAPATH\do\histogram.do"
 do "$STATAPATH\do\boxplot.do"
