@@ -57,3 +57,4 @@ use "`inter'\JHPSKHPS_2004_2014.dta", clear
 ** merge schooling using id
 merge m:1 id using "`inter'\Schooling.dta"
 drop _merge
+ 

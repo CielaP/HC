@@ -1,5 +1,5 @@
 *******************************************************
-*Title: MergeVar
+*Title: ConstructTen
 *Date: Oct 25th, 2018
 *Written by Ayaka Nakamura
 * 
