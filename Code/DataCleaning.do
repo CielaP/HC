@@ -40,6 +40,9 @@ count
 
 
 * 1. Rename variable names
+local initialYearExp JHPS2010 KHPS2004
+local initialYearEmp JHPS2009 KHPS2004
+
 do "`path'\Code\Renamevar_Varlist`currentData'`SvyY'.do"
 do "`path'\Code\Renamevar.do"
 tab sex   /* Check that data are read correctly */
@@ -71,6 +74,70 @@ disp %tm r(max)
 
 ge age = floor((svyym-bym)/12) /* Assumed birth day is 1st. */
 sum age, de
+
+** Working experience and employer tenure
+/// The first year survey creates variables from responses
+/// and creates missing values ​​for other years 
+
+*** working experience
+if `currentData'`SvyY'=="initialYearExp"{
+	/* construct initial workexp for initial survey year */
+	**** recode missing value (9) to 0 for each employment status
+	local empStatus cas regu self side fmw
+	local num_m: word count `empStatus'
+	forvalues status_j = 1/`num_m'{
+		local currentEmpStatus: word `status_j' of `empStatus'
+		recode `currentEmpStatus'* (9 = 0)
+	}
+	
+	**** make experience dummy in each year
+	/// experience of that year takes 1
+	/// if individual takes 1 in at least one employment status that year
+	for num 18/65: gen weX=0
+	forvalues X=18/65{
+		replace weX=1 if cas`X'+regu`X'+self`X'+side`X'+fmw`X'>=1
+	}
+	sum we*
+	
+	**** total experience dummy to make workexp
+	egen workexp=rowtotal(we18-we65)
+	sum workexp, de
+}
+else { 
+	/* making missing value for years other than initial year */
+	ge workexp=.
+	sum workexp
+	}
+
+
+*** employer tenure
+if `currentData'`SvyY'=="initialYearEmp"{
+	/* construct initial emptenure for initial survey year */
+	**** recode missing value
+	forvalues X of numlist 8888 9999{
+		mvdecode empsinceyear, mv(`X')
+	}
+	forvalues X of numlist 88 99{
+		mvdecode empsincemonth, mv(`X')
+	}
+	
+	gen empym=ym(empsinceyear,empsincemonth)
+	format empym %tmM,_CY
+	label var empym "Employment start year, month"
+	qui sum empym
+	disp %tm r(min)
+	disp %tm r(max)
+	
+	gen emptenure=(svyym-empym)
+	label var emptenure "Tenure months" 
+	sum emptenure, de
+}
+else { 
+	/* making missing value for years other than initial year */
+	ge emptenure=.
+	sum emptenure
+	}
+
 
 ** Recode missing values and make dummy variables
 {
