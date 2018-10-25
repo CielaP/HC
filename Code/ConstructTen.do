@@ -103,3 +103,10 @@ sort id year
 by id: gen empid = 1 if _n==1|switch==1|emptenure<emptenure[_n-1]
 replace empid=sum(empid)
 
+* テニュア変数がマイナスのもの, 変な値のものを欠損値にする
+replace emptenure=. if emptenure<0| emptenure>workexp
+replace workexp=. if workexp<0
+replace occtenure=. if occtenure<0
+* 年間労働時間500時間未満の時給を欠損値にする
+replace realwage=. if workinghour<500
+drop paymethod-overworkperweek cohort workinghour-wage
