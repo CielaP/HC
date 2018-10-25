@@ -121,6 +121,7 @@ if "`currentData'`SvyY'"=="initialYearEmp"{
 		mvdecode empsincemonth, mv(`X')
 	}
 	
+	**** initial employer tenure
 	gen empym=ym(empsinceyear,empsincemonth)
 	format empym %tmM,_CY
 	label var empym "Employment start year, month"
@@ -131,6 +132,9 @@ if "`currentData'`SvyY'"=="initialYearEmp"{
 	gen emptenure=(svyym-empym)
 	label var emptenure "Tenure months" 
 	sum emptenure, de
+	
+	**** generate switch dummy
+	gen switch=0
 }
 else { 
 	/* making missing value for years other than initial year */

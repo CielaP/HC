@@ -63,7 +63,7 @@ forvalues m = 1/`n' { /* loop within data set */
 		/* set a survey year */
 		global SVYY: word `k' of $`currentYearList'
 		disp "Current survey year: $SVYY"
-		*do "$Path\Code\DataCleaning.do"
+		do "$Path\Code\DataCleaning.do"
 	}
 }
 
