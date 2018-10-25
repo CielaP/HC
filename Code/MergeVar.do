@@ -8,7 +8,6 @@
 * 1. Select id, schooling and experience variable from initial survey
 * 2. Merge 1 to other survey years
 ********************************************************
-set mat 11000
 
 * Define folder location
 local path $Path
@@ -65,15 +64,17 @@ forvalues data_i = 1/`num_k' { /* loop within data set */
 	
 	forvalues status_j = 1/`num_m'{
 		local currentEmpStatus: word `status_j' of `empStatus'
-		for num 18/65: mvdecode `currentEmpStatus'X, mv(9)
+		recode `currentEmpStatus'* (9 = 0)
 	}
 	
-	for num 18/65: replace weX=1 if casX!=. | reguX!=. | selfX!=. | sideX!=. | fmwX!=. 
+	forvalues X=18/65{
+		replace weX=1 if cas`X'+regu`X'+self`X'+side`X'+fmw`X'>=1
+	}
 	sum we*
 	
 	egen intexp=rowtotal(we18-we65)
-	keep id intexp year
-
+	keep id intexp
+	
 	** save data
 	qui sum
 	save "$Inter\Workexp`currentExpData'.dta", replace
@@ -82,10 +83,11 @@ forvalues data_i = 1/`num_k' { /* loop within data set */
 *** bind all data
 use "`inter'/WorkexpJHPS2010.dta", clear
 forvalues data_i = 2/`num_k' { /* loop within data set */
-	local currentSchoolingData: word `data_i' of `schoolingData'
-	append using "`inter'/Schooling`currentSchoolingData'.dta"
+	local currentExpData: word `data_i' of `expData'
+	append using "`inter'/Workexp`currentExpData'.dta"
 }
 sort id
+save "`inter'\Workexp.dta", replace
 
 ** employer tenure
 local empData JHPS2009 KHPS2004 KHPS2007_new KHPS2012_new
@@ -115,6 +117,8 @@ merge m:1 id using "`inter'\Schooling.dta"
 drop _merge
 
 ** merge experience using id
+merge m:1 id using "`inter'\Workexp.dta"
+drop _merge
 
 ** merge employer tenure using id
 
