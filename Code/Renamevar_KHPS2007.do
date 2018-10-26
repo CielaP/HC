@@ -44,7 +44,7 @@ gen dsex=.
 gen bYear=.
 gen bMonth=.
 global RenameListSpo ///
-				v1 v4 dsex bYear bMonth ///
+				v1 v4 v14 v15 v16 ///
 				v76 ///
 				v309 ///
 				v329 v330 v331 v332 v335 v336 ///
@@ -52,18 +52,6 @@ global RenameListSpo ///
 				v348 v349 v350 v351 v352 v353 ///
 				v366 v367 v368
 sum $RenameListSpo
-
-*** info. of spouse
-global RelInfo ///
-				v13 v14 v15 v16 ///
-				v20 v21 v22 v23 ///
-				v27 v28 v29 v30 ///
-				v34 v35 v36 v37 ///
-				v41 v42 v43 v44 ///
-				v48 v49 v50 v51 ///
-				v55 v56 v57 v58 ///
-				v62 v63 v64 v65 ///
-				v69 v70 v71 v72 ///
 
 ** variable list to be convert to matrix
 global MatVarList $VarList dhead dearnmost

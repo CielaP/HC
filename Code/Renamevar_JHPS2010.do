@@ -19,9 +19,9 @@ local varList ///
 				paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
 				workdaypermonth workhourperweek overworkperweek
 *** variables of working experience
-local expList ///
-				cas* regu* self* side* fmw*	
-disp "`varList'" "`expList'"
+global ExpList ///
+				cas* full* self* side* fmw*	
+disp "`varList'" "$ExpList"
 
 ** variable number of principal
 *** common variable with other years
@@ -35,11 +35,11 @@ local renameListPri ///
 				v205 v206 v207
 *** variables of working experience
 global CasPri v368-v420
-global ReguPri v421-v473
+global FullPri v421-v473
 global SelfPri v474-v526
 global SidePri v527-v579
 global FmwPri v580-v632
-sum `renameListPri' $CasPri $ReguPri $SelfPri $SidePri $FmwPri
+sum `renameListPri' $CasPri $FullPri $SelfPri $SidePri $FmwPri
 
 ** variable number of spouse
 *** common variable with other years
@@ -53,14 +53,14 @@ local renameListSpo ///
 				v826 v827 v828
 *** variables of working experience
 global CasSpo v989-v1041
-global ReguSpo v1042-v1094
+global FullSpo v1042-v1094
 global SelfSpo v1095-v1147
 global SideSpo v1148-v1200
 global FmwSpo v1201-v1253
-sum `renameListSpo' $CasSpo $ReguSpo $SelfSpo $SideSpo $FmwSpo
+sum `renameListSpo' $CasSpo $FullSpo $SelfSpo $SideSpo $FmwSpo
 
 ** variable list to be convert to matrix
-local matVarList `varList' dhead dearnmost `expList'
+local matVarList `varList' dhead dearnmost $ExpList
 
 * set survey year
 local SvyY=$SVYY
@@ -80,10 +80,14 @@ forvalues i = 1/`n' { /* loop within rename list */
 	** rename common variable
 	rename ( ``currentRenameList'' ) ( `varList' )
 	
+	** rename variable of experience
+	dis " rename variable of experience "
 	global Resp_i `i'
-	do "$Path\Code\Renamevar_Exp.do"
+	global Age_t 18
+do "$Path\Code\Renamevar_Exp.do"
 	
 	if `i'==2{
+		dis " replace id of spouse and drop not married "
 		** replace id (spouse)
 		replace id = id+10000
 		* keep sample of spouse
@@ -93,6 +97,7 @@ forvalues i = 1/`n' { /* loop within rename list */
 	sum id
 	
 	** make household head dummy
+	dis " make household head dummy  "
 	*** Q = Are you head of household?
 	gen dhead=.
 	replace dhead=0 if head!=`i'
@@ -119,6 +124,7 @@ forvalues i = 1/`n' { /* loop within rename list */
 	mat dir
 	
 	** restore variable names
+	dis " restore variable names  "
 	rename ( `varList' ) ( ``currentRenameList'' )
 	drop dhead dearnmost
 	drop $ExpList

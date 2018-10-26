@@ -33,20 +33,21 @@ adopath + $Output
 adopath + $Inter
  
 set mat 11000
-
+/*
 ***************************
-/* tent */
-global SVYY 2007
+tent 
+global SVYY 2010
 global CurrentData KHPS
 ***************************
-
+*/
 ** set the lists of data set and corresponding year lists
-global DataSet "JHPS KHPS" /* list of the data set */
+global DataSet "JHPS KHPS KHPSnew" /* list of the data set */
 numlist "2009/2014"
 global JHPSyear "`r(numlist)'" /* list of year in JHPS */
 numlist "2004/2014"
 global KHPSyear "`r(numlist)'" /* list of year in KHPS */
-global YearList JHPSyear KHPSyear /* list of the name of year lists */
+global NewKHPSyear 2007 2012
+global YearList JHPSyear KHPSyear NewKHPSyear /* list of the name of year lists */
 disp "data list: $DataSet, year list: $YearList"
 
 
@@ -81,12 +82,12 @@ forvalues year_t = 2004/2014{
 	append using "$Inter\KHPS`year_t'.dta"
 }
 *** new cohort
-forvalues year_t = 2007 2012{
-	append using "$Inter\KHPS`year_t'_new.dta"
+foreach year_t of num 2007 2012{
+	append using "$Inter\KHPSnew`year_t'.dta"
 }
-qui sum
-save "`inter'\JHPSKHPS_2004_2014.dta", replace
 
+qui sum
+save "$Inter\JHPSKHPS_2004_2014.dta", replace
 
 * 3: Merge schooling
 do "$Path\Code\MergeSchooling.do"

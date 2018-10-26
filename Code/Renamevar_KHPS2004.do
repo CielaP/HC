@@ -19,9 +19,9 @@ local varList ///
 				paymethod monthlypaid dailypaid hourlypaid yearlypaid bonus ///
 				workdaypermonth workhourperweek overworkperweek
 *** variables of working experience
-local expList ///
-				cas* regu* self* side* fmw*	
-disp "`varList'" "`expList'"
+global ExpList ///
+				cas* full* self* side* fmw*	
+disp "`varList'" "$ExpList"
 
 ** variable number of principal
 *** common variable with other years
@@ -35,11 +35,11 @@ local renameListPri ///
 				v262 v263 v264
 *** variables of working experience
 global CasPri v419-v469
-global ReguPri v470-v520
+global FullPri v470-v520
 global SelfPri v521-v571
 global SidePri v572-v622
 global FmwPri v623-v673
-sum `renameListPri' $CasPri $ReguPri $SelfPri $SidePri $FmwPri
+sum `renameListPri' $CasPri $FullPri $SelfPri $SidePri $FmwPri
 
 ** variable number of spouse
 *** common variable with other years
@@ -47,7 +47,7 @@ gen relno=.
 gen dsex=.
 gen bYear=.
 gen bMonth=.
-global RenameListSpo ///
+local renameListSpo ///
 				v1 v4 dsex bYear bMonth ///
 				v76 ///
 				v803 v867 ///
@@ -55,17 +55,16 @@ global RenameListSpo ///
 				v935 v936 v937 ///
 				v941 v942 v943 v944 v945 v946 ///
 				v959 v960 v961
-sum $RenameListSpo
 *** variables of working experience
 global CasSpo v1116-v1166
-global ReguSpo v1167-v1217
+global FullSpo v1167-v1217
 global SelfSpo v1218-v1268
 global SideSpo v1269-v1319
 global FmwSpo v1320-v1370
-sum `renameListSpo' $CasSpo $ReguSpo $SelfSpo $SideSpo $FmwSpo
+sum `renameListSpo' $CasSpo $FullSpo $SelfSpo $SideSpo $FmwSpo
 
 ** variable list to be convert to matrix
-local matVarList `varList' dhead dearnmost `expList'
+local matVarList `varList' dhead dearnmost $ExpList
 
 * set survey year
 local SvyY=$SVYY
@@ -95,7 +94,7 @@ rename ( ///
 				rel8no rel8sex rel8byear rel8bmonth ///
 				rel9no rel9sex rel9byear rel9bmonth ///
 				)
-forvalues x=1/9 {
+qui forvalues x=1/9 {
 	dis "iteration no. is `x'"
 	** relation No. of spouse
 	replace relno=`x'+1 if rel`x'no==1
@@ -119,24 +118,31 @@ forvalues i = 1/`n' { /* loop within rename list */
 	** rename common variable
 	rename ( ``currentRenameList'' ) ( `varList' )
 	
+	** rename variable of experience
+	dis " rename variable of experience "
 	global Resp_i `i'
+	global Age_t 18
 	do "$Path\Code\Renamevar_Exp.do"
 	
 	if `i'==1 {
+		dis " replace id of principle "
 		** replace id (KHPS)
 		replace id = id+20000
 		
+		dis " make household head dummy  "
 		** make breadwinner dummy
 		gen dearnmost=.
 		replace dearnmost=1 if earnmost==1
 		replace dearnmost=0 if dearnmost!=1
 	}
 	else {
+		dis " replace id of spouse and drop not married "
 		** replace id (spouse)
 		replace id = id+10000
 		** keep sample of spouse
 		keep if marital==1
 		count
+		dis " make household head dummy  "
 		** make breadwinner dummy
 		gen dearnmost=.
 		replace dearnmost=1 if earnmost==relno

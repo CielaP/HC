@@ -14,8 +14,6 @@
 ** JHPS(spouse): id=original id+10000
 ** KHPS(principal): id=original id+20000
 ** KHPS(spouse): id=original id+30000 (=(original id +20000)+10000)
-** KHPS(new_cohort, principal): id=original id+40000
-** KHPS(new_cohort, spouse): id=original id+50000 (=(original id +40000)+10000)
 */
 
 * set survey year
@@ -57,6 +55,7 @@ forvalues i = 1/`n' { /* loop within rename list */
 		count
 		}
 	
+	dis " make household head dummy  "
 	** make household head dummy
 	*** Q = Are you head of household?
 	gen dhead=.

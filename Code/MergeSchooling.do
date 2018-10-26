@@ -20,7 +20,7 @@ disp "`path', `original', `input', `output', `inter' "
 
 * 1. Select id, schooling from initial survey
 ** schooling
-local schoolingData JHPS2009 KHPS2004 KHPS2007_new KHPS2012_new
+local schoolingData JHPS2009 KHPS2004 KHPSnew2007 KHPSnew2012
 local num_k: word count `schoolingData'
 
 forvalues data_i = 1/`num_k' { /* loop within data set */

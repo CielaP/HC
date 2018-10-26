@@ -75,14 +75,17 @@ sum age, de
 /// The first year survey creates variables from responses
 /// and creates missing values ​​for other years 
 local isInitialExp "`currentData'`SvyY'"=="JHPS2010" | ///
-								"`currentData'`SvyY'"=="KHPS2004"
+								"`currentData'`SvyY'"=="KHPS2004" | ///
+								"`currentData'`SvyY'"=="KHPSnew2007" | ///
+								"`currentData'`SvyY'"=="KHPSnew2012"
 *** working experience
 if "`isInitialExp'"{
 	/* construct initial workexp for initial survey year */
 	**** recode missing value (9) to 0 for each employment status
-	local empStatus cas regu self side fmw
+	local empStatus cas full self side fmw
 	local num_m: word count `empStatus'
-	forvalues status_j = 1/`num_m'{
+	dis " recode missing value (9) to 0 for each employment status "
+	qui forvalues status_j = 1/`num_m'{
 		local currentEmpStatus: word `status_j' of `empStatus'
 		recode `currentEmpStatus'* (9 = 0)
 	}
@@ -90,15 +93,19 @@ if "`isInitialExp'"{
 	**** make experience dummy in each year
 	/// experience of that year takes 1
 	/// if individual takes 1 in at least one employment status that year
-	for num 18/65: gen weX=0
-	forvalues X=18/65{
-		replace weX=1 if cas`X'+regu`X'+self`X'+side`X'+fmw`X'>=1
+	local age_t $Age_t
+	qui forvalues x=`age_t'/65{
+		gen we`x'=0
+	}
+	qui forvalues x=`age_t'/65{
+		replace we`x'=1 if cas`x'+full`x'+self`x'+side`x'+fmw`x'>=1
 	}
 	sum we*
 	
 	**** total experience dummy to make workexp
-	egen workexp=rowtotal(we18-we65)
+	egen workexp=rowtotal(we`age_t'-we65)
 	sum workexp, de
+	drop cas* full* self* side* fmw* we*
 }
 else { 
 	/* making missing value for years other than initial year */
@@ -108,16 +115,18 @@ else {
 
 
 local isInitialEmp "`currentData'`SvyY'"=="JHPS2009" | ///
-								"`currentData'`SvyY'"=="KHPS2004"
+								"`currentData'`SvyY'"=="KHPS2004" | ///
+								"`currentData'`SvyY'"=="KHPSnew2007" | ///
+								"`currentData'`SvyY'"=="KHPSnew2012"
 *** employer tenure
 if "`isInitialEmp'"{
 	/* construct initial emptenure for initial survey year */
 	**** recode missing value
-	forvalues X of numlist 8888 9999{
-		mvdecode empsinceyear, mv(`X')
+	foreach x of num 8888 9999{
+		mvdecode empsinceyear, mv(`x')
 	}
-	forvalues X of numlist 88 99{
-		mvdecode empsincemonth, mv(`X')
+	foreach x of num 88 99{
+		mvdecode empsincemonth, mv(`x')
 	}
 	
 	**** initial employer tenure
@@ -128,7 +137,7 @@ if "`isInitialEmp'"{
 	disp %tm r(min)
 	disp %tm r(max)
 	
-	gen emptenure=(svyym-empym)
+	gen emptenure=(svyym-empym)/12
 	label var emptenure "Tenure months" 
 	sum emptenure, de
 	
