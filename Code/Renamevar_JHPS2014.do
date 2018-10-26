@@ -1,9 +1,9 @@
 *******************************************************
-* Title: Renamevar_VarlistKHPS2014
+* Title: Renamevar_VarlistJHPS2014
 * Date: Oct 6th, 2018
 * Written by Ayaka Nakamura
 * 
-* This file shows variables to be named in KHPS 2014
+* This file shows variables to be named in JHPS 2014
 ********************************************************
 set mat 11000
 
@@ -43,3 +43,7 @@ sum $RenameListSpo
 
 ** variable list to be convert to matrix
 global MatVarList $VarList dhead dearnmost
+
+
+* rename varname and make head dummy
+do "$Path\Code\Renamevar.do"

@@ -1,9 +1,9 @@
 *******************************************************
-* Title: Renamevar_VarlistKHPS2012
+* Title: Renamevar_VarlistKHPS2010
 * Date: Oct 6th, 2018
 * Written by Ayaka Nakamura
 * 
-* This file shows variables to be named in KHPS 2012
+* This file shows variables to be named in KHPS 2010
 ********************************************************
 set mat 11000
 
@@ -23,23 +23,27 @@ disp "$VarList"
 global RenameListPri ///
 				v1 v4 v5 v6 v7 ///
 				v85 v86 v87 ///
-				v167 ///
-				v187 v188 v189 v190 v193 v194 ///
-				v228 v202 ///
-				v204 v205 v206 v207 v208 v209 ///
-				v214 v215 v216
+				v161 ///
+				v181 v182 v183 v184 v187 v188 ///
+				v243 v196 ///
+				v198 v199 v200 v201 v202 v203 ///
+				v217 v218 v219
 sum $RenameListPri
 
 ** variable number of spouse
 global RenameListSpo ///
 				v1 v4  v14 v15 v16 ///
 				v85 v86 v87 ///
-				v405 ///
-				v425 v426 v427 v428 v431 v432 ///
-				v466 v440 ///
-				v442 v443 v444 v445 v446 v447 ///
-				v452 v453 v454
+				v426 ///
+				v446 v447 v448 v449 v452 v453 ///
+				v508 v461 ///
+				v463 v464 v465 v466 v467 v468 ///
+				v482 v483 v484
 sum $RenameListSpo
 
 ** variable list to be convert to matrix
 global MatVarList $VarList dhead dearnmost
+
+
+* rename varname and make head dummy
+do "$Path\Code\Renamevar.do"

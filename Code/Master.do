@@ -32,10 +32,12 @@ adopath + $Input
 adopath + $Output
 adopath + $Inter
  
+set mat 11000
+
 ***************************
 /* tent */
-global SVYY 2011
-global CurrentData JHPS
+global SVYY 2007
+global CurrentData KHPS
 ***************************
 
 ** set the lists of data set and corresponding year lists
