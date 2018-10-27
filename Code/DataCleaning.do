@@ -1,13 +1,9 @@
-*******************************************************
-*Title: DataCleaning
-*Date: Oct 12th, 2018
-*Written by Ayaka Nakamura
-* 
-* This file creates data cleaned by year
-* 
-* 1. Rename variable names
-* 2. Generate main variables
-********************************************************
+/* Title: DataCleaning */
+/// Date: Oct 12th, 2018
+/// Written by Ayaka Nakamura
+/// This file creates data cleaned by year
+/// 1. Rename variable names
+/// 2. Generate main variables
 
 clear all
 set more off
@@ -67,7 +63,7 @@ disp %tm r(max)
 ge age = floor((svyym-bym)/12) /* Assumed birth day is 1st. */
 sum age, de
 
-** Working experience and employer tenure
+** Initial working experience and employer tenure
 /// The first year survey creates variables from responses
 /// and creates missing values ​​for other years 
 local isInitialExp "`currentData'`SvyY'"=="JHPS2010" | ///
@@ -133,7 +129,7 @@ if "`isInitialEmp'"{
 	disp %tm r(min)
 	disp %tm r(max)
 	
-	gen emptenure=(svyym-empym)/12
+	gen emptenure=(svyym-empym)
 	label var emptenure "Tenure months" 
 	sum emptenure, de
 	

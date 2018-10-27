@@ -1,22 +1,23 @@
-*****************************************************************
-* Title: Master
-* Date: Oct 6th, 2018
-* Written by Ayaka Nakamura
-* 
-* This file runs the following files:
-* - DataCleaning.do: 
-* 		- Renamevar_Varlist`currentData'`SvyY'.do: 
-* 		- Renamevar.do: 
-* - MergeVar.do: 
-* - 
-* 
-* Step
-* 1: Data cleaning
-* 2: Bind data of the all years
-* 3: Merge schooling
-* 4: Construct tenure variables
-* 5: Sample selection and save data
-*****************************************************************
+/* Title: Master */
+/// Date: Oct 6th, 2018
+/// Written by Ayaka Nakamura
+/// 
+/// This file runs the following files:
+/// - DataCleaning.do: 
+/// 		-- Renamevar_`currentData'`SvyY'.do: 
+/// 			-- Renamevar.do: 
+/// 			-- Renamevar_OldKHPS.do: 
+/// 			-- Renamevar_Exp.do: 
+/// -- MergeSchooling.do: 
+/// -- ConstructTen.do: 
+/// -- SampleSelection.do: 
+/// 
+/// Step
+/// 1: Data cleaning
+/// 2: Bind data of the all years
+/// 3: Merge schooling
+/// 4: Construct tenure variables
+/// 5: Sample selection and save data
 
 *  0. Preparation
 * Set Directories
@@ -53,7 +54,7 @@ disp "data list: $DataSet, year list: $YearList"
 
 * Open Log file
 cap log close /* close any log files that accidentally have been left open. */
-log using "`path'\Log\DataCleaning.log", replace
+*log using "`path'\Log\DataCleaning.log", replace
 
 * 1: Data cleaning
 local n: word count $DataSet /* set counter of data set */
@@ -73,7 +74,7 @@ forvalues m = 1/`n' { /* loop within data set */
 		do "$Path\Code\DataCleaning.do"
 	}
 }
-log close 
+*log close 
 
 ***** ***** ***** ***** ***** ***** kokokara ***** ***** ***** ***** ***** ***** 
 * 2: Bind data of the all years
