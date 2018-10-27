@@ -22,16 +22,12 @@ local output $Output
 local inter $Inter
 disp "`path', `original', `input', `output', `inter' "
 
-* Open Log file
-cap log close /* close any log files that accidentally have been left open. */
-*log using "`path'\Log\DataCleaning.log", replace
-
-*qui{
-
 * Set survey year
 local SvyY $SVYY
 local currentData $CurrentData
 disp "Current data set is `currentData'`SvyY'"
+
+qui{
 
 * Read original data files
 disp "`original'/`currentData'`SvyY'.csv"
@@ -319,5 +315,4 @@ sum orealwage realwage
 * Save Data
 save "`inter'/`currentData'`SvyY'.dta", replace
 
-*}
-*log close 
+}

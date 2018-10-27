@@ -51,6 +51,10 @@ global YearList JHPSyear KHPSyear NewKHPSyear /* list of the name of year lists 
 disp "data list: $DataSet, year list: $YearList"
 
 
+* Open Log file
+cap log close /* close any log files that accidentally have been left open. */
+log using "`path'\Log\DataCleaning.log", replace
+
 * 1: Data cleaning
 local n: word count $DataSet /* set counter of data set */
 forvalues m = 1/`n' { /* loop within data set */
@@ -69,6 +73,7 @@ forvalues m = 1/`n' { /* loop within data set */
 		do "$Path\Code\DataCleaning.do"
 	}
 }
+log close 
 
 ***** ***** ***** ***** ***** ***** kokokara ***** ***** ***** ***** ***** ***** 
 * 2: Bind data of the all years
