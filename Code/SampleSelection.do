@@ -29,7 +29,6 @@ sum demployed
 drop demployed
 * drop government
 drop if dsize==6
-drop dsize
 keep if owner==1 | owner==2 | owner==3
 sum owner
 drop owner

@@ -37,7 +37,7 @@ set mat 11000
 /*
 ***************************
 tent 
-global SVYY 2010
+global SVYY 2004
 global CurrentData KHPS
 ***************************
 */
@@ -54,7 +54,7 @@ disp "data list: $DataSet, year list: $YearList"
 
 * Open Log file
 cap log close /* close any log files that accidentally have been left open. */
-*log using "`path'\Log\DataCleaning.log", replace
+log using "$Path\Log\DataCleaning.log", replace
 
 * 1: Data cleaning
 local n: word count $DataSet /* set counter of data set */
@@ -74,7 +74,6 @@ forvalues m = 1/`n' { /* loop within data set */
 		do "$Path\Code\DataCleaning.do"
 	}
 }
-*log close 
 
 ***** ***** ***** ***** ***** ***** kokokara ***** ***** ***** ***** ***** ***** 
 * 2: Bind data of the all years
@@ -95,8 +94,9 @@ foreach year_t of num 2007 2012{
 qui sum
 save "$Inter\JHPSKHPS_2004_2014.dta", replace
 
-* 3: Merge schooling
+* 3: Merge schooling and clean data
 do "$Path\Code\MergeSchooling.do"
+log close 
 
 
 * 4: Construct tenure variables
@@ -105,6 +105,15 @@ do "$Path\Code\ConstructTen.do"
 
 * 5: Sample selection and save data
 do "$Path\Code\SampleSelection.do"
+
+** keep variable being used for estimation
+local estVar id realwage occ ind dunion dmarital ///
+					year schooling dsize dregular ///
+					emptenure oj occtenure workexp ///
+					///
+					dswitch empid
+					
+sum `estVar'
 
 save "$Input\jhps_hc.dta", replace
 

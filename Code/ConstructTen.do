@@ -1,7 +1,9 @@
 /* Title: ConstructTen */
 /// Date: Oct 25th, 2018
 /// Written by Ayaka Nakamura
+/// 
 /// This file construct workexp and emptenure for each year
+/// 
 /// 1. 
 /// 2. 
 
@@ -19,7 +21,8 @@ replace emptenure=. if emptenure<0
 forvalues X = 2005/2014{ 
 	*** working more than 800h & not switched->+1
 	/// If the sample dropped on the way was resurrected, 
-	/// it is assumed that he kept being employed for the period in which it was dropped.
+	/// it is assumed that he kept being employed for the period
+	/// in which it was dropped.
 	dis "current year is `X' "
 	bysort id (year): replace emptenure=emptenure[_n-1]+(year-year[_n-1]) ///
 		if morethan800==1 & dswitch==0 & year==`X' & _n>1
@@ -102,4 +105,3 @@ replace workexp=. if workexp<0
 replace occtenure=. if occtenure<0
 ** relawage of working less than 500 to missing value
 replace realwage=. if workinghour<500
-drop paymethod-overworkperweek workinghour-hourlywage

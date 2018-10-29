@@ -183,5 +183,17 @@ mat dir
 drop _all
 svmat double ps, name(col)
 qui sum
+
+*** recode size dummy
+gen osize=size
+foreach x of num 88 99{
+		mvdecode size, mv(`x')
+	}
+replace size=1 if size<=6
+replace size=4 if size==7 | size==8
+replace size=5 if size==9 | size==10
+replace size=6 if size==11
+tab osize size
+
 save "$Inter/`currentData'`SvyY'.dta", replace
 mat drop _all
