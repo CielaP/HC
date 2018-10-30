@@ -13,18 +13,21 @@
 *  0. Preparation
 qui {
 	* Set Directories
-	local path "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion"
+	local code "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Code"
 	local original "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData"
 	local inputfd "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input"
 	local output "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output"
 	local inter "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate"
+	local prg "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program" 
 	
-	cd `path'
+	cd `code'
 	adopath + `original'
 	adopath + `inputfd'
 	adopath + `output'
 	adopath + `inter'
-	
+	adopath + "`prg'\coefplot"
+	adopath + "`prg'\estout"
+
 	* set variable list for estimation
 	** list of common variable
 	local commonVar realwage i.occ i.ind i.dunion i.dmarital ///
@@ -46,630 +49,152 @@ qui {
 	local empocc4 c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
 							c.workexp##c.workexp##c.workexp##c.workexp ///
 							c.occtenure##c.occtenure##c.occtenure##c.occtenure
+	** list of iv 
+	local empiv1 emptenureiv ojiv workexpiv
+	local empiv2 emptenureiv emptenureiv2 ojiv ///
+						workexpiv workexpiv2
+	local empiv3 emptenureiv emptenureiv2 emptenureiv3 ojiv ///
+						workexpiv workexpiv2 workexpiv3
+	local empiv4 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
+						workexpiv workexpiv2 workexpiv3 workexpiv4
+	** list of iv (including occupation tenure)
+	local empocciv1 emptenureiv ojiv workexpiv occtenureiv
+	local empocciv2 emptenureiv emptenureiv2 ojiv ///
+								workexpiv workexpiv2 ///
+								occtenureiv occtenureiv2
+	local empocciv3 emptenureiv emptenureiv2 emptenureiv3 ojiv ///
+								workexpiv workexpiv2 workexpiv3 ///
+								occtenureiv occtenureiv2 occtenureiv3
+	local empocciv4 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
+								workexpiv workexpiv2 workexpiv3 workexpiv4 ///
+								occtenureiv occtenureiv2 occtenureiv3 occtenureiv4
+	** list of variable list
+	local varlist emp empocc
 }
 
+
+
 * 1. OLS->AS / 1-4 dimenational polynomial
-
-
-*** OLS
+** OLS
+*** reading data
 qui {
 	use "`inputfd'\jhps_hc.dta", clear
 	destring, replace
 	tsset id year
 }
 
-forvalues x=2/4{
-	reg `commonVar' ///
-			`emp`x'' ///
-			, vce(r)
-	est sto olsemp`x'
+foreach tenure of local varlist{
+	forvalues x=1/4{
+		reg ///
+				`commonVar' ///
+				``tenure'`x'' ///
+				, vce(r)
+		est sto ols`tenure'`x'
+	}
 }
 
-**** empten+occten
-{
-***** 2nd
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-c.emptenure##c.emptenure oj c.occtenure##c.occtenure c.workexp##c.workexp, vce(r)
-est sto olsempocc2
-***** 3rd
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-c.emptenure##c.emptenure##c.emptenure oj ///
-c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp, vce(r)
-est sto olsempocc3
-***** 4th
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
-c.occtenure##c.occtenure##c.occtenure##c.occtenure ///
-c.workexp##c.workexp##c.workexp##c.workexp, vce(r)
-est sto olsempocc4
-}
-}
-
-*** AS
-{
-**** empten
-{
-***** 2nd
-quietly {
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
-destring, replace
-tsset id year
-* 操作変数を作成
-sort empid year
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure oj c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
-est sto isvemp2
-drop if _est_isvemp2==0
-drop *iv *iv? avg*
-* 必要な変数を再作成
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-}
-* 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure oj c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 ojiv workexpiv workexpiv2), vce(r)
-est sto isvemp2
-
-***** 3rd
-quietly {
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
-destring, replace
-tsset id year
-* 操作変数を作成
-sort empid year
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 ojiv workexpiv workexpiv2 workexpiv3), vce(r)
-est sto isvemp3
-drop if _est_isvemp3==0
-drop *iv *iv? avg*
-* 必要な変数を再作成
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-}
-* 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure##c.emptenure oj c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 ojiv workexpiv workexpiv2 workexpiv3), vce(r)
-est sto isvemp3
-
-***** 4th
-quietly {
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
-destring, replace
-tsset id year
-* 操作変数を作成
-sort empid year
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-egen avgemptenure4=mean(emptenure^4), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-gen emptenureiv4=emptenure^4-avgemptenure4
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-egen avgworkexp4=mean(workexp^4), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-gen workexpiv4=workexp^4-avgworkexp4
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
-c.workexp##c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
-workexpiv workexpiv2 workexpiv3 workexpiv4), vce(r)
-est sto isvemp4
-drop if _est_isvemp4==0
-drop *iv *iv? avg*
-* 必要な変数を再作成
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-egen avgemptenure4=mean(emptenure^4), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-gen emptenureiv4=emptenure^4-avgemptenure4
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-egen avgworkexp4=mean(workexp^4), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-gen workexpiv4=workexp^4-avgworkexp4
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-}
-* 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
-c.workexp##c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
-workexpiv workexpiv2 workexpiv3 workexpiv4), vce(r)
-est sto isvemp4
+** AS
+foreach tenure of local varlist{
+	forvalues x=1/4{
+		qui {
+			use "`inputfd'\jhps_hc.dta", clear
+			destring, replace
+			tsset id year
+			do "`code'\ConstructIV.do"
+		ivregress 2sls ///
+				`commonVar' ///
+				(``tenure'`x'' = ``tenure'iv`x'') ///
+				, vce(r)
+		est sto isv`tenure'`x'
+		drop if _est_isvemp`x'==0
+		drop *iv *iv? avg*
+		**** re-build iv
+		qui do "`code'\ConstructIV.do"
+		}
+		ivregress 2sls ///
+				`commonVar' ///
+				(``tenure'`x'' = ``tenure'iv`x'') ///
+				, vce(r)
+		est sto isv`tenure'`x'
+	}
 }
 
-**** empten+occten
-{
-***** 2nd
-quietly {
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
-destring, replace
-tsset id year
-* 操作変数を作成
-sort empid year
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgocctenure=mean(occtenure), by(id occ)
-egen avgocctenure2=mean(occtenure^2), by(id occ)
-egen avgocctenure3=mean(occtenure^3), by(id occ)
-gen occtenureiv=occtenure-avgocctenure
-gen occtenureiv2=occtenure^2-avgocctenure2
-gen occtenureiv3=occtenure^3-avgocctenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure oj ///
-c.occtenure##c.occtenure c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 ojiv ///
-occtenureiv occtenureiv2 workexpiv workexpiv2), vce(r)
-est sto isvempocc2
-drop if _est_isvempocc2==0
-drop *iv *iv? avg*
-* 必要な変数を再作成
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgocctenure=mean(occtenure), by(id occ)
-egen avgocctenure2=mean(occtenure^2), by(id occ)
-egen avgocctenure3=mean(occtenure^3), by(id occ)
-gen occtenureiv=occtenure-avgocctenure
-gen occtenureiv2=occtenure^2-avgocctenure2
-gen occtenureiv3=occtenure^3-avgocctenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-}
-* 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure oj ///
-c.occtenure##c.occtenure c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 ojiv ///
-occtenureiv occtenureiv2 workexpiv workexpiv2), vce(r)
-est sto isvempocc2
+** culc. return
+local culcemp1 _b[oj]+emptenure*_b[emptenure]
+local culcemp2 _b[oj]+emptenure*_b[emptenure]+ ///
+						(emptenure^2)*_b[c.emptenure#c.emptenure]
+local culcemp3 _b[oj]+emptenure*_b[emptenure]+ ///
+						(emptenure^2)*_b[c.emptenure#c.emptenure]+ ///
+						(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure]
+local culcemp4 _b[oj]+emptenure*_b[emptenure]+ ///
+						(emptenure^2)*_b[c.emptenure#c.emptenure]+ ///
+						(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure] ///
+						(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]
 
-***** 3rd
-quietly {
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
-destring, replace
-tsset id year
-* 操作変数を作成
-sort empid year
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgocctenure=mean(occtenure), by(id occ)
-egen avgocctenure2=mean(occtenure^2), by(id occ)
-egen avgocctenure3=mean(occtenure^3), by(id occ)
-gen occtenureiv=occtenure-avgocctenure
-gen occtenureiv2=occtenure^2-avgocctenure2
-gen occtenureiv3=occtenure^3-avgocctenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure##c.emptenure oj ///
-c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 ojiv ///
-occtenureiv occtenureiv2 occtenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
-est sto isvempocc3
-drop if _est_isvempocc3==0
-drop *iv *iv? avg*
-* 必要な変数を再作成
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-egen avgocctenure=mean(occtenure), by(id occ)
-egen avgocctenure2=mean(occtenure^2), by(id occ)
-egen avgocctenure3=mean(occtenure^3), by(id occ)
-gen occtenureiv=occtenure-avgocctenure
-gen occtenureiv2=occtenure^2-avgocctenure2
-gen occtenureiv3=occtenure^3-avgocctenure3
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-}
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure##c.emptenure oj ///
-c.occtenure##c.occtenure##c.occtenure c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 ojiv ///
-occtenureiv occtenureiv2 occtenureiv3 workexpiv workexpiv2 workexpiv3), vce(r)
-est sto isvempocc3
-
-***** 4th
-quietly {
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
-destring, replace
-tsset id year
-* 操作変数を作成
-sort empid year
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-egen avgemptenure4=mean(emptenure^4), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-gen emptenureiv4=emptenure^4-avgemptenure4
-egen avgocctenure=mean(occtenure), by(id occ)
-egen avgocctenure2=mean(occtenure^2), by(id occ)
-egen avgocctenure3=mean(occtenure^3), by(id occ)
-egen avgocctenure4=mean(occtenure^4), by(id occ)
-gen occtenureiv=occtenure-avgocctenure
-gen occtenureiv2=occtenure^2-avgocctenure2
-gen occtenureiv3=occtenure^3-avgocctenure3
-gen occtenureiv4=occtenure^4-avgocctenure4
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-egen avgworkexp4=mean(workexp^4), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-gen workexpiv4=workexp^4-avgworkexp4
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
-c.occtenure##c.occtenure##c.occtenure##c.occtenure ///
-c.workexp##c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
-occtenureiv occtenureiv2 occtenureiv3 occtenureiv4 ///
-workexpiv workexpiv2 workexpiv3 workexpiv4), vce(r)
-est sto isvempocc4
-drop if _est_isvempocc4==0
-drop *iv *iv? avg*
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-egen avgemptenure4=mean(emptenure^4), by(empid)
-gen emptenureiv=emptenure-avgemptenure
-gen emptenureiv2=emptenure^2-avgemptenure2
-gen emptenureiv3=emptenure^3-avgemptenure3
-gen emptenureiv4=emptenure^4-avgemptenure4
-egen avgocctenure=mean(occtenure), by(id occ)
-egen avgocctenure2=mean(occtenure^2), by(id occ)
-egen avgocctenure3=mean(occtenure^3), by(id occ)
-egen avgocctenure4=mean(occtenure^4), by(id occ)
-gen occtenureiv=occtenure-avgocctenure
-gen occtenureiv2=occtenure^2-avgocctenure2
-gen occtenureiv3=occtenure^3-avgocctenure3
-gen occtenureiv4=occtenure^4-avgocctenure4
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-egen avgworkexp4=mean(workexp^4), by(id)
-gen workexpiv=workexp-avgworkexp
-gen workexpiv2=workexp^2-avgworkexp2
-gen workexpiv3=workexp^3-avgworkexp3
-gen workexpiv4=workexp^4-avgworkexp4
-egen avgoj=mean(oj), by(empid)
-gen ojiv=oj-avgoj
-}
-* 再推定
-ivregress 2sls realwage i.occ i.ind i.union i.marital i.year i.schooling i.size i.regular ///
-(c.emptenure##c.emptenure##c.emptenure##c.emptenure oj ///
-c.occtenure##c.occtenure##c.occtenure##c.occtenure ///
-c.workexp##c.workexp##c.workexp##c.workexp = ///
-emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ojiv ///
-occtenureiv occtenureiv2 occtenureiv3 occtenureiv4 ///
-workexpiv workexpiv2 workexpiv3 workexpiv4), vce(r)
-est sto isvempocc4
-}
-
-}
-
- *** culc. return
- {
-**** empten
-{
-***** 2nd
-est res olsemp2
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto olsempr2
-est res isvemp2
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto isvempr2
-coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Using All Samples, Occupation Tenure is not Controlled, Quadratic Form of Tenure.")
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_2.pdf", replace
- 
-***** 3rd
-est res olsemp3
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto olsempr3
-est res isvemp3
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto isvempr3
-coefplot (olsempr3, label(OLS)) (isvempr3, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Using All Samples, Occupation Tenure is not Controlled, Cubic Form of Tenure.")
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_3.pdf", replace
-
-***** 4th
-est res olsemp4
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure#c.emptenure* ///
-_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto olsempr4
-est res isvemp4
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure#c.emptenure* ///
-_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto isvempr4
-coefplot (olsempr4, label(OLS)) (isvempr4, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Using All Samples, Occupation Tenure is not Controlled, Quartic Form of Tenure.")
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_emp_4.pdf", replace
+foreach tenure of local varlist{ /// loop within emp and empocc
+	forvalues x=1/4{ /// loop within polynomial
+		*** culculation
+		est res ols`tenure'`x'
+		margins, exp(`culcemp`x'') ///
+		at(emptenure=(0(1)25)) noe post
+		est sto ols`tenure'r`x'
+		est res isv`tenure'`x'
+		
+		*** plot
+		margins, exp(`culcemp`x'') ///
+		at(emptenure=(0(1)25)) noe post
+		est sto isv`tenure'r`x'
+		coefplot (ols`tenure'r`x', label(OLS)) (isv`tenure'r`x', label(IV)), ///
+		at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
+		xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
+		yline(0) rescale(100) ////
+		graph export "`output'\plot_as_`tenure'_`x'.pdf", replace
+	}
 }
  
-**** empten+occten
+** output tex all results
 {
-***** 2nd
-est res olsempocc2
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto olsempoccr2
-est res isvempocc2
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto isvempoccr2
-coefplot (olsempr2, label(OLS)) (isvempr2, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Using All Samples, Occupation Tenure is Controlled, Quadratic Form of Tenure.")
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_2.pdf", replace
+qui{
+local labelVar emptenure "Employer tenure" ///
+						c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
+						c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
+						c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
+						oj "Old job" ///
+						workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
+						c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
+						c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 1000$"
+local transVar c.emptenure#c.emptenure 100*@ 100 ///
+						c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
+						c.emptenure#c.emptenurec.emptenure#c.emptenure 1000*@ 1000 ///
+						c.occtenure#c.occtenure 100*@ 100 ///
+						c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
+						c.workexp#c.workexp#c.workexp 100*@ 100 ///
+						c.workexp#c.workexp#c.workexp 1000*@ 1000
 
-***** 3rd
-est res olsempocc3
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto olsempoccr3
-est res isvempocc3
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto isvempoccr3
-coefplot (olsempr3, label(OLS)) (isvempr3, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Using All Samples, Occupation Tenure is Controlled, Cubic Form of Tenure.")
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_3.pdf", replace
+*** coefficients / emp+occ
+local keepVar emptenure c.emptenure#c.emptenure ///
+						c.emptenure#c.emptenure#c.emptenure ///
+						c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
+						oj ///
+						occtenure c.occtenure#c.occtenure ///
+						c.occtenure#c.occtenure#c.occtenure ///
+						c.occtenure#c.occtenure#c.occtenure#c.occtenure ///
+						workexp c.workexp#c.workexp ///
+						c.workexp#c.workexp#c.workexp ///
+						c.workexp#c.workexp#c.workexp#c.workexp
 
-***** 4th
-est res olsempocc4
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure#c.emptenure* ///
-_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto olsempoccr4
-est res isvempocc4
-margins, exp(_b[oj]+emptenure*_b[emptenure]+ ///
-c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure*_b[c.emptenure#c.emptenure#c.emptenure] ///
-+c.emptenure#c.emptenure#c.emptenure#c.emptenure* ///
-_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]) ///
-at(emptenure=(0(1)25)) noe post
-est sto isvempoccr4
-coefplot (olsempr4, label(OLS)) (isvempr4, label(IV)), ///
-at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100) ////
-title("Using All Samples, Occupation Tenure is Controlled, Quartic Form of Tenure.")
-graph export "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\plot_as_empocc_4.pdf", replace
-}
-}
- 
-*** output tex all results
-{
-**** coefficients / emptenure
-quietly {
-esttab olsemp2 olsemp3 olsemp4 isvemp2 isvemp3 isvemp4 ///
-using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_emp.tex", ///
+esttab olsempocc* isvempocc* ///
+using "`output'\as_empocc.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-keep(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
-c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp ///
-c.workexp#c.workexp#c.workexp#c.workexp) ///
-order(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
-c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp ///
-c.workexp#c.workexp#c.workexp#c.workexp) ///
-coeflabel(emptenure "Employer tenure" ///
-c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
-c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
-c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
-oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
-c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
-c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 1000$") ///
-transform(c.emptenure#c.emptenure 100*@ 100 ///
-c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
-c.emptenure#c.emptenurec.emptenure#c.emptenure 1000*@ 1000 ///
-c.occtenure#c.occtenure 100*@ 100 ///
-c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
-c.workexp#c.workexp#c.workexp 100*@ 100 ///
-c.workexp#c.workexp#c.workexp 1000*@ 1000) ///
-nodep nonote nomtitles ///
-title(Earnings Function Estimates, using Sample up to 64-year-old, ///
-including Non-regular Workers and Specialists, ///
-Variables of Occupation Tenure are not Controlled.) ///
-mgroups("OLS" "IV" ///
-pattern(1 0 0 1 0 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
-}
-
-**** coefficients / emp+occ
-quietly {
-esttab olsempocc2 olsempocc3 olsempocc4 isvempocc2 isvempocc3 isvempocc4 ///
-using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_empocc.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-keep(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
-c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
-c.occtenure#c.occtenure#c.occtenure#c.occtenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp ///
-c.workexp#c.workexp#c.workexp#c.workexp) ///
-order(emptenure c.emptenure#c.emptenure c.emptenure#c.emptenure#c.emptenure ///
-c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
-c.occtenure#c.occtenure#c.occtenure#c.occtenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp ///
-c.workexp#c.workexp#c.workexp#c.workexp) ///
-coeflabel(emptenure "Employer tenure" ///
-c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
-c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
-c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
-occtenure "Occupation tenure" c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
-c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
-c.occtenure#c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{4}\times 1000$" ///
-oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
-c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
-c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 1000$") ///
-transform(c.emptenure#c.emptenure 100*@ 100 ///
-c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
-c.emptenure#c.emptenurec.emptenure#c.emptenure 1000*@ 1000 ///
-c.occtenure#c.occtenure 100*@ 100 ///
-c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
-c.occtenure#c.occtenure#c.occtenure#c.occtenure 1000*@ 1000 ///
-c.workexp#c.workexp#c.workexp 100*@ 100 ///
-c.workexp#c.workexp#c.workexp#c.workexp 1000*@ 1000) ///
+keep(`keepVar') ///
+order(`keepVar') ///
+coeflabel(`labelVar' ///
+				occtenure "Occupation tenure" ///
+				c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
+				c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
+				c.occtenure#c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{4}\times 1000$" ///
+				) ///
+transform(`transVar') ///
 nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists, ///
@@ -678,29 +203,38 @@ mgroups("OLS" "IV" ///
 pattern(1 0 0 1 0 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
 replace
-}
 
-**** main table
-quietly{
-esttab olsemp2 olsempocc2 isvemp2 isvempocc2 ///
-using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_main.tex", ///
+*** coefficients / emptenure
+local keepVar emptenure c.emptenure#c.emptenure ///
+						c.emptenure#c.emptenure#c.emptenure ///
+						c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
+						oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp ///
+						c.workexp#c.workexp#c.workexp#c.workexp
+
+esttab olsemp2 olsemp3 olsemp4 isvemp2 isvemp3 isvemp4 ///
+using "`output'\as_emp.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-keep(emptenure c.emptenure#c.emptenure ///
-occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
-order(emptenure c.emptenure#c.emptenure ///
-occtenure c.occtenure#c.occtenure c.occtenure#c.occtenure#c.occtenure ///
-oj workexp c.workexp#c.workexp c.workexp#c.workexp#c.workexp) ///
-coeflabel(emptenure "Employer tenure" ///
-c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
-occtenure "Occupation tenure" c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
-c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
-oj "Old job" workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
-c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$") ///
-transform(c.emptenure#c.emptenure 100*@ 100 ///
-c.occtenure#c.occtenure 100*@ 100 ///
-c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
-c.workexp#c.workexp#c.workexp 100*@ 100) ///
+keep(`keepVar') ///
+order(`keepVar') ///
+coeflabel(`labelVar') ///
+transform(`transVar') ///
+nodep nonote nomtitles ///
+title(Earnings Function Estimates, using Sample up to 64-year-old, ///
+including Non-regular Workers and Specialists, ///
+Variables of Occupation Tenure are not Controlled.) ///
+mgroups("OLS" "IV" ///
+pattern(1 0 0 1 0 0) ///
+prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+replace
+
+*** main table
+esttab olsemp2 olsempocc2 isvemp2 isvempocc2 ///
+using "`output'\as_main.tex", ///
+se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+keep(`keepVar') ///
+order(`keepVar') ///
+coeflabel(`labelVar') ///
+transform(`transVar') ///
 nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists.) ///
@@ -708,12 +242,10 @@ mgroups("OLS" "IV" ///
 pattern(1 0 1 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
 replace
-}
 
-**** return
-quietly{
+*** return
 esttab olsempr2 olsempoccr2 isvempr2 isvempoccr2 ///
-using "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output\as_return.tex", ///
+using "`output'\as_return.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -729,10 +261,8 @@ prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) //
 replace
 }
 }
-}
 
-* 2
-** OLS->AS / ability*tenure
+* 2. OLS->AS / ability*tenure
  {
 *** OLS
  {
