@@ -69,11 +69,12 @@ qui {
 								workexpiv workexpiv2 workexpiv3 workexpiv4 ///
 								occtenureiv occtenureiv2 occtenureiv3 occtenureiv4
 	** list of variable list
-	local varlist emp empocc
+	local isIncOcc emp empocc
 }
 
-
-
+/// comment out
+{
+/*
 * 1. OLS->AS / 1-4 dimenational polynomial
 ** OLS
 *** reading data
@@ -83,18 +84,18 @@ qui {
 	tsset id year
 }
 
-foreach tenure of local varlist{
+foreach ten_i of local isIncOcc{
 	forvalues x=1/4{
 		reg ///
 				`commonVar' ///
-				``tenure'`x'' ///
+				``ten_i'`poly_x'' ///
 				, vce(r)
-		est sto ols`tenure'`x'
+		est sto ols`ten_i'`poly_x'
 	}
 }
 
 ** AS
-foreach tenure of local varlist{
+foreach ten_i of local isIncOcc{
 	forvalues x=1/4{
 		qui {
 			use "`inputfd'\jhps_hc.dta", clear
@@ -103,19 +104,19 @@ foreach tenure of local varlist{
 			do "`code'\ConstructIV.do"
 		ivregress 2sls ///
 				`commonVar' ///
-				(``tenure'`x'' = ``tenure'iv`x'') ///
+				(``ten_i'`poly_x'' = ``ten_i'iv`poly_x'') ///
 				, vce(r)
-		est sto isv`tenure'`x'
-		drop if _est_isvemp`x'==0
+		est sto isv`ten_i'`poly_x'
+		drop if _est_isv`ten_i'`poly_x'==0
 		drop *iv *iv? avg*
 		**** re-build iv
 		qui do "`code'\ConstructIV.do"
 		}
 		ivregress 2sls ///
 				`commonVar' ///
-				(``tenure'`x'' = ``tenure'iv`x'') ///
+				(``ten_i'`poly_x'' = ``ten_i'iv`poly_x'') ///
 				, vce(r)
-		est sto isv`tenure'`x'
+		est sto isv`ten_i'`poly_x'
 	}
 }
 
@@ -131,24 +132,24 @@ local culcemp4 _b[oj]+emptenure*_b[emptenure]+ ///
 						(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure] ///
 						(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]
 
-foreach tenure of local varlist{ /// loop within emp and empocc
-	forvalues x=1/4{ /// loop within polynomial
+foreach ten_i of local isIncOcc{ /// loop within emp and empocc
+	forvalues x=1/4{ /// loop within ten_inomial
 		*** culculation
-		est res ols`tenure'`x'
-		margins, exp(`culcemp`x'') ///
+		est res ols`ten_i'`poly_x'
+		margins, exp(`culcemp`poly_x'') ///
 		at(emptenure=(0(1)25)) noe post
-		est sto ols`tenure'r`x'
-		est res isv`tenure'`x'
+		est sto ols`ten_i'r`poly_x'
+		est res isv`ten_i'`poly_x'
 		
 		*** plot
-		margins, exp(`culcemp`x'') ///
+		margins, exp(`culcemp`poly_x'') ///
 		at(emptenure=(0(1)25)) noe post
-		est sto isv`tenure'r`x'
-		coefplot (ols`tenure'r`x', label(OLS)) (isv`tenure'r`x', label(IV)), ///
+		est sto isv`ten_i'r`poly_x'
+		coefplot (ols`ten_i'r`poly_x', label(OLS)) (isv`ten_i'r`poly_x', label(IV)), ///
 		at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 		xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 		yline(0) rescale(100) ////
-		graph export "`output'\plot_as_`tenure'_`x'.pdf", replace
+		graph export "`output'\plot_as_`ten_i'_`poly_x'.pdf", replace
 	}
 }
  
@@ -261,39 +262,64 @@ prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) //
 replace
 }
 }
+*/
+}
+/// comment out
 
 * 2. OLS->AS / ability*tenure
- {
-*** OLS
- {
-**** sample selection
-quietly {
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
-destring, replace
-tsset id year
+** OLS
+*** reading data
+qui {
+	use "`inputfd'\jhps_hc.dta", clear
+	destring, replace
+	tsset id year
 }
 
-**** empten
-***** schooling
-reg realwage i.occ i.ind i.union i.marital i.year i.regular i.size ///
-c.emptenure##i.schooling ///
-c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
-est sto olsempsc
-
-***** regular
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-c.emptenure##i.regular ///
-c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
-est sto olsregular
-
-***** size
-reg realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling ///
-c.emptenure##i.size ///
-c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
-est sto olsempsi
+local ability schooling dregular dsize
+foreach ab_i of local ability{
+	reg ///
+			`commonVar' ///
+			``ten_i'2' ///
+			c.emptenure##i.`ab_i' ///
+			, vce(r)
+	est sto olsemp`ab_i'
 }
 
-*** AS
+** AS
+foreach ab_i of local ability{
+	qui {
+		use "`inputfd'\jhps_hc.dta", clear
+		destring, replace
+		tsset id year
+		do "`code'\ConstructIV.do"
+		
+		local ab_i dsize
+		tabulate `ab_i', generate(`ab_i')
+		local numab max(`ab_i')
+		dis `numab'
+		drop dsize1-dsize3
+		for j=`numab'{
+			bysort empid (year): egen avg`ab_i'`j'=mean(`ab_i'`j'*emptenure)
+			bysort empid (year): egen `ab_i'iv`j'=`ab_i'`j'*emptenure-avg`ab_i'`j'
+		}
+		
+		ivregress 2sls ///
+				`commonVar' ///
+				(``ten_i'`poly_x'' = ``ten_i'iv`poly_x'') ///
+				, vce(r)
+		est sto isv`ten_i'`poly_x'
+		drop if _est_isv`ten_i'`poly_x'==0
+		drop *iv *iv? avg*
+		**** re-build iv
+		qui do "`code'\ConstructIV.do"
+		}
+		ivregress 2sls ///
+				`commonVar' ///
+				(``ten_i'`poly_x'' = ``ten_i'iv`poly_x'') ///
+				, vce(r)
+		est sto isv`ten_i'`poly_x'
+}
+
 {
 ***** schooling
 quietly {
