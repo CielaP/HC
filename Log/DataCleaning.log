@@ -3,7 +3,7 @@
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\DataCleaning.log
   log type:  text
- opened on:  29 Oct 2018, 14:48:36
+ opened on:   5 Nov 2018, 14:43:30
 
 . 
 . * 1: Data cleaning
@@ -18027,17 +18027,16 @@ file C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 . * 3: Merge schooling and clean data
 . do "$Path\Code\MergeSchooling.do"
 
-. *******************************************************
-. *Title: MergeVar
-. *Date: Oct 24th, 2018
-. *Written by Ayaka Nakamura
-. * 
-. * This file merges schooling
-. * 
-. * 1. Select id, schooling from initial survey
-. * 2. Merge 1 to other survey years
-. ********************************************************
-. 
+. /* Title: MergeSchooling */
+. /// Date: Oct 24th, 2018
+> /// Written by Ayaka Nakamura
+> /// 
+> /// This file merges schooling
+> /// 
+> /// 1. Select id, schooling from initial survey
+> /// 2. Merge 1 to other survey years
+> /// 3. Recode missing values and make dummy variables
+> 
 . * Define folder location
 . local path $Path
 
@@ -18713,5 +18712,5 @@ end of do-file
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\DataCleaning.log
   log type:  text
- closed on:  29 Oct 2018, 14:50:41
+ closed on:   5 Nov 2018, 14:45:41
 ---------------------------------------------------------------------------------
