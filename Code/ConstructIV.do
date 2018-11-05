@@ -6,20 +6,21 @@
 
 sort empid year
 * iv of emptenure
-egen avgemptenure=mean(emptenure), by(empid)
-egen avgemptenure2=mean(emptenure^2), by(empid)
-egen avgemptenure3=mean(emptenure^3), by(empid)
-egen avgemptenure4=mean(emptenure^4), by(empid)
+bysort empid (year): egen avgemptenure=mean(emptenure)
+bysort empid (year): egen avgemptenure2=mean(emptenure^2)
+bysort empid (year): egen avgemptenure3=mean(emptenure^3)
+bysort empid (year): egen avgemptenure4=mean(emptenure^4)
 gen emptenureiv=emptenure-avgemptenure
 gen emptenureiv2=emptenure^2-avgemptenure2
 gen emptenureiv3=emptenure^3-avgemptenure3
 gen emptenureiv4=emptenure^4-avgemptenure4
 
+sort id year
 * iv of workexp
-egen avgworkexp=mean(workexp), by(id)
-egen avgworkexp2=mean(workexp^2), by(id)
-egen avgworkexp3=mean(workexp^3), by(id)
-egen avgworkexp4=mean(workexp^4), by(id)
+bysort id (year): egen avgworkexp=mean(workexp)
+bysort id (year): egen avgworkexp2=mean(workexp^2)
+bysort id (year): egen avgworkexp3=mean(workexp^3)
+bysort id (year): egen avgworkexp4=mean(workexp^4)
 gen workexpiv=workexp-avgworkexp
 gen workexpiv2=workexp^2-avgworkexp2
 gen workexpiv3=workexp^3-avgworkexp3
@@ -36,5 +37,5 @@ gen occtenureiv3=occtenure^3-avgocctenure3
 gen occtenureiv4=occtenure^4-avgocctenure4
 
 * iv of oj dummy
-egen avgoj=mean(oj), by(empid)
+bysort empid (year): egen avgoj=mean(oj)
 gen ojiv=oj-avgoj

@@ -111,7 +111,7 @@ local estVar id realwage occ ind dunion dmarital ///
 					year schooling dsize dregular ///
 					emptenure oj occtenure workexp ///
 					///
-					dswitch empid
+					dswitch empid age
 					
 sum `estVar'
 

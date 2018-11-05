@@ -715,39 +715,71 @@ replace
 }
 }
 
-* 2
-** OLS->AS / ability*tenure
- {
-*** OLS
- {
-**** sample selection
-quietly {
-use "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input\jhps_hc.dta", clear
-destring, replace
-tsset id year
+* 2. OLS->AS / ability*tenure
+** OLS
+*** reading data
+qui {
+	use "`inputfd'\jhps_hc.dta", clear
+	destring, replace
+	tsset id year
 }
 
-**** empten
-***** schooling
-reg realwage i.occ i.ind i.union i.marital i.year i.regular i.size ///
-c.emptenure##i.schooling ///
-c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
-est sto olsempsc
-
-***** regular
-reg realwage i.occ i.ind i.union i.marital i.year i.schooling i.size ///
-c.emptenure##i.regular ///
-c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
-est sto olsregular
-
-***** size
-reg realwage i.occ i.ind i.union i.marital i.year i.regular i.schooling ///
-c.emptenure##i.size ///
-c.emptenure##c.emptenure oj c.workexp##c.workexp, vce(r)
-est sto olsempsi
+local ability schooling dregular dsize
+foreach ab_i of local ability{
+	reg ///
+			`commonVar' ///
+			``ten_i'2' ///
+			c.emptenure##i.`ab_i' ///
+			, vce(r)
+	est sto olsemp`ab_i'
 }
 
-*** AS
+** AS
+foreach ab_i of local ability{
+	qui {
+		use "`inputfd'\jhps_hc.dta", clear
+		destring, replace
+		tsset id year
+		do "`code'\ConstructIV.do"
+		
+		/// set counter according to the number of state of ability
+		tabulate `ab_i', generate(`ab_i')
+		if "`ab_i'"=="schoolig"{
+			local num_ab 4
+		}
+		else if "`ab_i'"=="dregular"{
+			local num_ab 2
+		}
+		else{
+			local num_ab 3
+		}
+		dis `num_ab'
+		forvalues j=`num_ab'{
+			local ab_i dregular
+			local num_ab 2
+			bysort empid (year): egen avgemptenure4=mean(emptenure^4)
+			gen emptenureiv=emptenure-avgemptenure
+			bysort empid (year): egen avg`ab_i'`j'=mean(`ab_i'`j'*emptenure)
+			bysort empid (year): egen `ab_i'iv`j'=`ab_i'`j'*emptenure-avg`ab_i'`j'
+		}
+		
+		ivregress 2sls ///
+				`commonVar' ///
+				(``ten_i'2' = ``ten_i'iv2') ///
+				, vce(r)
+		est sto isv`ten_i'`ab_i'
+		drop if _est_isvisv`ten_i'`ab_i'==0
+		drop *iv *iv? avg*
+		**** re-build iv
+		qui do "`code'\ConstructIV.do"
+		}
+		ivregress 2sls ///
+				`commonVar' ///
+				(``ten_i'2' = ``ten_i'iv2') ///
+				, vce(r)
+		est sto isv`ten_i'`ab_i'
+}
+
 {
 ***** schooling
 quietly {
@@ -1165,7 +1197,6 @@ mgroups("Regular Employee" "Firm Size" ///
 pattern(1 0 0 0 1 0 0 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
 replace
-}
 }
 }
 
