@@ -3,7 +3,7 @@
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\DataCleaning.log
   log type:  text
- opened on:   5 Nov 2018, 14:43:30
+ opened on:   6 Nov 2018, 20:28:55
 
 . 
 . * 1: Data cleaning
@@ -570,7 +570,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -3328,7 +3328,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -3958,7 +3958,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -4590,7 +4590,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -5219,7 +5219,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -7590,18 +7590,6 @@ Current data set is KHPS2005
 
 . 
 . ** variable number of spouse
-. gen relno=.
-(3,314 missing values generated)
-
-. gen dsex=.
-(3,314 missing values generated)
-
-. gen bYear=.
-(3,314 missing values generated)
-
-. gen bMonth=.
-(3,314 missing values generated)
-
 . global RenameListSpo ///
 >                                 v1 v4 v14 v15 v16 ///
 >                                 v76 ///
@@ -7964,7 +7952,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -8205,18 +8193,6 @@ Current data set is KHPS2006
 
 . 
 . ** variable number of spouse
-. gen relno=.
-(2,887 missing values generated)
-
-. gen dsex=.
-(2,887 missing values generated)
-
-. gen bYear=.
-(2,887 missing values generated)
-
-. gen bMonth=.
-(2,887 missing values generated)
-
 . global RenameListSpo ///
 >                                 v1 v4 v14 v15 v16 ///
 >                                 v76 ///
@@ -8578,7 +8554,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -8819,18 +8795,6 @@ Current data set is KHPS2007
 
 . 
 . ** variable number of spouse
-. gen relno=.
-(2,643 missing values generated)
-
-. gen dsex=.
-(2,643 missing values generated)
-
-. gen bYear=.
-(2,643 missing values generated)
-
-. gen bMonth=.
-(2,643 missing values generated)
-
 . global RenameListSpo ///
 >                                 v1 v4 v14 v15 v16 ///
 >                                 v76 ///
@@ -9192,7 +9156,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -9433,18 +9397,6 @@ Current data set is KHPS2008
 
 . 
 . ** variable number of spouse
-. gen relno=.
-(3,691 missing values generated)
-
-. gen dsex=.
-(3,691 missing values generated)
-
-. gen bYear=.
-(3,691 missing values generated)
-
-. gen bMonth=.
-(3,691 missing values generated)
-
 . global RenameListSpo ///
 >                                 v1 v4 v14 v15 v16 ///
 >                                 v85 ///
@@ -9810,7 +9762,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -10432,7 +10384,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -11070,7 +11022,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -11706,7 +11658,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -12340,7 +12292,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -12970,7 +12922,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -13602,7 +13554,7 @@ end of do-file
 .         dis " recode missing value (9) to 0 for each employment status "
 .         qui forvalues status_j = 1/`num_m'{
   2.                 local currentEmpStatus: word `status_j' of `empStatus'
-  3.                 recode `currentEmpStatus'* (9 = 0)
+  3.                 recode `currentEmpStatus'* (8 9 = 0)
   4.         }
 .         
 .         **** make experience dummy in each year
@@ -18712,5 +18664,5 @@ end of do-file
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\DataCleaning.log
   log type:  text
- closed on:   5 Nov 2018, 14:45:41
+ closed on:   6 Nov 2018, 20:31:02
 ---------------------------------------------------------------------------------

@@ -79,7 +79,7 @@ if "`isInitialExp'"{
 	dis " recode missing value (9) to 0 for each employment status "
 	qui forvalues status_j = 1/`num_m'{
 		local currentEmpStatus: word `status_j' of `empStatus'
-		recode `currentEmpStatus'* (9 = 0)
+		recode `currentEmpStatus'* (8 9 = 0)
 	}
 	
 	**** make experience dummy in each year

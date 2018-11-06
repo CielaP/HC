@@ -1,0 +1,42 @@
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables}
+\begin{tabular}{l*{2}{c}}
+\hline\hline
+            &         OLS         &                     \\
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         \\
+\hline
+$1\leq T\_{ij} < 2$&      0.0150         &      0.0183         \\
+            &    (0.0339)         &    (0.0413)         \\
+[1em]
+$2\leq T\_{ij} < 5$&      0.0353\sym{**} &      0.0177         \\
+            &    (0.0141)         &    (0.0200)         \\
+[1em]
+$5\leq T\_{ij} < 10$&      0.0246\sym{***}&      0.0123         \\
+            &    (0.0056)         &    (0.0090)         \\
+[1em]
+$10\leq T\_{ij} < 15$&      0.0182\sym{***}&      0.0102\sym{*}  \\
+            &    (0.0029)         &    (0.0052)         \\
+[1em]
+$15\leq T\_{ij} < 20$&      0.0144\sym{***}&      0.0068\sym{*}  \\
+            &    (0.0019)         &    (0.0040)         \\
+[1em]
+$20\leq T\_{ij} < 25$&      0.0125\sym{***}&      0.0047         \\
+            &    (0.0015)         &    (0.0034)         \\
+[1em]
+$25\leq T\_{ij} < 30$&      0.0143\sym{***}&      0.0069\sym{**} \\
+            &    (0.0013)         &    (0.0030)         \\
+[1em]
+$30\leq T\_{ij}$&      0.0105\sym{***}&      0.0055\sym{*}  \\
+            &    (0.0010)         &    (0.0029)         \\
+[1em]
+Total experience&      0.0223\sym{***}&      0.0449\sym{***}\\
+            &    (0.0026)         &    (0.0078)         \\
+[1em]
+Experience$^{2}$&     -0.0004\sym{***}&     -0.0007\sym{***}\\
+            &    (0.0000)         &    (0.0001)         \\
+\hline
+\(N\)       &        8032         &        8032         \\
+\hline\hline
+\end{tabular}
+\end{table}

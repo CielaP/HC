@@ -32,10 +32,3 @@ drop if dsize==6
 keep if owner==1 | owner==2 | owner==3
 sum owner
 drop owner
-* make flag of spouse
-gen sp =1 if (id>=10000&id<20000)|id>=30000
-replace sp=0 if sp==.
-* drop spouse
-drop if sp==1
-sum sp
-drop sp

@@ -39,10 +39,6 @@ global RenameListPri ///
 sum $RenameListPri
 
 ** variable number of spouse
-gen relno=.
-gen dsex=.
-gen bYear=.
-gen bMonth=.
 global RenameListSpo ///
 				v1 v4 v14 v15 v16 ///
 				v76 ///

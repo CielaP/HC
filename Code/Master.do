@@ -102,6 +102,16 @@ log close
 * 4: Construct tenure variables
 do "$Path\Code\ConstructTen.do"
 
+** save tentative data before sample selection
+save "$Input\jhps_hc_allsample.dta", replace
+
+* make flag of spouse
+gen sp =1 if (id>=10000&id<20000)|id>=30000
+replace sp=0 if sp==.
+* drop spouse
+drop if sp==1
+sum sp
+drop sp
 
 * 5: Sample selection and save data
 do "$Path\Code\SampleSelection.do"
