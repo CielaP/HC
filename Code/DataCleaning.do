@@ -1,7 +1,7 @@
 /* Title: DataCleaning */
 /// Date: Oct 12th, 2018
 /// Written by Ayaka Nakamura
-/// This file creates data cleaned by year
+/// This file creates cleaned data by year
 /// 1. Rename variable names
 /// 2. Generate main variables
 

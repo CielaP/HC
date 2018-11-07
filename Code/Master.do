@@ -3,18 +3,18 @@
 /// Written by Ayaka Nakamura
 /// 
 /// This file runs the following files:
-/// - DataCleaning.do: 
-/// 		-- Renamevar_`currentData'`SvyY'.do: 
-/// 			-- Renamevar.do: 
-/// 			-- Renamevar_OldKHPS.do: 
-/// 			-- Renamevar_Exp.do: 
-/// -- MergeSchooling.do: 
-/// -- ConstructTen.do: 
-/// -- SampleSelection.do: 
+/// - DataCleaning.do: creating cleaned data by year
+/// 		-- Renamevar_`currentData'`SvyY'.do: renaming variable in each year
+/// 			-- Renamevar.do: renaming variable in JHPS and KHPS2009--
+/// 			-- Renamevar_OldKHPS.do: renaming variable in --KHPS2008
+/// 			-- Renamevar_Exp.do: reanaming experience variable
+/// -- MergeSchooling.do: merging schooling
+/// -- ConstructTen.do: constructing tenure variable
+/// -- SampleSelection.do: restricting sample
 /// 
 /// Step
 /// 1: Data cleaning
-/// 2: Bind data of the all years
+/// 2: Bind data of the all years and create common variable
 /// 3: Merge schooling
 /// 4: Construct tenure variables
 /// 5: Sample selection and save data
