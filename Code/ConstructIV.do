@@ -3,6 +3,7 @@
 /// Written by Ayaka Nakamura
 /// 
 /// This file construct instrumental variable
+do "$Code\ReadData.do"
 
 sort empid year
 * iv of emptenure
@@ -39,3 +40,15 @@ gen occtenureiv4=occtenure^4-avgocctenure4
 * iv of oj dummy
 bysort empid (year): egen avgoj=mean(oj)
 gen ojiv=oj-avgoj
+
+* iv of year dummy
+tabulate year, generate(y)
+rename ( y# ) ( y# ), addnum(2004)
+su year, meanonly
+local ymax=r(max)
+local ymin=r(min)
+forvalues X = `ymin'/`ymax'{
+	bysort id (year): egen avgy`X'=mean(y`X')
+	gen yiv`X'=y`X'-avgy`X'
+}
+ 
