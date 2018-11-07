@@ -1,5 +1,5 @@
 qui{
-local code "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Code"
+local code $Code
 	
 do "`code'\ConstructDif.do"
 

@@ -13,20 +13,20 @@
 *  0. Preparation
 qui {
 	* Set Directories
-	local code "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Code"
-	local original "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData"
-	local inputfd "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input"
-	local output "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output"
-	local inter "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate"
-	local prg "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program" 
+	global Code "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Code"
+	global Original "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\OriginalData"
+	global Inputfd "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input"
+	global Output "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Output"
+	global Inter "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Intermediate"
+	global Prg "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program" 
 	
-	cd `code'
-	adopath + `original'
-	adopath + `inputfd'
-	adopath + `output'
-	adopath + `inter'
-	adopath + "`prg'\coefplot"
-	adopath + "`prg'\estout"
+	cd $Code
+	adopath + $Original
+	adopath + $Inputfd
+	adopath + $Output
+	adopath + $Inter
+	adopath + "$Prg\coefplot"
+	adopath + "$Prg\estout"
 
 	* set variable list for estimation
 	** list of common variable
@@ -81,7 +81,7 @@ log using "$Path\Log\Estimation.log", replace
 {
 ** OLS
 *** reading data
-do "`code'\ReadData.do"
+do "$Code\ReadData.do"
 
 foreach ten_i of local isIncOcc{
 	forvalues poly_x=1/4{
@@ -98,8 +98,8 @@ foreach ten_i of local isIncOcc{
 foreach ten_i of local isIncOcc{
 	forvalues poly_x=1/4{
 		qui {
-			do "`code'\ReadData.do"
-			do "`code'\ConstructIV.do"
+			do "$Code\ReadData.do"
+			do "$Code\ConstructIV.do"
 			ivregress 2sls ///
 						`commonVar' ///
 						(``ten_i'`poly_x'' = ``ten_i'iv`poly_x'') ///
@@ -108,7 +108,7 @@ foreach ten_i of local isIncOcc{
 			drop if _est_isv`ten_i'`poly_x'==0
 			drop *iv *iv? avg*
 			**** re-build iv
-			do "`code'\ConstructIV.do"
+			do "$Code\ConstructIV.do"
 		}
 		dis "/* AS's IV `ten_i' `poly_x'th order */"
 		ivregress 2sls ///
@@ -151,7 +151,7 @@ foreach ten_i of local isIncOcc{ /* loop within emp and empocc */
 		at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 		xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 		yline(0) rescale(100)
-		graph export "`output'\plot_as_`ten_i'_`poly_x'.pdf", replace
+		graph export "$Output\plot_as_`ten_i'_`poly_x'.pdf", replace
 	}
 }
 
@@ -187,7 +187,7 @@ local keepVar emptenure c.emptenure#c.emptenure ///
 						c.workexp#c.workexp#c.workexp#c.workexp
 
 esttab olsempocc* isvempocc* ///
-using "`output'\as_empocc.tex", ///
+using "$Output\as_empocc.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
@@ -215,7 +215,7 @@ local keepVar emptenure c.emptenure#c.emptenure ///
 						c.workexp#c.workexp#c.workexp#c.workexp
 
 esttab olsemp2 olsemp3 olsemp4 isvemp2 isvemp3 isvemp4 ///
-using "`output'\as_emp.tex", ///
+using "$Output\as_emp.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
@@ -232,7 +232,7 @@ replace
 
 *** main table
 esttab olsemp2 olsempocc2 isvemp2 isvempocc2 ///
-using "`output'\as_main.tex", ///
+using "$Output\as_main.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
@@ -248,7 +248,7 @@ replace
 
 *** return
 esttab olsempr2 olsempoccr2 isvempr2 isvempoccr2 ///
-using "`output'\as_return.tex", ///
+using "$Output\as_return.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -272,7 +272,7 @@ replace
 {
 local subSample Yn Pr La Sm Rg
 foreach sub_i of local subSample{ /* loop within subsample */
-	do "`code'\ReadData.do"
+	do "$Code\ReadData.do"
 	/// criterion for making subsamples
 	if "`sub_i'"=="Yn"{ /* under 59-year-old */
 		dis "/* under 59-year-old */"
@@ -308,7 +308,7 @@ foreach sub_i of local subSample{ /* loop within subsample */
 	
 	*** AS
 	qui {
-		do "`code'\ConstructIV.do"
+		do "$Code\ConstructIV.do"
 		ivregress 2sls ///
 							`commonVar' ///
 							(`emp2' = `empiv2') ///
@@ -317,7 +317,7 @@ foreach sub_i of local subSample{ /* loop within subsample */
 		drop if _est_isvrob`sub_i'==0
 		drop *iv *iv? avg*
 		**** re-build iv
-		do "`code'\ConstructIV.do"
+		do "$Code\ConstructIV.do"
 	}
 	ivregress 2sls ///
 						`commonVar' ///
@@ -344,7 +344,7 @@ qui coefplot (olsrobnYn, label(OLS)) (isvrobnYn, label(IV)), bylabel(Under 60-ye
 ||, at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 yline(0) rescale(100)
-graph export "`output'\plot_as_emp_rob.pdf", replace
+graph export "$Output\plot_as_emp_rob.pdf", replace
 
 
 ** output tex all results
@@ -354,7 +354,7 @@ local keepVar emptenure c.emptenure#c.emptenure ///
 ** coefficients
 esttab olsrobYn isvrobYn olsrobLa isvrobLa ///
 olsrobSm isvrobSm olsrobPr isvrobPr olsrobRg isvrobRg ///
-using "`output'\as_emp_rob.tex", ///
+using "$Output\as_emp_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
@@ -371,7 +371,7 @@ replace
 **** return
 esttab olsrobnYn isvrobnYn olsrobnLa isvrobnLa ///
 olsrobnSm isvrobnSm olsrobnPr isvrobnPr olsrobnRg isvrobnRg ///
-using "`output'\as_return_rob.tex", ///
+using "$Output\as_return_rob.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
@@ -394,7 +394,7 @@ replace
 {
 ** tenure>=1, >=3, >=5, >=10, >=15
 *** simple dummy
-do "`code'\ReadData.do"
+do "$Code\ReadData.do"
 sort empid year
 replace emptenure=40 if emptenure>=40
 est sto olsrobRg
@@ -406,7 +406,7 @@ reg ///
 est sto Dm
 
 *** same equation as AS
-do "`code'\ReadData.do"
+do "$Code\ReadData.do"
 sort empid year
 numlist "1 2 5 10 15 20 25 30"
 local tendm "`r(numlist)'"
@@ -425,13 +425,13 @@ est sto olsempD
 
 *** AS
 qui {
-	do "`code'\ReadData.do"
+	do "$Code\ReadData.do"
 	**** make emptenure dummy
 	foreach i of local tendm {
 		gen emp`i'=1 if emptenure>=`i'
 		replace emp`i'=0 if emp`i'==.
 	}
-	do "`code'\ConstructIV.do"
+	do "$Code\ConstructIV.do"
 	foreach i of local tendm {
 		bysort empid (year): egen avgemp`i'=mean(emp`i')
 		gen empiv`i'=emp`i'-avgemp`i'
@@ -447,7 +447,7 @@ qui {
 	drop if _est_isvempD==0
 	drop *iv* avg*
 	**** re-build iv
-	do "`code'\ConstructIV.do"
+	do "$Code\ConstructIV.do"
 	foreach i of local tendm {
 		bysort empid (year): egen avgemp`i'=mean(emp`i')
 		gen empiv`i'=emp`i'-avgemp`i'
@@ -470,7 +470,7 @@ local keepVar emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
 *** coefficients
 esttab olsempD isvempD ///
 olsrobSm isvrobSm olsrobPr isvrobPr olsrobRg isvrobRg ///
-using "`output'\as_emp_dm.tex", ///
+using "$Output\as_emp_dm.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
@@ -500,7 +500,7 @@ rename(1.emptenure=1 2.emptenure=2 3.emptenure=3 4.emptenure=4 5.emptenure=5 ///
 31.emptenure=31 32.emptenure=32 33.emptenure=33 34.emptenure=34 35.emptenure=35 ///
 36.emptenure=36 37.emptenure=37 38.emptenure=38 39.emptenure=39 40.emptenure=40)  ///
 title("Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables")
-graph export "`output'\plot_as_dm.pdf", replace
+graph export "$Output\plot_as_dm.pdf", replace
 }
 }
 
@@ -519,14 +519,14 @@ qui{
 								initialemp, nocons
 }
 
-do "`code'\ReadData.do"
-do "`code'\EstTopel.do"
+do "$Code\ReadData.do"
+do "$Code\EstTopel.do"
 
 *** output tex all results
 quietly {
 **** coefficients 
 esttab fst1 fst2 fst3 ///
-using "`output'\topel_emp.tex", ///
+using "$Output\topel_emp.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(_cons emptendif2 emptendif3 ///
 empexpdif2 empexpdif3) ///
@@ -553,7 +553,7 @@ replace
 {
 ** make the same sample as Toda
 qui {
-	use "`inputfd'\jhps_hc_allsample.dta", clear
+	use "$Inputfd\jhps_hc_allsample.dta", clear
 	destring, replace
 	tsset id year
 }
@@ -570,7 +570,7 @@ forvalues X = 2005/2014{
 	bysort id (year): replace emptenure=0.5 ///
 		if dswitch==1 & year==`X'
 }
-do "`code'\SampleSelection.do"
+do "$Code\SampleSelection.do"
 *** replace workexp
 replace workexp=age-schooling-6
 *** sample selection: male, employed, 2004--2007, 20--60, regular
@@ -580,7 +580,7 @@ keep if age>=20 & age<=60
 sum age
 keep if dregular==1
 tab dregular
-save "`inputfd'\jhps_hc_toda.dta", replace
+save "$Inputfd\jhps_hc_toda.dta", replace
 
 ** AS
 qui {
@@ -601,7 +601,7 @@ qui {
 }
 
 qui {
-	use "`inputfd'\jhps_hc_toda.dta", clear
+	use "$Inputfd\jhps_hc_toda.dta", clear
 	destring, replace
 	tsset id year
 }
@@ -620,10 +620,10 @@ forvalues poly_x=1/4{
 *** AS
 forvalues poly_x=1/4{
 	qui {
-		use "`inputfd'\jhps_hc_toda.dta", clear
+		use "$Inputfd\jhps_hc_toda.dta", clear
 		destring, replace
 		tsset id year
-		do "`code'\ConstructIV.do"
+		do "$Code\ConstructIV.do"
 		ivregress 2sls ///
 					`commonVar' ///
 					(`toda`poly_x'' = `todaiv`poly_x'') ///
@@ -631,7 +631,7 @@ forvalues poly_x=1/4{
 		est sto isvtoda`poly_x'
 		drop if _est_isvtoda`poly_x'==0
 		drop *iv *iv? avg*
-		do "`code'\ConstructIV.do"
+		do "$Code\ConstructIV.do"
 	}
 	dis "/* AS'sIV  `poly_x'th order */"
 	ivregress 2sls ///
@@ -671,7 +671,7 @@ forvalues poly_x=1/4{ /* loop within ten_inomial */
 		at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 		xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 		yline(0) rescale(100)
-		graph export "`output'\plot_as_toda_`poly_x'.pdf", replace
+		graph export "$Output\plot_as_toda_`poly_x'.pdf", replace
 }
 
 *** Topel
@@ -684,11 +684,11 @@ qui {
 }
 
 qui {
-	use "`inputfd'\jhps_hc_toda.dta", clear
+	use "$Inputfd\jhps_hc_toda.dta", clear
 	destring, replace
 	tsset id year
 }
-do "`code'\EstTopel.do"
+do "$Code\EstTopel.do"
 }
 
 
