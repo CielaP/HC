@@ -5,10 +5,10 @@
 /// This file is for estimation
 /// 
 /// 1. OLS->AS / 1-4 dimenational polynomial
-/// 2. OLS->AS / ability*tenure <- omitted
-/// 3. OLS->AS / under 60-year-old, firm size, non-specialist, regular employee
-/// 4. OLS->AS / tenure as dummy
-/// 5. Topel / 1-4 dimenational polynomial
+/// 2. OLS->AS / under 60-year-old, firm size, non-specialist, regular employee
+/// 3. OLS->AS / tenure as dummy
+/// 4. Topel / 1-4 dimenational polynomial
+/// 5. Compare with Toda(2009)
 
 *  0. Preparation
 qui {
@@ -77,14 +77,15 @@ qui {
 cap log close /* close any log files that accidentally have been left open. */
 log using "$Path\Log\Estimation.log", replace
 
-{
 * 1. OLS->AS / 1-4 dimenational polynomial
+{
 ** OLS
 *** reading data
 do "`code'\ReadData.do"
 
 foreach ten_i of local isIncOcc{
 	forvalues poly_x=1/4{
+		dis "/* OLS `ten_i' `poly_x'th order */"
 		reg ///
 				`commonVar' ///
 				``ten_i'`poly_x'' ///
@@ -109,6 +110,7 @@ foreach ten_i of local isIncOcc{
 			**** re-build iv
 			do "`code'\ConstructIV.do"
 		}
+		dis "/* AS's IV `ten_i' `poly_x'th order */"
 		ivregress 2sls ///
 				`commonVar' ///
 				(``ten_i'`poly_x'' = ``ten_i'iv`poly_x'') ///
@@ -118,20 +120,23 @@ foreach ten_i of local isIncOcc{
 }
 
 ** culc. return
-local culcemp1 _b[oj]+emptenure*_b[emptenure]
-local culcemp2 _b[oj]+emptenure*_b[emptenure] ///
-						+(emptenure^2)*_b[c.emptenure#c.emptenure]
-local culcemp3 _b[oj]+emptenure*_b[emptenure] ///
-						+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
-						+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure]
-local culcemp4 _b[oj]+emptenure*_b[emptenure] ///
-						+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
-						+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure] ///
-						+(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]
+qui{
+	local culcemp1 _b[oj]+emptenure*_b[emptenure]
+	local culcemp2 _b[oj]+emptenure*_b[emptenure] ///
+							+(emptenure^2)*_b[c.emptenure#c.emptenure]
+	local culcemp3 _b[oj]+emptenure*_b[emptenure] ///
+							+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
+							+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure]
+	local culcemp4 _b[oj]+emptenure*_b[emptenure] ///
+							+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
+							+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure] ///
+							+(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]
+}
 
 foreach ten_i of local isIncOcc{ /* loop within emp and empocc */
 	forvalues poly_x=1/4{ /* loop within ten_inomial */
 		*** culculation
+		dis "/* `ten_i' `poly_x'th order */"
 		est res ols`ten_i'`poly_x'
 		margins, exp(`culcemp`poly_x'') ///
 		at(emptenure=(0(1)25)) noe post
@@ -142,7 +147,7 @@ foreach ten_i of local isIncOcc{ /* loop within emp and empocc */
 		est sto isv`ten_i'r`poly_x'
 		
 		*** plot
-		coefplot (ols`ten_i'r`poly_x', label(OLS)) (isv`ten_i'r`poly_x', label(IV)), ///
+		qui coefplot (ols`ten_i'r`poly_x', label(OLS)) (isv`ten_i'r`poly_x', label(IV)), ///
 		at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 		xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 		yline(0) rescale(100)
@@ -163,11 +168,11 @@ local labelVar emptenure "Employer tenure" ///
 						c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 1000$"
 local transVar c.emptenure#c.emptenure 100*@ 100 ///
 						c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
-						c.emptenure#c.emptenurec.emptenure#c.emptenure 1000*@ 1000 ///
+						c.emptenure#c.emptenurec.emptenure#c.emptenure 10000*@ 10000 ///
 						c.occtenure#c.occtenure 100*@ 100 ///
 						c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
 						c.workexp#c.workexp#c.workexp 100*@ 100 ///
-						c.workexp#c.workexp#c.workexp 1000*@ 1000
+						c.workexp#c.workexp#c.workexp 10000*@ 10000
 
 *** coefficients / emp+occ
 local keepVar emptenure c.emptenure#c.emptenure ///
@@ -263,28 +268,34 @@ replace
 
 
 
-* 3. OLS->AS / under 60-year-old, firm size, non-specialist, regular employee
+* 2. OLS->AS / under 60-year-old, firm size, non-specialist, regular employee
+{
 local subSample Yn Pr La Sm Rg
 foreach sub_i of local subSample{ /* loop within subsample */
 	do "`code'\ReadData.do"
 	/// criterion for making subsamples
 	if "`sub_i'"=="Yn"{ /* under 59-year-old */
+		dis "/* under 59-year-old */"
 		drop if age>=60
 		sum age
 	}
 	else if "`sub_i'"=="Pr"{ /* non-professional */
+		dis "/* non-professional */"
 		drop if occ==10
 		tab occ
 	}
 	else if "`sub_i'"=="La"{ /* large firm */
+		dis "/* large firm */"
 		keep if dsize==2
 		tab dsize
 	}
 	else if "`sub_i'"=="Sm"{ /* small firm */
+		dis "/* small firm */"
 		drop if dsize==2
 		tab dsize
 	}
 	else if "`sub_i'"=="Rg"{ /* regular employee */
+		dis "/* regular employee */"
 		drop if dregular==0
 	tab dregular
 	}
@@ -325,7 +336,7 @@ foreach sub_i of local subSample{ /* loop within subsample */
 	est sto isvrobn`sub_i'
 }
 *** plot
-coefplot (olsrobnYn, label(OLS)) (isvrobnYn, label(IV)), bylabel(Under 60-year-old) ///
+qui coefplot (olsrobnYn, label(OLS)) (isvrobnYn, label(IV)), bylabel(Under 60-year-old) ///
 || (olsrobnRg, label(OLS)) (isvrobnRg, label(IV)), bylabel(Regular Employee) ///
 || (olsrobnPr, label(OLS)) (isvrobnPr, label(IV)), bylabel(Non-Professional) ///
 || (olsrobnLa, label(OLS)) (isvrobnLa, label(IV)), bylabel(Large Firm (Size>=500)) ///
@@ -375,16 +386,19 @@ pattern(1 0 1 0 1 0 1 0 1 0) ///
 prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
 replace
 }
+}
 
 
 
-* 4. OLS->AS / tenure as dummy
+* 3. OLS->AS / tenure as dummy
+{
 ** tenure>=1, >=3, >=5, >=10, >=15
 *** simple dummy
 do "`code'\ReadData.do"
 sort empid year
 replace emptenure=40 if emptenure>=40
 est sto olsrobRg
+dis " /* simple dummy */ "
 reg ///
 	`commonVar' ///
 	i.emptenure c.workexp##c.workexp ///
@@ -401,6 +415,7 @@ foreach i of local tendm {
 	gen emp`i'=1 if emptenure>=`i'
 	replace emp`i'=0 if emp`i'==.
 }
+dis " /* OLS dummy */ "
 reg ///
 	`commonVar' ///
 	emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
@@ -438,6 +453,7 @@ qui {
 		gen empiv`i'=emp`i'-avgemp`i'
 	}
 }
+dis " /* AS's IV dummy */ "
 ivregress 2sls ///
 		`commonVar' ///
 		(emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
@@ -472,7 +488,7 @@ replace
 
 *** simple dummy
 est res Dm
-coefplot, vertical yline(0) nolabel keep(*.emptenure) ///
+qui coefplot, vertical yline(0) nolabel keep(*.emptenure) ///
 ciopts(recast(rline) lpattern(dash)) recast(connected)  rescale(100) ///
 xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 rename(1.emptenure=1 2.emptenure=2 3.emptenure=3 4.emptenure=4 5.emptenure=5 ///
@@ -486,18 +502,22 @@ rename(1.emptenure=1 2.emptenure=2 3.emptenure=3 4.emptenure=4 5.emptenure=5 ///
 title("Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables")
 graph export "`output'\plot_as_dm.pdf", replace
 }
+}
 
 
 
-* 5. Topel / 1-4 dimenational polynomial
-global DmYear +y2005*_b[2005b.year]+y2006*_b[2006.year]+y2007*_b[2007.year] ///
-						+y2008*_b[2008.year]+y2009*_b[2009.year]+y2010*_b[2010.year] ///
-						+y2011*_b[2011.year]+y2012*_b[2012.year]+y2013*_b[2013.year] ///
-						+y2014*_b[2014.year]
-global FstReg reg empwagedif i.year
-global SndReg reg intwemp1 i.dunion i.dmarital i.schooling i.dregular ///
-							i.occ i.ind i.dsize ///
-							initialemp, nocons
+* 4. Topel / 1-4 dimenational polynomial
+{
+qui{
+	global DmYear +y2005*_b[2005b.year]+y2006*_b[2006.year]+y2007*_b[2007.year] ///
+							+y2008*_b[2008.year]+y2009*_b[2009.year]+y2010*_b[2010.year] ///
+							+y2011*_b[2011.year]+y2012*_b[2012.year]+y2013*_b[2013.year] ///
+							+y2014*_b[2014.year]
+	global FstReg reg empwagedif i.year
+	global SndReg reg intwemp1 i.dunion i.dmarital i.schooling i.dregular ///
+								i.occ i.ind i.dsize ///
+								initialemp, nocons
+}
 
 do "`code'\ReadData.do"
 do "`code'\EstTopel.do"
@@ -525,15 +545,19 @@ nodep nonote nomtitles ///
 title(Estimation Results, using the Method of 2SFD Estimation.) ///
 replace
 }
+}
  
  
-* 6. Compare with Toda(2009)
+ 
+* 5. Compare with Toda(2009)
+{
 ** make the same sample as Toda
 qui {
 	use "`inputfd'\jhps_hc_allsample.dta", clear
 	destring, replace
 	tsset id year
 }
+*** construct employer tenure
 forvalues X = 2005/2014{ 
 	*** working more than 800h & not switched->+1
 	/// If the sample dropped on the way was resurrected, 
@@ -559,28 +583,33 @@ tab dregular
 save "`inputfd'\jhps_hc_toda.dta", replace
 
 ** AS
-local commonVar realwage i.occ i.ind i.dunion schooling i.dsize
-local toda1 c.emptenure c.workexp
-local toda2 c.emptenure##c.emptenure c.workexp##c.workexp
-local toda3 c.emptenure##c.emptenure##c.emptenure ///
-					c.workexp##c.workexp##c.workexp
-local toda4 c.emptenure##c.emptenure##c.emptenure##c.emptenure ///
-					c.workexp##c.workexp##c.workexp##c.workexp
-local todaiv1 emptenureiv workexpiv
-local todaiv2 emptenureiv emptenureiv2 ///
-					workexpiv workexpiv2
-local todaiv3 emptenureiv emptenureiv2 emptenureiv3 ///
-					workexpiv workexpiv2 workexpiv3
-local todaiv4 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ///
-					workexpiv workexpiv2 workexpiv3 workexpiv4
+qui {
+	local commonVar realwage i.occ i.ind i.dunion schooling i.dsize
+	local toda1 c.emptenure c.workexp
+	local toda2 c.emptenure##c.emptenure c.workexp##c.workexp
+	local toda3 c.emptenure##c.emptenure##c.emptenure ///
+						c.workexp##c.workexp##c.workexp
+	local toda4 c.emptenure##c.emptenure##c.emptenure##c.emptenure ///
+						c.workexp##c.workexp##c.workexp##c.workexp
+	local todaiv1 emptenureiv workexpiv
+	local todaiv2 emptenureiv emptenureiv2 ///
+						workexpiv workexpiv2
+	local todaiv3 emptenureiv emptenureiv2 emptenureiv3 ///
+						workexpiv workexpiv2 workexpiv3
+	local todaiv4 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ///
+						workexpiv workexpiv2 workexpiv3 workexpiv4
+}
+
 qui {
 	use "`inputfd'\jhps_hc_toda.dta", clear
 	destring, replace
 	tsset id year
 }
-sum `commonVar' emptenure workexp, de
+sum realwage schooling dsize emptenure workexp, de
+
 *** OLS
 forvalues poly_x=1/4{
+	dis "/* OLS  `poly_x'th order */"
 	reg ///
 			`commonVar' ///
 			`toda`poly_x'' ///
@@ -604,6 +633,7 @@ forvalues poly_x=1/4{
 		drop *iv *iv? avg*
 		do "`code'\ConstructIV.do"
 	}
+	dis "/* AS'sIV  `poly_x'th order */"
 	ivregress 2sls ///
 				`commonVar' ///
 				(`toda`poly_x'' = `todaiv`poly_x'') ///
@@ -612,16 +642,18 @@ forvalues poly_x=1/4{
 }
 
 ** culc. return
-local culcemp1 emptenure*_b[emptenure]
-local culcemp2 emptenure*_b[emptenure] ///
-						+(emptenure^2)*_b[c.emptenure#c.emptenure]
-local culcemp3 emptenure*_b[emptenure] ///
-						+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
-						+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure]
-local culcemp4 emptenure*_b[emptenure] ///
-						+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
-						+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure] ///
-						+(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]
+qui{
+	local culcemp1 emptenure*_b[emptenure]
+	local culcemp2 emptenure*_b[emptenure] ///
+							+(emptenure^2)*_b[c.emptenure#c.emptenure]
+	local culcemp3 emptenure*_b[emptenure] ///
+							+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
+							+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure]
+	local culcemp4 emptenure*_b[emptenure] ///
+							+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
+							+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure] ///
+							+(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]
+}
 
 forvalues poly_x=1/4{ /* loop within ten_inomial */
 		*** culculation
@@ -635,7 +667,7 @@ forvalues poly_x=1/4{ /* loop within ten_inomial */
 		est sto isvtodar`poly_x'
 		
 		*** plot
-		coefplot (olstodar`poly_x', label(OLS)) (isvtodar`poly_x', label(IV)), ///
+		qui coefplot (olstodar`poly_x', label(OLS)) (isvtodar`poly_x', label(IV)), ///
 		at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 		xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 		yline(0) rescale(100)
@@ -643,16 +675,21 @@ forvalues poly_x=1/4{ /* loop within ten_inomial */
 }
 
 *** Topel
-global DmYear
-global FstReg reg empwagedif
-global SndReg reg intwemp1 i.dunion ///
-							i.occ i.ind i.dsize ///
-							initialemp, nocons
+qui {
+	global DmYear
+	global FstReg reg empwagedif
+	global SndReg reg intwemp1 i.dunion ///
+								i.occ i.ind i.dsize ///
+								initialemp, nocons
+}
+
 qui {
 	use "`inputfd'\jhps_hc_toda.dta", clear
 	destring, replace
 	tsset id year
 }
 do "`code'\EstTopel.do"
+}
+
 
 log close

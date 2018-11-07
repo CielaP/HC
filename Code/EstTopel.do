@@ -1,21 +1,45 @@
+qui{
 local code "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Code"
-
-*** linear
+	
 do "`code'\ConstructDif.do"
-**** 1st step
-$FstReg ///
-			if fst==1
-est sto fst1
-gen emptenB1=emptenure*_b[_cons] ///
-							$DmYear
-gen intwemp1=realwage-emptenB
 
-**** 2nd step
-$SndReg
-est sto snd1
+* list of control variable
+local contrl1
+local contrl2 emptendif2 empexpdif2
+local contrl3 `contrl2' ///
+					emptendif3 empexpdif3
+local contrl4 `contrl3' ///
+					emptendif4 empexpdif4 ///
 
-**** culc return
-{
+* list of terms subtracted from the LHS
+local LHSterm1 emptenure*_b[_cons]
+local LHSterm2 `LHSterm1' ///
+						+_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2
+local LHSterm3 `LHSterm2' ///
+						+_b[emptendif3]*emptenure^3+_b[empexpdif3]*workexp^3
+local LHSterm4 `LHSterm3' ///
+						+_b[emptendif4]*emptenure^4+_b[empexpdif4]*workexp^4
+}
+
+
+* estimation
+forvalues i=1/4 {
+	**** 1st step
+	qui $FstReg ///
+				`contrl`i'' ///
+				if fst==1
+	est sto fst`i'
+	gen emptenB`i'=`LHSterm`i'' ///
+								$DmYear
+	gen intwemp`i'=realwage-emptenB`i'
+	
+	**** 2nd step
+	qui $SndReg
+	est sto snd`i'
+}
+
+* calc. return
+** linear
 capture program drop coef
 program coef, rclass
 	suest fst1 snd1
@@ -32,25 +56,8 @@ suest fst1 snd1
 	}
 end
 emprtn
-}
 
-*** qadratic
-**** 1st step
-$FstReg ///
-			emptendif2 empexpdif2 ///
-			if fst==1
-est sto fst2
-gen emptenB2=emptenure*_b[_cons] ///
-						+_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2 ///
-						$DmYear
-gen intwemp2=realwage-emptenB2
-
-**** 2nd step
-$SndReg
-est sto snd2
-
-**** culc return
-{
+** qadratic
 capture program drop coef
 program coef, rclass
 	suest fst2 snd2
@@ -68,26 +75,8 @@ suest fst2 snd2
 	}
 end
 emprtn
-}
 
-*** cubic
-**** 1st step
-$FstReg ///
-			emptendif2 empexpdif2 emptendif3 empexpdif3 ///
-			if fst==1
-est sto fst3
-gen emptenB3=emptenure*_b[_cons] ///
-						+_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2 ///
-						+_b[emptendif3]*emptenure^3+_b[empexpdif3]*workexp^3 ///
-						$DmYear
-gen intwemp3=realwage-emptenB3
-
-**** 2nd step
-$SndReg
-est sto snd3
-
-**** culc return
-{
+** cubic
 capture program drop coef
 program coef, rclass
 	suest fst3 snd3
@@ -106,29 +95,8 @@ suest fst3 snd3
 	}
 end
 emprtn
-}
 
-*** quartic
-**** 1st step
-$FstReg ///
-			emptendif2 empexpdif2 ///
-			emptendif3 empexpdif3 ///
-			emptendif4 empexpdif4 ///
-			if fst==1
-est sto fst4
-gen emptenB4=emptenure*_b[_cons] ///
-						+_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2 ///
-						+_b[emptendif3]*emptenure^3+_b[empexpdif3]*workexp^3 ///
-						+_b[emptendif4]*emptenure^4+_b[empexpdif4]*workexp^4 ///
-						$DmYear
-gen intwemp4=realwage-emptenB4
-
-**** 2nd step
-$SndReg
-est sto snd4
-
-**** culc return
-{
+** quartic
 capture program drop coef
 program coef, rclass
 	suest fst4 snd4
@@ -148,4 +116,3 @@ suest fst4 snd4
 	}
 end
 emprtn
-}
