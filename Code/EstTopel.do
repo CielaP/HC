@@ -1,23 +1,26 @@
 qui{
 local code $Code
-	
 do "`code'\ConstructDif.do"
 
 * list of control variable
 local contrl1
 local contrl2 emptendif2 empexpdif2
-local contrl3 `contrl2' ///
+local contrl3 emptendif2 empexpdif2 ///
 					emptendif3 empexpdif3
-local contrl4 `contrl3' ///
+local contrl4 emptendif2 empexpdif2 ///
+					emptendif3 empexpdif3 ///
 					emptendif4 empexpdif4 ///
 
 * list of terms subtracted from the LHS
 local LHSterm1 emptenure*_b[_cons]
-local LHSterm2 `LHSterm1' ///
+local LHSterm2 emptenure*_b[_cons] ///
 						+_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2
-local LHSterm3 `LHSterm2' ///
+local LHSterm3 emptenure*_b[_cons] ///
+						+_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2 ///
 						+_b[emptendif3]*emptenure^3+_b[empexpdif3]*workexp^3
-local LHSterm4 `LHSterm3' ///
+local LHSterm4 emptenure*_b[_cons] ///
+						+_b[emptendif2]*emptenure^2+_b[empexpdif2]*workexp^2 ///
+						+_b[emptendif3]*emptenure^3+_b[empexpdif3]*workexp^3 ///
 						+_b[emptendif4]*emptenure^4+_b[empexpdif4]*workexp^4
 }
 
@@ -49,7 +52,7 @@ end
 coef
 capture program drop emprtn
 program emprtn, rclass
-suest fst1 snd1
+	qui suest fst1 snd1
 	foreach X of numlist 2 5 10 15 20 25 {
 	lincom ([fst1_mean]_b[_cons]-[snd1_mean]_b[initialemp])*`X'
 	return scalar rtn`X' =r(se)
@@ -67,7 +70,7 @@ end
 coef
 capture program drop emprtn
 program emprtn, rclass
-suest fst2 snd2
+	qui suest fst2 snd2
 	foreach X of numlist 2 5 10 15 20 25 {
 	lincom ([fst2_mean]_b[_cons]-[snd2_mean]_b[initialemp])*`X' ///
 				+[fst2_mean]_b[emptendif2]*`X'*`X'
@@ -86,7 +89,7 @@ end
 coef
 capture program drop emprtn
 program emprtn, rclass
-suest fst3 snd3
+	qui suest fst3 snd3
 	foreach X of numlist 2 5 10 15 20 25 {
 	lincom ([fst3_mean]_b[_cons]-[snd3_mean]_b[initialemp])*`X' ///
 				+[fst3_mean]_b[emptendif2]*`X'*`X' ///
@@ -106,7 +109,7 @@ end
 coef
 capture program drop emprtn
 program emprtn, rclass
-suest fst4 snd4
+	qui suest fst4 snd4
 	foreach X of numlist 2 5 10 15 20 25 {
 	lincom ([fst4_mean]_b[_cons]-[snd4_mean]_b[initialemp])*`X' ///
 				+[fst4_mean]_b[emptendif2]*`X'*`X' ///
