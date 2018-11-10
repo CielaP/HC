@@ -37,7 +37,8 @@ forvalues i=1/4 {
 	gen intwemp`i'=realwage-emptenB`i'
 	
 	**** 2nd step
-	qui $SndReg
+	qui reg intwemp`i' ///
+				$SndReg
 	est sto snd`i'
 }
 
