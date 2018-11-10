@@ -134,6 +134,9 @@ qui{
 							+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
 							+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure] ///
 							+(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]
+	local comSetPlot at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
+								xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
+								yline(0) rescale(100)
 }
 
 foreach ten_i of local isIncOcc{ /* loop within emp and empocc */
@@ -151,9 +154,7 @@ foreach ten_i of local isIncOcc{ /* loop within emp and empocc */
 		
 		*** plot
 		qui coefplot (ols`ten_i'r`poly_x', label(OLS)) (isv`ten_i'r`poly_x', label(IV)), ///
-		at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-		xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-		yline(0) rescale(100)
+		`comSetPlot'
 		graph export "$Output\plot_as_`ten_i'_`poly_x'.pdf", replace
 	}
 }
@@ -177,6 +178,10 @@ local transVar c.emptenure#c.emptenure 100*@ 100 ///
 						c.occtenure#c.occtenure 100*@ 100 ///
 						c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
 						c.occtenure#c.occtenure#c.occtenure#c.occtenure 10000*@ 10000
+local comSetTex prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
+					se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+					nodep nonote nomtitles ///
+					replace
 
 *** coefficients / emp+occ
 local keepVar emptenure c.emptenure#c.emptenure ///
@@ -192,7 +197,6 @@ local keepVar emptenure c.emptenure#c.emptenure ///
 
 esttab olsempocc2 olsempocc3 olsempocc4 isvempocc2 isvempocc3 isvempocc4 ///
 using "$Output\as_empocc.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
 coeflabel(`labelVar' ///
@@ -202,14 +206,12 @@ coeflabel(`labelVar' ///
 				c.occtenure#c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{4}\times 10000$" ///
 				) ///
 transform(`transVar') ///
-nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists, ///
 Variables of Occupation Tenure are Controlled.) ///
 mgroups("OLS" "IV" ///
 pattern(1 0 0 1 0 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
+`comSetTex'
 
 *** coefficients / emptenure
 local keepVar emptenure c.emptenure#c.emptenure ///
@@ -221,52 +223,43 @@ local keepVar emptenure c.emptenure#c.emptenure ///
 
 esttab olsemp2 olsemp3 olsemp4 isvemp2 isvemp3 isvemp4 ///
 using "$Output\as_emp.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
 coeflabel(`labelVar') ///
 transform(`transVar') ///
-nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists, ///
 Variables of Occupation Tenure are not Controlled.) ///
 mgroups("OLS" "IV" ///
 pattern(1 0 0 1 0 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
+`comSetTex'
 
 *** main table
 esttab olsemp2 olsempocc2 isvemp2 isvempocc2 ///
 using "$Output\as_main.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
 coeflabel(`labelVar') ///
 transform(`transVar') ///
-nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists.) ///
 mgroups("OLS" "IV" ///
 pattern(1 0 1 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
+`comSetTex'
 
 *** return
 esttab olsempr2 olsempoccr2 isvempr2 isvempoccr2 ///
 using "$Output\as_return.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
 6._at "5 Years" 11._at "10 Years" ///
 16._at "15 Years" ///
 21._at "20 Years" 26._at "25 Years") ///
-nodep nonote nomtitles ///
 title(Estimated Returns to Employer Tenure, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists.) ///
 mgroups("OLS" "IV" ///
 pattern(1 0 1 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
+`comSetTex'
 }
 }
 }
@@ -346,9 +339,7 @@ qui coefplot (olsrobnYn, label(OLS)) (isvrobnYn, label(IV)), bylabel(Under 60-ye
 || (olsrobnPr, label(OLS)) (isvrobnPr, label(IV)), bylabel(Non-Professional) ///
 || (olsrobnLa, label(OLS)) (isvrobnLa, label(IV)), bylabel(Large Firm (Size>=500)) ///
 || (olsrobnSm, label(OLS)) (isvrobnSm, label(IV)), bylabel(Small Firm (Size<500)) ///
-||, at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-yline(0) rescale(100)
+||, `comSetPlot'
 graph export "$Output\plot_as_emp_rob.pdf", replace
 
 
@@ -360,36 +351,30 @@ local keepVar emptenure c.emptenure#c.emptenure ///
 esttab olsrobYn isvrobYn olsrobLa isvrobLa ///
 olsrobSm isvrobSm olsrobPr isvrobPr olsrobRg isvrobRg ///
 using "$Output\as_emp_rob.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
 coeflabel(`labelVar') ///
 transform(`transVar') ///
-nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Various Subsamples.) ///
 mgroups("Under 59-year-old" "Large firms ($\geq500$)" ///
 "Small Firms ($<500$)" "Non-Professional" "Regular Employee" ///
 pattern(1 0 1 0 1 0 1 0 1 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
+`comSetTex'
 
 **** return
 esttab olsrobnYn isvrobnYn olsrobnLa isvrobnLa ///
 olsrobnSm isvrobnSm olsrobnPr isvrobnPr olsrobnRg isvrobnRg ///
 using "$Output\as_return_rob.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
 6._at "5 Years" 11._at "10 Years" ///
 16._at "15 Years" ///
 21._at "20 Years" 26._at "25 Years") ///
-nodep nonote nomtitles ///
 title(Estimated Returns to Employer Tenure, using Various Subsamples.) ///
 mgroups("Under 59-year-old" "Large firms ($\geq500$)" ///
 "Small Firms ($<500$)" "Non-Professional" "Regular Employee" ///
 pattern(1 0 1 0 1 0 1 0 1 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
+`comSetTex'
 }
 }
 
@@ -469,7 +454,6 @@ local keepVar emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
 *** coefficients
 esttab olsempD isvempD ///
 using "$Output\as_emp_dm.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
 coeflabel(emp1 "$ T_{ij}\geq1$" emp2 "$ T_{ij}\geq2$" ///
@@ -477,12 +461,10 @@ emp5 "$ T_{ij}\geq5$" emp10 "$ T_{ij}\geq10$" ///
 emp15 "$ T_{ij}\geq15$" emp20 "$ T_{ij}\geq20$" ///
 emp25 "$ T_{ij}\geq25$" emp30 "$ T_{ij}\geq30$" ///
 workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$") ///
-nodep nonote nomtitles ///
 title(Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables) ///
 mgroups("OLS" "IV" ///
 pattern(1 1) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
+`comSetTex'
 
 *** simple dummy
 est res Dm
@@ -678,9 +660,7 @@ forvalues poly_x=1/4{ /* loop within ten_inomial */
 		
 		*** plot
 		qui coefplot (olstodar`poly_x', label(OLS)) (isvtodar`poly_x', label(IV)), ///
-		at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-		xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-		yline(0) rescale(100)
+		`comSetPlot'
 		graph export "$Output\plot_as_toda_`poly_x'.pdf", replace
 }
 
@@ -765,9 +745,7 @@ forvalues poly_x=1/4{ /* loop within ten_inomial */
 		
 		*** plot
 		qui coefplot (olsempr`poly_x', label(OLS)) (isvydmr`poly_x', label(IV)), ///
-		at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
-		xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
-		yline(0) rescale(100)
+		`comSetPlot'
 		graph export "$Output\plot_as_emp_ydm_`poly_x'.pdf", replace
 }
 
@@ -800,36 +778,30 @@ local keepVar emptenure c.emptenure#c.emptenure ///
 
 esttab olsemp2 olsemp3 olsemp4 isvydm2 isvydm3 isvydm4 ///
 using "$Output\as_emp_ydm.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(`keepVar') ///
 order(`keepVar') ///
 coeflabel(`labelVar') ///
 transform(`transVar') ///
-nodep nonote nomtitles ///
 title(Earnings Function Estimates, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists, ///
 Variables of Occupation Tenure are not Controlled.) ///
 mgroups("OLS" "IV" ///
 pattern(1 0 0 1 0 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
+`comSetTex'
 
 *** return
 esttab olsempr2 isvydmr2 ///
 using "$Output\as_return_ydm.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
 6._at "5 Years" 11._at "10 Years" ///
 16._at "15 Years" ///
 21._at "20 Years" 26._at "25 Years") ///
-nodep nonote nomtitles ///
 title(Estimated Returns to Employer Tenure, using Sample up to 64-year-old, ///
 including Non-regular Workers and Specialists.) ///
 mgroups("OLS" "IV" ///
 pattern(1 0 1 0) ///
-prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-replace
+`comSetTex'
 }
 }
 */
