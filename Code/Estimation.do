@@ -574,19 +574,18 @@ save "$Inputfd\jhps_hc_toda.dta", replace
 ** AS
 qui {
 	local commonVar realwage i.occ i.ind i.dunion schooling i.dsize
-	local toda1 c.emptenure c.workexp
-	local toda2 c.emptenure##c.emptenure c.workexp##c.workexp
-	local toda3 c.emptenure##c.emptenure##c.emptenure ///
-						c.workexp##c.workexp##c.workexp
-	local toda4 c.emptenure##c.emptenure##c.emptenure##c.emptenure ///
-						c.workexp##c.workexp##c.workexp##c.workexp
-	local todaiv1 emptenureiv workexpiv
-	local todaiv2 emptenureiv emptenureiv2 ///
-						workexpiv workexpiv2
-	local todaiv3 emptenureiv emptenureiv2 emptenureiv3 ///
-						workexpiv workexpiv2 workexpiv3
-	local todaiv4 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ///
-						workexpiv workexpiv2 workexpiv3 workexpiv4
+	local emp1 c.emptenure ///
+	local emp2 c.emptenure##c.emptenure
+	local emp3 c.emptenure##c.emptenure##c.emptenure
+	local emp4 c.emptenure##c.emptenure##c.emptenure##c.emptenure
+	local work1 c.workexp
+	local work2  c.workexp##c.workexp
+	local work3 c.workexp##c.workexp##c.workexp
+	local work4 c.workexp##c.workexp##c.workexp##c.workexp
+	local todaiv1 emptenureiv
+	local todaiv2 emptenureiv emptenureiv2
+	local todaiv3 emptenureiv emptenureiv2 emptenureiv3
+	local todaiv4 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4
 }
 
 qui {
@@ -602,7 +601,8 @@ forvalues poly_x=1/4{
 	dis "/* OLS  `poly_x'th order */"
 	reg ///
 			`commonVar' ///
-			`toda`poly_x'' ///
+			`emp`poly_x'' ///
+			`work`poly_x'' ///
 			, vce(r)
 	est sto olstoda`poly_x'
 }
@@ -617,7 +617,8 @@ forvalues poly_x=1/4{
 		do "$Code\ConstructIV.do"
 		ivregress 2sls ///
 					`commonVar' ///
-					(`toda`poly_x'' = `todaiv`poly_x'') ///
+					`work`poly_x'' ///
+					(`emp`poly_x'' = `todaiv`poly_x'') ///
 					, vce(r)
 		est sto isvtoda`poly_x'
 		drop if _est_isvtoda`poly_x'==0
@@ -672,30 +673,30 @@ local keepVar emptenure c.emptenure#c.emptenure ///
 						c.workexp#c.workexp#c.workexp ///
 						c.workexp#c.workexp#c.workexp#c.workexp
 
-esttab olstoda# isvtoda# ///
+esttab olstoda1 olstoda2 olstoda3 olstoda4 ///
+			isvtoda1 isvtoda2 isvtoda3 isvtoda4 ///
 using "$Output\as_toda.tex", ///
 keep(`keepVar') ///
 order(`keepVar') ///
 coeflabel(`labelVar') ///
 transform(`transVar') ///
-title(Replication of Toda (2007).) ///
+title("Replication of Toda (2007), using the AS's IV method.") ///
 mgroups("OLS" "IV" ///
 pattern(1 0 0 1 0 0) ///
 `comSetTex'
 
 **** return
-esttab olstodar* isvtodar* ///
-olsrobnSm isvrobnSm olsrobnPr isvrobnPr olsrobnRg isvrobnRg ///
+esttab olstodar1 olstodar2 olstodar3 olstodar4 ///
+			isvtodar1 isvtodar2 isvtodar3 isvtodar4 ///
 using "$Output\as_return_toda.tex", ///
 keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
 coeflabel(3._at "2 Years" ///
 6._at "5 Years" 11._at "10 Years" ///
 16._at "15 Years" ///
 21._at "20 Years" 26._at "25 Years") ///
-title(Estimated Returns to Employer Tenure, using Various Subsamples.) ///
-mgroups("Under 59-year-old" "Large firms ($\geq500$)" ///
-"Small Firms ($<500$)" "Non-Professional" "Regular Employee" ///
-pattern(1 0 1 0 1 0 1 0 1 0) ///
+title("Estimated Returns to Employer Tenure, based on replication of Toda (2007).") ///
+mgroups("OLS" "IV" ///
+pattern(1 0 0 0 1 0 0 0) ///
 `comSetTex'
 }
 
@@ -715,131 +716,51 @@ qui {
 	tsset id year
 }
 do "$Code\EstTopel.do"
+
+**** output tex all results
+quietly {
+***** coefficients 
+esttab fst1 fst2 fst3 fst4 ///
+using "$Output\topel_emp.tex", ///
+se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+keep( ///
+		_cons emptendif2 emptendif3 emptendif4 ///
+		empexpdif2 empexpdif3 empexpdif4 ///
+) ///
+order( ///
+		_cons emptendif2 emptendif3 emptendif4 ///
+		empexpdif2 empexpdif3 empexpdif4 ///
+) ///
+coeflabel( ///
+		_cons "Constant" ///
+		emptendif2 "Emp.ten.$^{2}\times 100$" ///
+		emptendif3 "Emp.ten.$^{3}\times 1000$" ///
+		emptendif4 "Emp.ten.$^{4}\times 10000$" ///
+		empexpdif2 "Experience$^{2}\times 100$" ///
+		empexpdif3 "Experience$^{3}\times 1000$" ///
+		empexpdif4 "Experience$^{4}\times 10000$" ///
+		) ///
+transform( ///
+		emptendif2 100*@ 100 ///
+		emptendif3 1000*@ 1000 ///
+		emptendif4 10000*@ 10000 ///
+		empexpdif2 100*@ 100 ///
+		empexpdif3 1000*@ 1000 ///
+		empexpdif4 10000*@ 10000 ///
+		) ///
+nodep nonote nomtitles ///
+title(Replication of Toda (2007), using the method of 2SFD.) ///
+replace
 }
 
 
 
-* 6. OLS->AS / iv of year dummy
-{/*
-local commonVar realwage i.occ i.ind i.dunion i.dmarital ///
-								i.schooling i.dsize i.dregular
-*local ydm y2005 y2006 y2007 y2008 ///
-*				y2009 y2010 y2011 y2012 y2013 y2014
-*local yiv yiv2005 yiv2006 yiv2007 yiv2008 ///
-*				yiv2009 yiv2010 yiv2011 yiv2012 yiv2013 yiv2014
-local ydm year
-local yiv yiv
+** predict muhat -> calculate bias in Topel and AS
+** y-xb=mu+e
+** V(T|X)-> reg T X -> ve -> E(ve^2) given X
+*** see auxionaly estimation in AW, 2005
+** jobmatch fixed effect retry
+set mat 10000
 
-** AS
-forvalues poly_x=1/4{
-		qui {
-			do "$Code\ReadData.do"
-			do "$Code\ConstructIV.do"
-			ivregress 2sls ///
-						`commonVar' ///
-						(`emp`poly_x'' `ydm' = `empiv`poly_x'' `yiv' ) ///
-						, vce(r)
-			est sto isvydm`poly_x'
-			drop if _est_isvydm`poly_x'==0
-			drop *iv *iv? avg*
-			**** re-build iv
-			do "$Code\ConstructIV.do"
-		}
-		dis "/* AS's IV emp `poly_x'th order */"
-		ivregress 2sls ///
-				`commonVar' ///
-				(`emp`poly_x'' `ydm' = `empiv`poly_x'' `yiv' ) ///
-				, vce(r)
-		est sto isvydm`poly_x'
-}
-
-** culc. return
-qui{
-	local culcemp1 _b[oj]+emptenure*_b[emptenure]
-	local culcemp2 _b[oj]+emptenure*_b[emptenure] ///
-							+(emptenure^2)*_b[c.emptenure#c.emptenure]
-	local culcemp3 _b[oj]+emptenure*_b[emptenure] ///
-							+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
-							+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure]
-	local culcemp4 _b[oj]+emptenure*_b[emptenure] ///
-							+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
-							+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure] ///
-							+(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]
-}
-
-forvalues poly_x=1/4{ /* loop within ten_inomial */
-		*** culculation
-		dis "/* emp `poly_x'th order */"
-		est res olsemp`poly_x'
-		margins, exp(`culcemp`poly_x'') ///
-		at(emptenure=(0(1)25)) noe post
-		est sto olsempr`poly_x'
-		est res isvydm`poly_x'
-		margins, exp(`culcemp`poly_x'') ///
-		at(emptenure=(0(1)25)) noe post
-		est sto isvydmr`poly_x'
-		
-		*** plot
-		qui coefplot (olsempr`poly_x', label(OLS)) (isvydmr`poly_x', label(IV)), ///
-		`comSetPlot'
-		graph export "$Output\plot_as_emp_ydm_`poly_x'.pdf", replace
-}
-
-** output tex all results
-qui{
-local labelVar emptenure "Employer tenure" ///
-						c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
-						c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
-						c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
-						oj "Old job" ///
-						workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
-						c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
-						c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 10000$"
-local transVar c.emptenure#c.emptenure 100*@ 100 ///
-						c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
-						c.emptenure#c.emptenurec.emptenure#c.emptenure 10000*@ 10000 ///
-						c.workexp#c.workexp#c.workexp 100*@ 100 ///
-						c.workexp#c.workexp#c.workexp 10000*@ 10000 ///
-						c.occtenure#c.occtenure 100*@ 100 ///
-						c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
-						c.occtenure#c.occtenure#c.occtenure#c.occtenure 10000*@ 10000
-
-*** coefficients / emptenure
-local keepVar emptenure c.emptenure#c.emptenure ///
-						c.emptenure#c.emptenure#c.emptenure ///
-						c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-						oj workexp c.workexp#c.workexp ///
-						c.workexp#c.workexp#c.workexp ///
-						c.workexp#c.workexp#c.workexp#c.workexp
-
-esttab olsemp2 olsemp3 olsemp4 isvydm2 isvydm3 isvydm4 ///
-using "$Output\as_emp_ydm.tex", ///
-keep(`keepVar') ///
-order(`keepVar') ///
-coeflabel(`labelVar') ///
-transform(`transVar') ///
-title(Earnings Function Estimates, using Sample up to 64-year-old, ///
-including Non-regular Workers and Specialists, ///
-Variables of Occupation Tenure are not Controlled.) ///
-mgroups("OLS" "IV" ///
-pattern(1 0 0 1 0 0) ///
-`comSetTex'
-
-*** return
-esttab olsempr2 isvydmr2 ///
-using "$Output\as_return_ydm.tex", ///
-keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
-coeflabel(3._at "2 Years" ///
-6._at "5 Years" 11._at "10 Years" ///
-16._at "15 Years" ///
-21._at "20 Years" 26._at "25 Years") ///
-title(Estimated Returns to Employer Tenure, using Sample up to 64-year-old, ///
-including Non-regular Workers and Specialists.) ///
-mgroups("OLS" "IV" ///
-pattern(1 0 1 0) ///
-`comSetTex'
-}
-*/
-}
-
+ 
 log close
