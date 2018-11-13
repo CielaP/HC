@@ -76,7 +76,6 @@ qui {
 * Open Log file
 cap log close /* close any log files that accidentally have been left open. */
 log using "$Path\Log\Estimation.log", replace
-/*
 
 
 
@@ -483,7 +482,6 @@ title("Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy
 graph export "$Output\plot_as_dm.pdf", replace
 }
 }
-*/
 
 
 * 4. Topel / 1-4 dimenational polynomial
@@ -494,7 +492,7 @@ qui{
 							+y2011*_b[2011.year]+y2012*_b[2012.year]+y2013*_b[2013.year] ///
 							+y2014*_b[2014.year]
 	global FstReg reg empwagedif i.year
-	global SndReg reg intwemp1 i.dmarital i.schooling ///
+	global SndReg i.dmarital i.schooling ///
 								i.dregular i.dunion ///
 								i.occ i.ind i.dsize ///
 								initialemp, nocons
@@ -540,7 +538,6 @@ replace
 }
 }
  
- /*
 * 5. Compare with Toda(2009)
 {
 ** make the same sample as Toda
@@ -599,6 +596,7 @@ qui {
 }
 sum realwage schooling dsize emptenure workexp, de
 
+
 *** OLS
 forvalues poly_x=1/4{
 	dis "/* OLS  `poly_x'th order */"
@@ -608,6 +606,7 @@ forvalues poly_x=1/4{
 			, vce(r)
 	est sto olstoda`poly_x'
 }
+
 
 *** AS
 forvalues poly_x=1/4{
@@ -662,15 +661,52 @@ forvalues poly_x=1/4{ /* loop within ten_inomial */
 		qui coefplot (olstodar`poly_x', label(OLS)) (isvtodar`poly_x', label(IV)), ///
 		`comSetPlot'
 		graph export "$Output\plot_as_toda_`poly_x'.pdf", replace
+
+
+** output tex file
+*** coefficient
+local keepVar emptenure c.emptenure#c.emptenure ///
+						c.emptenure#c.emptenure#c.emptenure ///
+						c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
+						oj workexp c.workexp#c.workexp ///
+						c.workexp#c.workexp#c.workexp ///
+						c.workexp#c.workexp#c.workexp#c.workexp
+
+esttab olstoda# isvtoda# ///
+using "$Output\as_toda.tex", ///
+keep(`keepVar') ///
+order(`keepVar') ///
+coeflabel(`labelVar') ///
+transform(`transVar') ///
+title(Replication of Toda (2007).) ///
+mgroups("OLS" "IV" ///
+pattern(1 0 0 1 0 0) ///
+`comSetTex'
+
+**** return
+esttab olstodar* isvtodar* ///
+olsrobnSm isvrobnSm olsrobnPr isvrobnPr olsrobnRg isvrobnRg ///
+using "$Output\as_return_toda.tex", ///
+keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
+coeflabel(3._at "2 Years" ///
+6._at "5 Years" 11._at "10 Years" ///
+16._at "15 Years" ///
+21._at "20 Years" 26._at "25 Years") ///
+title(Estimated Returns to Employer Tenure, using Various Subsamples.) ///
+mgroups("Under 59-year-old" "Large firms ($\geq500$)" ///
+"Small Firms ($<500$)" "Non-Professional" "Regular Employee" ///
+pattern(1 0 1 0 1 0 1 0 1 0) ///
+`comSetTex'
 }
+
 
 *** Topel
 qui {
 	global DmYear
 	global FstReg reg empwagedif
-	global SndReg reg intwemp1 i.dunion ///
-								i.occ i.ind i.dsize ///
-								initialemp, nocons
+	global SndReg i.dunion ///
+							i.occ i.ind i.dsize ///
+							initialemp, nocons
 }
 
 qui {
@@ -803,7 +839,7 @@ mgroups("OLS" "IV" ///
 pattern(1 0 1 0) ///
 `comSetTex'
 }
-}
 */
+}
 
 log close

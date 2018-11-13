@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2017.3.29)  8 NOV 2018 00:09
+This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2017.3.29)  13 NOV 2018 14:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -957,7 +957,7 @@ LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <9> not available
 LaTeX Warning: Reference `wage' on page 1 undefined on input line 69.
 
 
-Overfull \hbox (55.74495pt too wide) in paragraph at lines 27--72
+Overfull \hbox (87.74495pt too wide) in paragraph at lines 27--72
  [] 
  []
 
@@ -986,16 +986,15 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 LaTeX Warning: Reference `wage' on page 2 undefined on input line 148.
 
 
-Overfull \hbox (63.85612pt too wide) in paragraph at lines 94--151
+Overfull \hbox (95.85612pt too wide) in paragraph at lines 94--151
  [] 
  []
 
 
-LaTeX Warning: Text page 2 contains only floats.
+LaTeX Warning: Float too large for page by 22.11995pt on input line 151.
 
-[2]
 File: plot_as_empocc_2.pdf Graphic file (type pdf)
- <plot_as_empocc_2.pdf>
+<plot_as_empocc_2.pdf>
 File: plot_as_empocc_3.pdf Graphic file (type pdf)
  <plot_as_empocc_3.pdf>
 File: plot_as_empocc_4.pdf Graphic file (type pdf)
@@ -1007,49 +1006,54 @@ LaTeX Warning: Float too large for page by 49.17528pt on input line 157.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-LaTeX Warning: Reference `wage' on page 3 undefined on input line 197.
+LaTeX Warning: Reference `wage' on page 2 undefined on input line 198.
 
 
-LaTeX Warning: Reference `wage' on page 3 undefined on input line 244.
+LaTeX Warning: Reference `wage' on page 2 undefined on input line 246.
 
 
-LaTeX Warning: Reference `wage' on page 3 undefined on input line 300.
+Overfull \hbox (34.28659pt too wide) in paragraph at lines 210--249
+ [] 
+ []
+
+
+LaTeX Warning: Reference `wage' on page 2 undefined on input line 302.
 
 File: plot_as_dm.pdf Graphic file (type pdf)
 <plot_as_dm.pdf>
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[3] [4] [5] [6] [7] [8]
+[2] [3] [4] [5] [6] [7] [8] [9]
 
-LaTeX Warning: Reference `wage' on page 9 undefined on input line 353.
+LaTeX Warning: Reference `wage' on page 10 undefined on input line 356.
 
 
-Overfull \hbox (51.91539pt too wide) in paragraph at lines 325--356
+Overfull \hbox (51.91539pt too wide) in paragraph at lines 327--359
  [] 
  []
 
-[9]
-
-LaTeX Warning: Reference `wage' on page 10 undefined on input line 398.
-
 [10]
+
+LaTeX Warning: Reference `wage' on page 11 undefined on input line 402.
+
+[11]
 File: plot_as_emp_rob.pdf Graphic file (type pdf)
- <plot_as_emp_rob.pdf> [11
+ <plot_as_emp_rob.pdf> [12
 
 
 
 
 ]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 422.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 426.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 422.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 426.
 
 
-LaTeX Warning: Reference `wage' on page 12 undefined on input line 459.
+LaTeX Warning: Reference `wage' on page 13 undefined on input line 465.
 
-[12] (./table_plot.aux)
+[13] (./table_plot.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1057,10 +1061,10 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  32743 strings out of 493683
  781241 string characters out of 6152642
- 910461 words of memory out of 5000000
+ 925463 words of memory out of 5000000
  35784 multiletter control sequences out of 15000+600000
  15237 words of font info for 65 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  69i,12n,98p,10416b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on table_plot.dvi (12 pages, 30184 bytes).
+Output written on table_plot.dvi (13 pages, 30564 bytes).
