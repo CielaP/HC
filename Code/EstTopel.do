@@ -48,7 +48,6 @@ capture program drop coef
 program coef, rclass
 	suest fst1 snd1
 	lincom [fst1_mean]_b[_cons]-[snd1_mean]_b[initialemp]
-	return scalar diffse =r(se)
 end
 coef
 capture program drop emprtn
@@ -56,7 +55,6 @@ program emprtn, rclass
 	qui suest fst1 snd1
 	foreach X of numlist 2 5 10 15 20 25 {
 	lincom ([fst1_mean]_b[_cons]-[snd1_mean]_b[initialemp])*`X'
-	return scalar rtn`X' =r(se)
 	}
 end
 emprtn
@@ -66,7 +64,6 @@ capture program drop coef
 program coef, rclass
 	suest fst2 snd2
 	lincom [fst2_mean]_b[_cons]-[snd2_mean]_b[initialemp]
-	return scalar diffse =r(se)
 end
 coef
 capture program drop emprtn
@@ -75,7 +72,6 @@ program emprtn, rclass
 	foreach X of numlist 2 5 10 15 20 25 {
 	lincom ([fst2_mean]_b[_cons]-[snd2_mean]_b[initialemp])*`X' ///
 				+[fst2_mean]_b[emptendif2]*`X'*`X'
-	return scalar rtn`X' =r(se)
 	}
 end
 emprtn
@@ -85,7 +81,6 @@ capture program drop coef
 program coef, rclass
 	suest fst3 snd3
 	lincom [fst3_mean]_b[_cons]-[snd3_mean]_b[initialemp]
-	return scalar diffse =r(se)
 end
 coef
 capture program drop emprtn
@@ -95,7 +90,6 @@ program emprtn, rclass
 	lincom ([fst3_mean]_b[_cons]-[snd3_mean]_b[initialemp])*`X' ///
 				+[fst3_mean]_b[emptendif2]*`X'*`X' ///
 				+[fst3_mean]_b[emptendif3]*`X'*`X'*`X'
-	return scalar rtn`X' =r(se)
 	}
 end
 emprtn
@@ -105,7 +99,6 @@ capture program drop coef
 program coef, rclass
 	suest fst4 snd4
 	lincom [fst4_mean]_b[_cons]-[snd4_mean]_b[initialemp]
-	return scalar diffse =r(se)
 end
 coef
 capture program drop emprtn
@@ -116,7 +109,6 @@ program emprtn, rclass
 				+[fst4_mean]_b[emptendif2]*`X'*`X' ///
 				+[fst4_mean]_b[emptendif3]*`X'*`X'*`X' ///
 				+[fst4_mean]_b[emptendif4]*`X'*`X'*`X'*`X'
-	return scalar rtn`X' =r(se)
 	}
 end
 emprtn
