@@ -574,18 +574,19 @@ save "$Inputfd\jhps_hc_toda.dta", replace
 ** AS
 qui {
 	local commonVar realwage i.occ i.ind i.dunion schooling i.dsize
-	local emp1 c.emptenure ///
-	local emp2 c.emptenure##c.emptenure
-	local emp3 c.emptenure##c.emptenure##c.emptenure
-	local emp4 c.emptenure##c.emptenure##c.emptenure##c.emptenure
-	local work1 c.workexp
-	local work2  c.workexp##c.workexp
-	local work3 c.workexp##c.workexp##c.workexp
-	local work4 c.workexp##c.workexp##c.workexp##c.workexp
-	local todaiv1 emptenureiv
-	local todaiv2 emptenureiv emptenureiv2
-	local todaiv3 emptenureiv emptenureiv2 emptenureiv3
-	local todaiv4 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4
+	local toda1 c.emptenure c.workexp
+	local toda2 c.emptenure##c.emptenure c.workexp##c.workexp
+	local toda3 c.emptenure##c.emptenure##c.emptenure ///
+						c.workexp##c.workexp##c.workexp
+	local toda4 c.emptenure##c.emptenure##c.emptenure##c.emptenure ///
+						c.workexp##c.workexp##c.workexp##c.workexp
+	local todaiv1 emptenureiv workexpiv
+	local todaiv2 emptenureiv emptenureiv2 ///
+						workexpiv workexpiv2
+	local todaiv3 emptenureiv emptenureiv2 emptenureiv3 ///
+						workexpiv workexpiv2 workexpiv3
+	local todaiv4 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4 ///
+						workexpiv workexpiv2 workexpiv3 workexpiv4
 }
 
 qui {
@@ -601,8 +602,7 @@ forvalues poly_x=1/4{
 	dis "/* OLS  `poly_x'th order */"
 	reg ///
 			`commonVar' ///
-			`emp`poly_x'' ///
-			`work`poly_x'' ///
+			`toda`poly_x'' ///
 			, vce(r)
 	est sto olstoda`poly_x'
 }
@@ -617,8 +617,7 @@ forvalues poly_x=1/4{
 		do "$Code\ConstructIV.do"
 		ivregress 2sls ///
 					`commonVar' ///
-					`work`poly_x'' ///
-					(`emp`poly_x'' = `todaiv`poly_x'') ///
+					(`toda`poly_x'' = `todaiv`poly_x'') ///
 					, vce(r)
 		est sto isvtoda`poly_x'
 		drop if _est_isvtoda`poly_x'==0
@@ -662,6 +661,7 @@ forvalues poly_x=1/4{ /* loop within ten_inomial */
 		qui coefplot (olstodar`poly_x', label(OLS)) (isvtodar`poly_x', label(IV)), ///
 		`comSetPlot'
 		graph export "$Output\plot_as_toda_`poly_x'.pdf", replace
+}
 
 
 ** output tex file
@@ -754,13 +754,22 @@ replace
 }
 
 
+log close
+
 
 ** predict muhat -> calculate bias in Topel and AS
-** y-xb=mu+e
-** V(T|X)-> reg T X -> ve -> E(ve^2) given X
 *** see auxionaly estimation in AW, 2005
-** jobmatch fixed effect retry
+use "$Inputfd\jhps_hc.dta", clear
 set mat 10000
-
- 
-log close
+gen intexp=workexp-emptenure
+*** obtain gammaW0T
+reg emptenure intexp
+*** obtain cov(W0,T)
+corr intexp emptenure, cov
+*** obtain zeta
+reg emptenure workexp
+predict zeta, re
+*** obtain V(T), V(W), V(zeta)
+sum zeta workexp emptenure, de
+*** obtain v(zeta)/bOLS=V(zeta)/[V(T)-2Cov(W,T)+V(W)])/(Cov(w,T)/V(T))
+reg realwage emptenure
