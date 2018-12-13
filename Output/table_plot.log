@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2017.3.29)  13 NOV 2018 14:32
+This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2017.3.29)  8 DEC 2018 18:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -933,33 +933,28 @@ Package caption Info: rotating package is loaded.
 Package caption Info: threeparttable package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box86
-LaTeX Font Info:    Try loading font information for U+msa on input line 29.
+LaTeX Font Info:    Try loading font information for U+msa on input line 30.
 
 (c:/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 29.
+LaTeX Font Info:    Try loading font information for U+msb on input line 30.
 
 (c:/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+rsfs on input line 29.
+LaTeX Font Info:    Try loading font information for U+rsfs on input line 30.
 
 (c:/texlive/2016/texmf-dist/tex/latex/jknapltx/ursfs.fd
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 )
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <9> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 69.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 126.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <9> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 69.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 126.
 
 
-LaTeX Warning: Reference `wage' on page 1 undefined on input line 69.
-
-
-Overfull \hbox (87.74495pt too wide) in paragraph at lines 27--72
- [] 
- []
+LaTeX Warning: Reference `wage' on page 1 undefined on input line 126.
 
 File: plot_as_emp_2.pdf Graphic file (type pdf)
 <plot_as_emp_2.pdf>
@@ -968,30 +963,23 @@ File: plot_as_emp_3.pdf Graphic file (type pdf)
 File: plot_as_emp_4.pdf Graphic file (type pdf)
  <plot_as_emp_4.pdf>
 
-LaTeX Warning: Float too large for page by 49.17528pt on input line 78.
+LaTeX Warning: Float too large for page by 49.17528pt on input line 135.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 81.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 138.
+
 (c:/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 81.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 138.
  [1
 
-]
+] [2]
 
-LaTeX Warning: Reference `wage' on page 2 undefined on input line 148.
-
-
-Overfull \hbox (95.85612pt too wide) in paragraph at lines 94--151
- [] 
- []
-
-
-LaTeX Warning: Float too large for page by 22.11995pt on input line 151.
+LaTeX Warning: Reference `wage' on page 3 undefined on input line 211.
 
 File: plot_as_empocc_2.pdf Graphic file (type pdf)
 <plot_as_empocc_2.pdf>
@@ -1000,71 +988,57 @@ File: plot_as_empocc_3.pdf Graphic file (type pdf)
 File: plot_as_empocc_4.pdf Graphic file (type pdf)
  <plot_as_empocc_4.pdf>
 
-LaTeX Warning: Float too large for page by 49.17528pt on input line 157.
+LaTeX Warning: Float too large for page by 49.17528pt on input line 221.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+[3]
 
-LaTeX Warning: Reference `wage' on page 2 undefined on input line 198.
+LaTeX Warning: Reference `wage' on page 4 undefined on input line 270.
 
+[4] [5]
 
-LaTeX Warning: Reference `wage' on page 2 undefined on input line 246.
-
-
-Overfull \hbox (34.28659pt too wide) in paragraph at lines 210--249
- [] 
- []
-
-
-LaTeX Warning: Reference `wage' on page 2 undefined on input line 302.
+LaTeX Warning: Reference `wage' on page 6 undefined on input line 381.
 
 File: plot_as_dm.pdf Graphic file (type pdf)
 <plot_as_dm.pdf>
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[2] [3] [4] [5] [6] [7] [8] [9]
+[6] [7] [8] [9] [10]
 
-LaTeX Warning: Reference `wage' on page 10 undefined on input line 356.
+LaTeX Warning: Reference `wage' on page 11 undefined on input line 442.
 
-
-Overfull \hbox (51.91539pt too wide) in paragraph at lines 327--359
- [] 
- []
-
-[10]
-
-LaTeX Warning: Reference `wage' on page 11 undefined on input line 402.
-
-[11]
-File: plot_as_emp_rob.pdf Graphic file (type pdf)
- <plot_as_emp_rob.pdf> [12
-
+[11] [12
 
 
 
 ]
+File: plot_as_emp_rob.pdf Graphic file (type pdf)
+ <plot_as_emp_rob.pdf> [13
+
+]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 426.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 523.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 426.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 523.
 
 
-LaTeX Warning: Reference `wage' on page 13 undefined on input line 465.
+LaTeX Warning: Reference `wage' on page 14 undefined on input line 565.
 
-[13] (./table_plot.aux)
+[14] (./table_plot.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 32743 strings out of 493683
- 781241 string characters out of 6152642
- 925463 words of memory out of 5000000
- 35784 multiletter control sequences out of 15000+600000
- 15237 words of font info for 65 fonts, out of 8000000 for 9000
+ 32766 strings out of 493683
+ 781446 string characters out of 6152642
+ 908463 words of memory out of 5000000
+ 35801 multiletter control sequences out of 15000+600000
+ 17408 words of font info for 74 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  69i,12n,98p,10416b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on table_plot.dvi (13 pages, 30564 bytes).
+Output written on table_plot.dvi (14 pages, 33964 bytes).

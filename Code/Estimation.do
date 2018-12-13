@@ -77,12 +77,49 @@ qui {
 cap log close /* close any log files that accidentally have been left open. */
 log using "$Path\Log\Estimation.log", replace
 
-
+* Summary statistics
+do "$Code\ReadData.do"
+qui	reg ///
+				`commonVar' ///
+				`emp1' ///
+				, vce(r)
+		est sto forsum
+keep if _est_forsum==1
+tabulate dsize, generate(sized)
+tabulate schooling, generate(edud)
+estpost sum age edud* dmarital dunion sized* dregular ///
+					realwage workexp emptenure
+esttab using "$Output\sum.tex", ///
+	cell( ///
+			( ///
+			mean(label(Mean) fmt(%5.4f)) ///
+			sd(label(St.d) fmt(%5.4f)) ///
+ 			min(label(Min)) ///
+			max(label(Max)) ///
+			) ///
+			) ///
+	coeflabel( ///
+					age "Age" ///
+					edud1 "\quad Junior High School" ///
+					edud2 "\quad High School" ///
+					edud3 "\quad 2-year College or Vocational" ///
+					edud4 "\quad College or More" ///
+					dmarital "Married" ///
+					dunion "Union Member" ///
+					sized1 "\quad Size $<100$" ///
+					sized2 "\quad $100\leq$ Size $<500$" ///
+					sized3 "\quad Size $\geq 500$" ///
+					dregular "Regular Employee" ///
+					realwage "Log of Real Hourly Wage" ///
+					workexp "Total Experience" ///
+					emptenure "Employer Tenure" ///
+					) ///
+	replace
 
 * 1. OLS->AS / 1-4 dimenational polynomial
 {
 ** OLS
-*** reading data
+*** read data
 do "$Code\ReadData.do"
 
 foreach ten_i of local isIncOcc{
@@ -764,6 +801,8 @@ set mat 10000
 gen intexp=workexp-emptenure
 *** obtain gammaW0T
 reg emptenure intexp
+*** obtain gammaWT
+reg emptenure workexp
 *** obtain cov(W0,T)
 corr intexp emptenure, cov
 *** obtain zeta
