@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2017.3.29)  8 DEC 2018 18:43
+This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2017.3.29)  13 DEC 2018 17:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1027,7 +1027,12 @@ LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
 
 LaTeX Warning: Reference `wage' on page 14 undefined on input line 565.
 
-[14] (./table_plot.aux)
+[14]
+Overfull \hbox (55.6099pt too wide) in paragraph at lines 579--623
+ [][] 
+ []
+
+[15] (./table_plot.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -1041,4 +1046,4 @@ Here is how much of TeX's memory you used:
  929 hyphenation exceptions out of 8191
  69i,12n,98p,10416b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on table_plot.dvi (14 pages, 33964 bytes).
+Output written on table_plot.dvi (15 pages, 39144 bytes).

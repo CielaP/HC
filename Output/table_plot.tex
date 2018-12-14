@@ -452,7 +452,7 @@ We present the coefficients for which we use the sample of individuals under 59-
 %% as_return_rob.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{landscape}
-\begin{table}[!htp] \centering 
+\begin{table}[!tp] \centering 
 \begin{threeparttable}
 \caption{Estimated Returns to Employer Tenure, using Various Subsamples.}
 \label{retrob}
@@ -461,6 +461,7 @@ We present the coefficients for which we use the sample of individuals under 59-
 [-.8em]
             &\multicolumn{2}{c}{Under 59-year-old}&\multicolumn{2}{c}{Large Firms ($\geq500$)}&\multicolumn{2}{c}{Small Firms ($<500$)}&\multicolumn{2}{c}{Non-Professional}& \multicolumn{2}{c}{Regular Employee}\\
 [.5em]
+            &\multicolumn{1}{c}{OLS}         &\multicolumn{1}{c}{AS's IV}        &\multicolumn{1}{c}{OLS}         &\multicolumn{1}{c}{AS's IV}         &\multicolumn{1}{c}{OLS}         &\multicolumn{1}{c}{AS's IV}         &\multicolumn{1}{c}{OLS}         &\multicolumn{1}{c}{AS's IV}         &\multicolumn{1}{c}{OLS}         &\multicolumn{1}{c}{AS's IV}         \\
             &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         &\multicolumn{1}{c}{(5)}         &\multicolumn{1}{c}{(6)}         &\multicolumn{1}{c}{(7)}         &\multicolumn{1}{c}{(8)}         &\multicolumn{1}{c}{(9)}         &\multicolumn{1}{c}{(10)}         \\
 \hline\\
 [-.8em]
@@ -490,7 +491,7 @@ Observations       &        7754         &        7754         &        3325    
 \small
 \im Notes: Robust standard errors are in parentheses.
 \im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
-\im This table rebports the calculated wage returns to 2, 5, 10, 15, 20 and 25 years of employer tenure based on th coefficient of the corresponding colmns of Table \ref{est}.
+\im This table rebports the calculated wage returns to 2, 5, 10, 15, 20 and 25 years of employer tenure based on th coefficient of the corresponding colmns of Table \ref{coefrob}.
 Columns (1), (3), (5), (7) and (9) denote the wage returns to employer tenure using estimatorw based on the OLS, and columns (2), (4), (6), (8) and (10) denote those based on the AS's IV method. 
 We present the returns for calculating which we use the sample of individuals under 59-year-old in columns (1) and (2), the sample of individuals who belong to firms with more than 500 employee in columns (3) and (4), the sample of individuals who belong to firms with les than 500 employee in columns (5) and (6), the sample of individuals excepting workers who repond that s/he works as professional in columns (7) and (8), and the sample of the regular employees in columns (9) and (10).
 \end{tablenotes}
@@ -566,5 +567,61 @@ The model for estimation is given by earning function (\ref{wage}).
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Replication
+%% olsCheck.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{landscape}
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{Earnings Function Estimates.}
+\begin{tabular}{l*{10}{c}}
+\hline\hline
+            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         &\multicolumn{1}{c}{(5)}         &\multicolumn{1}{c}{(6)}         &\multicolumn{1}{c}{(7)}         &\multicolumn{1}{c}{(8)}         &\multicolumn{1}{c}{(9)}         &\multicolumn{1}{c}{(10)}         \\
+            &      minAll         &      minYng         &      minOld         &      hasAll         &       hasYd         &       hasSm         &     hasSmYd         &       hasLa         &     hasLaYd         &     hasLaYd         \\
+\hline
+Constant    &      6.5094\sym{***}&      6.2318\sym{***}&      6.4903\sym{***}&      6.6688\sym{***}&      6.6229\sym{***}&      6.7752\sym{***}&      6.7142\sym{***}&      6.5857\sym{***}&      6.5524\sym{***}&      6.5524\sym{***}\\
+            &    (0.0460)         &    (0.1496)         &    (0.0594)         &    (0.0379)         &    (0.0399)         &    (0.0582)         &    (0.0614)         &    (0.0568)         &    (0.0589)         &    (0.0589)         \\
+[1em]
+Total Experience&      0.0195\sym{***}&      0.0930\sym{***}&      0.0199\sym{***}&      0.0252\sym{***}&      0.0251\sym{***}&      0.0244\sym{***}&      0.0242\sym{***}&      0.0294\sym{***}&      0.0292\sym{***}&      0.0292\sym{***}\\
+            &    (0.0027)         &    (0.0267)         &    (0.0035)         &    (0.0027)         &    (0.0027)         &    (0.0043)         &    (0.0043)         &    (0.0037)         &    (0.0037)         &    (0.0037)         \\
+[1em]
+Experience $^{2}$&     -0.0004\sym{***}&     -0.0059\sym{***}&     -0.0004\sym{***}&     -0.0005\sym{***}&     -0.0005\sym{***}&     -0.0005\sym{***}&     -0.0005\sym{***}&     -0.0005\sym{***}&     -0.0005\sym{***}&     -0.0005\sym{***}\\
+            &    (0.0001)         &    (0.0017)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         \\
+[1em]
+Employer Tenure&      0.0231\sym{***}&     -0.0530\sym{*}  &      0.0241\sym{***}&      0.0282\sym{***}&      0.0283\sym{***}&      0.0139\sym{***}&      0.0144\sym{***}&      0.0286\sym{***}&      0.0286\sym{***}&      0.0286\sym{***}\\
+            &    (0.0020)         &    (0.0283)         &    (0.0020)         &    (0.0023)         &    (0.0023)         &    (0.0039)         &    (0.0039)         &    (0.0031)         &    (0.0031)         &    (0.0031)         \\
+[1em]
+Emp.ten. $^{2}$&     -0.0002\sym{***}&      0.0048\sym{**} &     -0.0002\sym{***}&     -0.0001\sym{**} &     -0.0001\sym{**} &     -0.0003\sym{***}&     -0.0003\sym{***}&     -0.0002\sym{**} &     -0.0002\sym{**} &     -0.0002\sym{**} \\
+            &    (0.0001)         &    (0.0024)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         \\
+[1em]
+Exp. $\times$ Emp.ten.&                     &                     &                     &     -0.0002\sym{*}  &     -0.0002\sym{*}  &      0.0003\sym{**} &      0.0003\sym{**} &     -0.0001         &     -0.0001         &     -0.0001         \\
+            &                     &                     &                     &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         &    (0.0001)         \\
+[1em]
+Old Job     &      0.0857\sym{***}&      0.3045\sym{***}&      0.0794\sym{**} &                     &                     &                     &                     &                     &                     &                     \\
+            &    (0.0279)         &    (0.0877)         &    (0.0312)         &                     &                     &                     &                     &                     &                     &                     \\
+[1em]
+High School &      0.1781\sym{***}&      0.2782\sym{***}&      0.1777\sym{***}&      0.1750\sym{***}&      0.1739\sym{***}&      0.0874\sym{***}&      0.0907\sym{***}&      0.2933\sym{***}&      0.2904\sym{***}&      0.2904\sym{***}\\
+            &    (0.0270)         &    (0.1005)         &    (0.0277)         &    (0.0275)         &    (0.0274)         &    (0.0336)         &    (0.0336)         &    (0.0493)         &    (0.0492)         &    (0.0492)         \\
+[1em]
+Some College&      0.2335\sym{***}&      0.3006\sym{***}&      0.2257\sym{***}&      0.2298\sym{***}&      0.2296\sym{***}&      0.1561\sym{***}&      0.1609\sym{***}&      0.3286\sym{***}&      0.3248\sym{***}&      0.3248\sym{***}\\
+            &    (0.0309)         &    (0.1050)         &    (0.0322)         &    (0.0315)         &    (0.0315)         &    (0.0393)         &    (0.0393)         &    (0.0538)         &    (0.0537)         &    (0.0537)         \\
+[1em]
+College     &      0.4242\sym{***}&      0.4210\sym{***}&      0.4226\sym{***}&      0.4340\sym{***}&      0.4337\sym{***}&      0.3240\sym{***}&      0.3293\sym{***}&      0.5326\sym{***}&      0.5293\sym{***}&      0.5293\sym{***}\\
+            &    (0.0281)         &    (0.1047)         &    (0.0289)         &    (0.0286)         &    (0.0286)         &    (0.0365)         &    (0.0367)         &    (0.0501)         &    (0.0500)         &    (0.0500)         \\
+[1em]
+Married     &      0.2032\sym{***}&      0.0450         &      0.2368\sym{***}&                     &                     &                     &                     &                     &                     &                     \\
+            &    (0.0147)         &    (0.0394)         &    (0.0159)         &                     &                     &                     &                     &                     &                     &                     \\
+[1em]
+Union Member&                     &                     &                     &      0.0989\sym{***}&      0.0981\sym{***}&      0.0047         &      0.0072         &      0.0537\sym{***}&      0.0530\sym{***}&      0.0530\sym{***}\\
+            &                     &                     &                     &    (0.0118)         &    (0.0118)         &    (0.0281)         &    (0.0283)         &    (0.0136)         &    (0.0137)         &    (0.0137)         \\
+\hline
+\(N\)       &        8937         &         768         &        8169         &        8715         &        8715         &        3391         &        3391         &        5324         &        5324         &        5324         \\
+\hline\hline
+\end{tabular}
+\end{table}
+\end{landscape}
 
 \end{document}
