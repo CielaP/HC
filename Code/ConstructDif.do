@@ -28,16 +28,17 @@ bysort empid (year): gen empwagedif=realwage-realwage[_n-1] ///
 		if fst==1
 sum empwagedif
 
-* generate year dummies
+/* * generate year dummies
 tabulate year, generate(y)
 rename ( y# ) ( y# ), addnum(2004)
-/* sum form
+*/
+* sum form
 su year, meanonly
 local ymax=r(max)
 local ymin=r(min)
 forvalues t=`ymin'/`ymax'{
-	replace y`t'=1 if year>=`t'
+	gen y`t'=1 if year>=`t'
+	replace y`t'=0 if y`t'==.
 }
-*/
 *drop if occ==1
 }

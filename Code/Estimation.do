@@ -522,16 +522,42 @@ graph export "$Output\plot_as_dm.pdf", replace
 
 
 * 4. Topel / 1-4 dimenational polynomial
+cap log close /* close any log files that accidentally have been left open. */
+log using "$Path\Log\EstTopel.log", replace
 {
 qui{
-	global DmYear +y2005*_b[2005b.year]+y2006*_b[2006.year]+y2007*_b[2007.year] ///
-							+y2008*_b[2008.year]+y2009*_b[2009.year]+y2010*_b[2010.year] ///
-							+y2011*_b[2011.year]+y2012*_b[2012.year]+y2013*_b[2013.year] ///
-							+y2014*_b[2014.year]
-	global FstReg reg empwagedif i.year
+/*
+** sum of year dummies
+	global DmYear +y2004*_b[y2004]+y2005*_b[y2005]+y2006*_b[y2006] ///
+							+y2007*_b[y2007]+y2008*_b[y2008]+y2009*_b[y2009] ///
+							+y2010*_b[y2010]+y2011*_b[y2011]+y2012*_b[y2012] ///
+							+y2013*_b[y2013]+y2014*_b[y2014]
+	global FstReg reg empwagedif ///
+								y2004-y2014
 	global SndReg i.dmarital i.schooling ///
 								i.dregular i.dunion ///
 								i.occ i.ind i.dsize ///
+								initialemp, nocons
+** sum of year dummies+year dummy in 2nd
+	global DmYear +y2004*_b[y2004]+y2005*_b[y2005]+y2006*_b[y2006] ///
+							+y2007*_b[y2007]+y2008*_b[y2008]+y2009*_b[y2009] ///
+							+y2010*_b[y2010]+y2011*_b[y2011]+y2012*_b[y2012] ///
+							+y2013*_b[y2013]+y2014*_b[y2014]
+	global FstReg reg empwagedif ///
+								y2004-y2014
+	global SndReg i.dmarital i.schooling ///
+								i.dregular i.dunion ///
+								i.occ i.ind i.dsize ///
+								i.year ///
+								initialemp, nocons
+*/
+** year dummies in the 2nd stage
+	global DmYear 
+	global FstReg reg empwagedif
+	global SndReg i.dmarital i.schooling ///
+								i.dregular i.dunion ///
+								i.occ i.ind i.dsize ///
+								i.year ///
 								initialemp, nocons
 }
 

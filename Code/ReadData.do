@@ -4,7 +4,7 @@
 /// 
 /// This file reads data set
 
-local inputfd "C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Input"
+local inputfd $Inputfd
 
 qui {
 	use "`inputfd'\jhps_hc.dta", clear
