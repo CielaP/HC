@@ -4,6 +4,39 @@
 /// 
 /// Comparing the coefficients with Toda (2007).
 
+/*
+** make the same sample as Toda
+qui {
+	use "$Inputfd\jhps_hc_allsample.dta", clear
+	destring, replace
+	tsset id year
+}
+*** construct employer tenure
+forvalues X = 2005/2014{ 
+	*** working more than 800h & not switched->+1
+	/// If the sample dropped on the way was resurrected, 
+	/// it is assumed that he kept being employed for the period
+	/// in which it was dropped.
+	dis "current year is `X' "
+	bysort id (year): replace emptenure=emptenure[_n-1]+(year-year[_n-1]) ///
+		if dswitch==0 & year==`X' & _n>1
+	*** switched->0
+	bysort id (year): replace emptenure=0.5 ///
+		if dswitch==1 & year==`X'
+}
+do "$Code\SampleSelection.do"
+*** replace workexp
+replace workexp=age-schooling-6
+*** sample selection: male, employed, 2004--2007, 20--60, regular
+keep if year<=2007
+tab year
+keep if age>=20 & age<=60
+sum age
+keep if dregular==1
+tab dregular
+save "$Inputfd\jhps_hc_toda.dta", replace
+*/
+
 *  0. Preparation
 qui {
 	* Set Directories
@@ -56,43 +89,8 @@ qui {
 							+(emptenure^2)*_b[c.emptenure#c.emptenure] ///
 							+(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure] ///
 							+(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenure]
-
-/*
-** make the same sample as Toda
-qui {
-	use "$Inputfd\jhps_hc_allsample.dta", clear
-	destring, replace
-	tsset id year
-}
-*** construct employer tenure
-forvalues X = 2005/2014{ 
-	*** working more than 800h & not switched->+1
-	/// If the sample dropped on the way was resurrected, 
-	/// it is assumed that he kept being employed for the period
-	/// in which it was dropped.
-	dis "current year is `X' "
-	bysort id (year): replace emptenure=emptenure[_n-1]+(year-year[_n-1]) ///
-		if dswitch==0 & year==`X' & _n>1
-	*** switched->0
-	bysort id (year): replace emptenure=0.5 ///
-		if dswitch==1 & year==`X'
-}
-do "$Code\SampleSelection.do"
-*** replace workexp
-replace workexp=age-schooling-6
-*** sample selection: male, employed, 2004--2007, 20--60, regular
-keep if year<=2007
-tab year
-keep if age>=20 & age<=60
-sum age
-keep if dregular==1
-tab dregular
-save "$Inputfd\jhps_hc_toda.dta", replace
-*/
 }
 
-* 5. Compare with Toda(2009)
-{
 ** Summary statistics
 qui {
 	use "$Inputfd\jhps_hc_toda.dta", clear
@@ -160,9 +158,21 @@ forvalues poly_x=1/4{ /* loop within ten_inomial */
 local keepVar emptenure c.emptenure#c.emptenure ///
 						c.emptenure#c.emptenure#c.emptenure ///
 						c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-						oj workexp c.workexp#c.workexp ///
+						workexp c.workexp#c.workexp ///
 						c.workexp#c.workexp#c.workexp ///
 						c.workexp#c.workexp#c.workexp#c.workexp
+local labelVar emptenure "Employer tenure" ///
+						c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
+						c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
+						c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
+						workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
+						c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
+						c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 10000$"
+local transVar c.emptenure#c.emptenure 100*@ 100 ///
+						c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
+						c.emptenure#c.emptenurec.emptenure#c.emptenure 10000*@ 10000 ///
+						c.workexp#c.workexp#c.workexp 100*@ 100 ///
+						c.workexp#c.workexp#c.workexp 10000*@ 10000 ///
 
 esttab olstoda1 olstoda2 olstoda3 olstoda4 ///
 			isvtoda1 isvtoda2 isvtoda3 isvtoda4 ///
@@ -189,7 +199,6 @@ title("Estimated Returns to Employer Tenure, based on replication of Toda (2007)
 mgroups("OLS" "IV" ///
 pattern(1 0 0 0 1 0 0 0) ///
 `comSetTex'
-}
 
 
 ** Topel
@@ -198,7 +207,7 @@ qui {
 	global FstReg reg empwagedif
 	global SndReg i.dunion ///
 							i.occ i.ind i.dsize ///
-							initialemp, nocons
+							initialemp
 }
 
 qui {
@@ -209,10 +218,10 @@ qui {
 do "$Code\EstTopel.do"
 
 **** output tex all results
-quietly {
+qui {
 ***** coefficients 
 esttab fst1 fst2 fst3 fst4 ///
-using "$Output\topel_emp.tex", ///
+using "$Output\topel_toda.tex", ///
 se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
 keep( ///
 		_cons emptendif2 emptendif3 emptendif4 ///

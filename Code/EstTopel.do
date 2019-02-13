@@ -1,6 +1,7 @@
 qui{
 local code $Code
 do "`code'\ConstructDif.do"
+gen dyear=year
 
 * list of control variable
 local contrl1

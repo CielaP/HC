@@ -3,7 +3,7 @@
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\DataCleaning.log
   log type:  text
- opened on:   6 Nov 2018, 20:28:55
+ opened on:  13 Feb 2019, 16:39:28
 
 . 
 . * 1: Data cleaning
@@ -32,7 +32,7 @@ Current survey year: 2009
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -684,7 +684,7 @@ Current survey year: 2010
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -2792,7 +2792,7 @@ Current survey year: 2011
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -3424,7 +3424,7 @@ Current survey year: 2012
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -4054,7 +4054,7 @@ Current survey year: 2013
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -4686,7 +4686,7 @@ Current survey year: 2014
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -5316,7 +5316,7 @@ Current survey year: 2004
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -7445,7 +7445,7 @@ Current survey year: 2005
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -8048,7 +8048,7 @@ Current survey year: 2006
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -8650,7 +8650,7 @@ Current survey year: 2007
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -9252,7 +9252,7 @@ Current survey year: 2008
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -9858,7 +9858,7 @@ Current survey year: 2009
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -10480,7 +10480,7 @@ Current survey year: 2010
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -11118,7 +11118,7 @@ Current survey year: 2011
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -11754,7 +11754,7 @@ Current survey year: 2012
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -12388,7 +12388,7 @@ Current survey year: 2013
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -13018,7 +13018,7 @@ Current survey year: 2014
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -13651,7 +13651,7 @@ Current survey year: 2007
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -15780,7 +15780,7 @@ Current survey year: 2012
 . /* Title: DataCleaning */
 . /// Date: Oct 12th, 2018
 > /// Written by Ayaka Nakamura
-> /// This file creates data cleaned by year
+> /// This file creates cleaned data by year
 > /// 1. Rename variable names
 > /// 2. Generate main variables
 > 
@@ -17946,8 +17946,6 @@ file C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\In
 end of do-file
 
 . 
-. ***** ***** ***** ***** ***** ***** kokokara ***** ***** ***** ***** ***** ****
-> * 
 . * 2: Bind data of the all years
 . use "$Inter\JHPS2009.dta",  clear
 
@@ -18664,5 +18662,5 @@ end of do-file
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\DataCleaning.log
   log type:  text
- closed on:   6 Nov 2018, 20:31:02
+ closed on:  13 Feb 2019, 16:41:34
 ---------------------------------------------------------------------------------

@@ -32,3 +32,8 @@ drop if dsize==6
 keep if owner==1 | owner==2 | owner==3
 sum owner
 drop owner
+* drop workinghour<500, workinghour>3120, hourlywage==0
+drop if workinghour<500
+drop if workinghour>3120
+drop if hourlywage==0
+

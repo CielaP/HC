@@ -524,81 +524,179 @@ graph export "$Output\plot_as_dm.pdf", replace
 * 4. Topel / 1-4 dimenational polynomial
 cap log close /* close any log files that accidentally have been left open. */
 log using "$Path\Log\EstTopel.log", replace
-{
+** changing time treand
 qui{
-/*
+** common variables
+local first reg empwagedif
+local charc i.dmarital i.schooling ///
+				i.dregular i.dunion ///
+				i.occ i.ind i.dsize ///
+				initialemp
 ** sum of year dummies
-	global DmYear +y2004*_b[y2004]+y2005*_b[y2005]+y2006*_b[y2006] ///
+/// 1. w_{ijt}-w_{ijt-1}=(\beta_{W}+\beta_{T})+\Delta\beta_{t}+\Delta\ve_{ijt}
+/// 2. w_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}-\sum_{0}^{t-1}\Delta\beta_{t}
+///		=\beta+\beta_{W}W0_{ijt}+X_{ijt}+\ve_{ijt}
+local dmYearSum +y2004*_b[y2004]+y2005*_b[y2005]+y2006*_b[y2006] ///
 							+y2007*_b[y2007]+y2008*_b[y2008]+y2009*_b[y2009] ///
 							+y2010*_b[y2010]+y2011*_b[y2011]+y2012*_b[y2012] ///
 							+y2013*_b[y2013]+y2014*_b[y2014]
-	global FstReg reg empwagedif ///
-								y2004-y2014
-	global SndReg i.dmarital i.schooling ///
-								i.dregular i.dunion ///
-								i.occ i.ind i.dsize ///
-								initialemp, nocons
+local fstRegSum `first' ///
+							y2004-y2014
+local sndRegSum `charc'
 ** sum of year dummies+year dummy in 2nd
-	global DmYear +y2004*_b[y2004]+y2005*_b[y2005]+y2006*_b[y2006] ///
-							+y2007*_b[y2007]+y2008*_b[y2008]+y2009*_b[y2009] ///
-							+y2010*_b[y2010]+y2011*_b[y2011]+y2012*_b[y2012] ///
-							+y2013*_b[y2013]+y2014*_b[y2014]
-	global FstReg reg empwagedif ///
-								y2004-y2014
-	global SndReg i.dmarital i.schooling ///
-								i.dregular i.dunion ///
-								i.occ i.ind i.dsize ///
-								i.year ///
-								initialemp, nocons
-*/
+/// 1. w_{ijt}-w_{ijt-1}=(\beta_{W}+\beta_{T})+\Delta\beta_{t}+\Delta\ve_{ijt}
+/// 2. w_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}-\sum_{0}^{t-1}\Delta\beta_{t}
+///		=\beta+\beta_{W}W0_{ijt}+X_{ijt}+\beta_{t}+\ve_{ijt}
+local dmYearSum2 `dmYearSum'
+local fstRegSum2 `fstRegSum'
+local sndRegSum2 i.year ///
+								`charc'
+** year dummies in the 1st and 2nd stage
+/// 1. w_{ijt}-w_{ijt-1}=(\beta_{W}+\beta_{T})+\beta_{t}+\Delta\ve_{ijt}
+/// 2. w_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}
+///		=\beta+\beta_{W}W0_{ijt}+X_{ijt}+\beta_{t}+\ve_{ijt}
+local dmYearDm 
+local fstRegDm `first' ///
+							i.dyear
+local sndRegDm i.year ///
+							`charc'
 ** year dummies in the 2nd stage
-	global DmYear 
-	global FstReg reg empwagedif
-	global SndReg i.dmarital i.schooling ///
-								i.dregular i.dunion ///
-								i.occ i.ind i.dsize ///
-								i.year ///
-								initialemp, nocons
+/// 1. w_{ijt}-w_{ijt-1}=(\beta_{W}+\beta_{T})+\Delta\ve_{ijt}
+/// 2. w_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}
+///		=\beta+\beta_{W}W0_{ijt}+X_{ijt}+\beta_{t}+\ve_{ijt}
+local dmYearDm2 `dmYearDm'
+local fstRegDm2 `first'
+local sndRegDm2 i.year ///
+							`charc'
+** detrend with year dummy
+/// 0. w_{ijt}=\alpha+\alpha_{t}I_{t}+\ve_{ijt}
+/// 	-> \hat{w}_{ijt}=w_{ijt}-\hat_{\alpha}-\hat{\alpha}_{t}I_{t}
+/// 1. \hat{w}_{ijt}-\hat{w}_{ijt-1}=(\beta_{W}+\beta_{T})+\Delta\ve_{ijt}
+/// 2. \hat{w}_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}
+/// 		=\beta+\beta_{W}W0_{ijt}+X_{ijt}+\ve_{ijt}
+local dmYearDet 
+local fstRegDet `first'
+local sndRegDet i.year ///
+							`charc'
 }
 
-do "$Code\ReadData.do"
-do "$Code\EstTopel.do"
-
-*** output tex all results
-quietly {
-**** coefficients 
-esttab fst1 fst2 fst3 fst4 ///
-using "$Output\topel_emp.tex", ///
-se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-keep( ///
-		_cons emptendif2 emptendif3 emptendif4 ///
-		empexpdif2 empexpdif3 empexpdif4 ///
-) ///
-order( ///
-		_cons emptendif2 emptendif3 emptendif4 ///
-		empexpdif2 empexpdif3 empexpdif4 ///
-) ///
-coeflabel( ///
-		_cons "Constant" ///
-		emptendif2 "Emp.ten.$^{2}\times 100$" ///
-		emptendif3 "Emp.ten.$^{3}\times 1000$" ///
-		emptendif4 "Emp.ten.$^{4}\times 10000$" ///
-		empexpdif2 "Experience$^{2}\times 100$" ///
-		empexpdif3 "Experience$^{3}\times 1000$" ///
-		empexpdif4 "Experience$^{4}\times 10000$" ///
-		) ///
-transform( ///
-		emptendif2 100*@ 100 ///
-		emptendif3 1000*@ 1000 ///
-		emptendif4 10000*@ 10000 ///
-		empexpdif2 100*@ 100 ///
-		empexpdif3 1000*@ 1000 ///
-		empexpdif4 10000*@ 10000 ///
-		) ///
-nodep nonote nomtitles ///
-title("Estimation Results, using the Method of 2SFD Estimation.") ///
-replace
+local dmList Sum Sum2 Dm Dm2 Det
+foreach eq_i of local dmList{
+	global DmYear `dmYear`eq_i''
+	global FstReg `fstReg`eq_i''
+	global SndReg `sndReg`eq_i''
+	
+	dis "Year Dummy Type: `eq_i'"
+	do "$Code\ReadData.do"
+	
+	if "`eq_i'"=="Det"{
+		reg realwage i.year
+		predict hatwage, re
+		replace realwage=hatwage
+	}
+	
+	do "$Code\EstTopel.do"
+	
+	*** output tex all results
+	quietly {
+	**** coefficients 
+	esttab fst1 fst2 fst3 fst4 ///
+	using "$Output\topel_`eq_i'.tex", ///
+	se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+	keep( ///
+			_cons emptendif2 emptendif3 emptendif4 ///
+			empexpdif2 empexpdif3 empexpdif4 ///
+			) ///
+	order( ///
+			_cons emptendif2 emptendif3 emptendif4 ///
+			empexpdif2 empexpdif3 empexpdif4 ///
+			) ///
+	coeflabel( ///
+			_cons "Constant" ///
+			emptendif2 "Emp.ten.$^{2}\times 100$" ///
+			emptendif3 "Emp.ten.$^{3}\times 1000$" ///
+			emptendif4 "Emp.ten.$^{4}\times 10000$" ///
+			empexpdif2 "Experience$^{2}\times 100$" ///
+			empexpdif3 "Experience$^{3}\times 1000$" ///
+			empexpdif4 "Experience$^{4}\times 10000$" ///
+			) ///
+	transform( ///
+			emptendif2 100*@ 100 ///
+			emptendif3 1000*@ 1000 ///
+			emptendif4 10000*@ 10000 ///
+			empexpdif2 100*@ 100 ///
+			empexpdif3 1000*@ 1000 ///
+			empexpdif4 10000*@ 10000 ///
+			) ///
+	nodep nonote nomtitles ///
+	title("Estimation Results, using the Method of 2SFD Estimation.") ///
+	replace
+	}
 }
+ 
+
+** changing control variables
+qui{
+** common variables
+global FstReg reg empwagedif
+global DmYear
+
+** Predeterminant
+local pred i.schooling
+** Predeterminant + Changing infrequently
+local infr i.dmarital i.schooling i.dunion
+** All controls
+local All i.dmarital i.schooling ///
+				i.dregular i.dunion ///
+				i.occ i.ind i.dsize
+}
+
+local charList pred infr all
+foreach eq_i of local charList{
+	global SndReg `eq_i' ///
+							i. year initialemp
+	
+	dis "Controls: `eq_i'"
+	do "$Code\ReadData.do"
+}
+	
+	do "$Code\EstTopel.do"
+	
+	*** output tex all results
+	quietly {
+	**** coefficients 
+	esttab fst1 fst2 fst3 fst4 ///
+	using "$Output\topel_`eq_i'.tex", ///
+	se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+	keep( ///
+			_cons emptendif2 emptendif3 emptendif4 ///
+			empexpdif2 empexpdif3 empexpdif4 ///
+			) ///
+	order( ///
+			_cons emptendif2 emptendif3 emptendif4 ///
+			empexpdif2 empexpdif3 empexpdif4 ///
+			) ///
+	coeflabel( ///
+			_cons "Constant" ///
+			emptendif2 "Emp.ten.$^{2}\times 100$" ///
+			emptendif3 "Emp.ten.$^{3}\times 1000$" ///
+			emptendif4 "Emp.ten.$^{4}\times 10000$" ///
+			empexpdif2 "Experience$^{2}\times 100$" ///
+			empexpdif3 "Experience$^{3}\times 1000$" ///
+			empexpdif4 "Experience$^{4}\times 10000$" ///
+			) ///
+	transform( ///
+			emptendif2 100*@ 100 ///
+			emptendif3 1000*@ 1000 ///
+			emptendif4 10000*@ 10000 ///
+			empexpdif2 100*@ 100 ///
+			empexpdif3 1000*@ 1000 ///
+			empexpdif4 10000*@ 10000 ///
+			) ///
+	nodep nonote nomtitles ///
+	title("Estimation Results, using the Method of 2SFD Estimation.") ///
+	replace
+	}
 }
  
 

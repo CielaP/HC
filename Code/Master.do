@@ -75,7 +75,6 @@ forvalues m = 1/`n' { /* loop within data set */
 	}
 }
 
-***** ***** ***** ***** ***** ***** kokokara ***** ***** ***** ***** ***** ***** 
 * 2: Bind data of the all years
 use "$Inter\JHPS2009.dta",  clear
 *** JHPS
@@ -112,6 +111,7 @@ replace sp=0 if sp==.
 drop if sp==1
 sum sp
 drop sp
+
 
 * 5: Sample selection and save data
 do "$Path\Code\SampleSelection.do"
