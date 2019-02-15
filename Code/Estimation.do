@@ -214,8 +214,10 @@ local transVar c.emptenure#c.emptenure 100*@ 100 ///
 						c.occtenure#c.occtenure 100*@ 100 ///
 						c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
 						c.occtenure#c.occtenure#c.occtenure#c.occtenure 10000*@ 10000
-local comSetTex prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-					se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+local comSetTex prefix(\multicolumn{@span}{c}{) suffix(}) ///
+					se(fmt(%9.3f)) ///
+					star(* 0.1 ** 0.05 *** 0.01) b(4) ///
+					stats(N, labels("Observations")) ///
 					nodep nonote nomtitles ///
 					replace
 
@@ -646,19 +648,18 @@ local pred i.schooling
 ** Predeterminant + Changing infrequently
 local infr i.dmarital i.schooling i.dunion
 ** All controls
-local All i.dmarital i.schooling ///
+local all i.dmarital i.schooling ///
 				i.dregular i.dunion ///
 				i.occ i.ind i.dsize
 }
 
 local charList pred infr all
 foreach eq_i of local charList{
-	global SndReg `eq_i' ///
+	global SndReg ``eq_i'' ///
 							i. year initialemp
 	
 	dis "Controls: `eq_i'"
 	do "$Code\ReadData.do"
-}
 	
 	do "$Code\EstTopel.do"
 	

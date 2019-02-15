@@ -3,7 +3,7 @@
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\Estimation.log
   log type:  text
- opened on:  13 Feb 2019, 16:46:35
+ opened on:  15 Feb 2019, 20:30:22
 
 . 
 . * Summary statistics
@@ -31,73 +31,74 @@ end of do-file
 .                 est sto forsum
 
 . keep if _est_forsum==1
-(2,063 observations deleted)
+(1,939 observations deleted)
 
 . tabulate dsize, generate(sized)
 
       dsize |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          0 |      3,076       37.68       37.68
-          1 |      1,874       22.95       60.63
-          2 |      3,214       39.37      100.00
+          0 |      2,841       37.15       37.15
+          1 |      1,771       23.16       60.30
+          2 |      3,036       39.70      100.00
 ------------+-----------------------------------
-      Total |      8,164      100.00
+      Total |      7,648      100.00
 
 . tabulate schooling, generate(edud)
 
   schooling |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          9 |        294        3.60        3.60
-         12 |      3,603       44.13       47.73
-         14 |        914       11.20       58.93
-         16 |      3,353       41.07      100.00
+          9 |        280        3.66        3.66
+         12 |      3,363       43.97       47.63
+         14 |        854       11.17       58.80
+         16 |      3,151       41.20      100.00
 ------------+-----------------------------------
-      Total |      8,164      100.00
+      Total |      7,648      100.00
 
 . estpost sum age edud* dmarital dunion sized* dregular ///
 >                                         realwage workexp emptenure
 
              |  e(count)   e(sum_w)    e(mean)     e(Var)      e(sd)     e(min) 
 -------------+------------------------------------------------------------------
-         age |      8164       8164   45.53234   106.1635   10.30357         20 
-       edud1 |      8164       8164   .0360118   .0347192   .1863308          0 
-       edud2 |      8164       8164   .4413278   .2465878   .4965761          0 
-       edud3 |      8164       8164   .1119549   .0994332   .3153303          0 
-       edud4 |      8164       8164   .4107055   .2420561    .491992          0 
-    dmarital |      8164       8164   .8375796   .1360567   .3688586          0 
-      dunion |      8164       8164   .2905439   .2061534   .4540412          0 
-      sized1 |      8164       8164   .3767761   .2348446   .4846077          0 
-      sized2 |      8164       8164   .2295443   .1768754   .4205656          0 
-      sized3 |      8164       8164   .3936796   .2387252   .4885951          0 
-    dregular |      8164       8164   .8924547   .0959911   .3098243          0 
-    realwage |      8164       8164   7.580954   .3069015    .553987   5.526562 
-     workexp |      8164       8164   25.56088   115.7485   10.75865          0 
-   emptenure |      8164       8164   14.34358   125.5714   11.20586          0 
+         age |      7648       7648   45.72764   106.7153   10.33031         20 
+       edud1 |      7648       7648   .0366109   .0352751   .1878168          0 
+       edud2 |      7648       7648   .4397228   .2463989   .4963858          0 
+       edud3 |      7648       7648   .1116632   .0992075   .3149722          0 
+       edud4 |      7648       7648   .4120031   .2422882   .4922278          0 
+    dmarital |      7648       7648   .8372123   .1363057    .369196          0 
+      dunion |      7648       7648   .2922333     .20686   .4548187          0 
+      sized1 |      7648       7648   .3714697   .2335105   .4832292          0 
+      sized2 |      7648       7648   .2315638   .1779653   .4218593          0 
+      sized3 |      7648       7648   .3969665   .2394154   .4893009          0 
+    dregular |      7648       7648   .8874215   .0999176   .3160975          0 
+    realwage |      7648       7648    7.60362   .3066968   .5538021   5.526562 
+     workexp |      7648       7648   25.75392   116.3344   10.78584          0 
+   emptenure |      7648       7648       14.5   127.8104   11.30533          0 
 
              |    e(max)     e(sum) 
 -------------+----------------------
-         age |        64     371726 
-       edud1 |         1        294 
-       edud2 |         1       3603 
-       edud3 |         1        914 
-       edud4 |         1       3353 
-    dmarital |         1       6838 
-      dunion |         1       2372 
-      sized1 |         1       3076 
-      sized2 |         1       1874 
-      sized3 |         1       3214 
-    dregular |         1       7286 
-    realwage |  10.65899   61890.91 
-     workexp |        50     208679 
-   emptenure |        47     117101 
+         age |        64     349725 
+       edud1 |         1        280 
+       edud2 |         1       3363 
+       edud3 |         1        854 
+       edud4 |         1       3151 
+    dmarital |         1       6403 
+      dunion |         1       2235 
+      sized1 |         1       2841 
+      sized2 |         1       1771 
+      sized3 |         1       3036 
+    dregular |         1       6787 
+    realwage |  10.65899   58152.49 
+     workexp |        50     196966 
+   emptenure |        47     110896 
 
 . esttab using "$Output\sum.tex", ///
->         cell( ///
+>         stats( N, label("Observations") fmt(%9.0f) ) ///
+>         cells( ///
 >                         ( ///
->                         mean(label(Mean) fmt(%5.4f)) ///
->                         sd(label(St.d) fmt(%5.4f)) ///
->                         min(label(Min)) ///
->                         max(label(Max)) ///
+>                         mean( label(Mean) fmt(%5.4f) ) ///
+>                         sd( label(St.d) fmt(%5.4f) ) ///
+>                         min(label(Min) fmt(%9.0f) ) ///
+>                         max(label(Max) fmt(%9.0f) ) ///
 >                         ) ///
 >                         ) ///
 >         coeflabel( ///
@@ -118,11 +119,27 @@ end of do-file
 >                                         workexp "Total Experience" ///
 >                                         emptenure "Employer Tenure" ///
 >                                         ) ///
+>         refcat( ///
+>                                 edu1 "Years of Education" ///
+>                                 ) ///
 >         replace
 (output written to C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\
 > Submittion\Output\sum.tex)
 
 . 
-. 
 end of do-file
 
+. do "C:\Users\AYAKAN~1\AppData\Local\Temp\STDb64_000000.tmp"
+
+. /* Title: ReplicationToda */
+. /// Date: Dec 14th, 2018
+> /// Written by Ayaka Nakamura
+> /// 
+> /// Comparing the coefficients with Toda (2007).
+> 
+. *  0. Preparation
+. qui {
+
+. 
+. * Open Log file
+. cap log close /* close any log files that accidentally have been left open. */
