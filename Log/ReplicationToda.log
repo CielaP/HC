@@ -3,7 +3,7 @@
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\ReplicationToda.log
   log type:  text
- opened on:  15 Feb 2019, 21:14:19
+ opened on:  15 Feb 2019, 21:17:40
 
 . 
 . /**/
@@ -1085,3 +1085,1463 @@ Expression   : emptenure*_b[emptenure]
 > tput\plot_as_toda_1.pdf written in PDF format)
 (results olstoda2 are active now)
 Warning: expression() does not contain predict() or xb().
+
+Predictive margins                              Number of obs     =      2,984
+Model VCE    : Robust
+
+Expression   : emptenure*_b[emptenure]
+               +(emptenure^2)*_b[c.emptenure#c.emptenure]
+
+1._at        : emptenure       =           0
+
+2._at        : emptenure       =           1
+
+3._at        : emptenure       =           2
+
+4._at        : emptenure       =           3
+
+5._at        : emptenure       =           4
+
+6._at        : emptenure       =           5
+
+7._at        : emptenure       =           6
+
+8._at        : emptenure       =           7
+
+9._at        : emptenure       =           8
+
+10._at       : emptenure       =           9
+
+11._at       : emptenure       =          10
+
+12._at       : emptenure       =          11
+
+13._at       : emptenure       =          12
+
+14._at       : emptenure       =          13
+
+15._at       : emptenure       =          14
+
+16._at       : emptenure       =          15
+
+17._at       : emptenure       =          16
+
+18._at       : emptenure       =          17
+
+19._at       : emptenure       =          18
+
+20._at       : emptenure       =          19
+
+21._at       : emptenure       =          20
+
+22._at       : emptenure       =          21
+
+23._at       : emptenure       =          22
+
+24._at       : emptenure       =          23
+
+25._at       : emptenure       =          24
+
+26._at       : emptenure       =          25
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |          0  (empty)
+          2  |   .0170846   .0032214     5.30   0.000     .0107707    .0233984
+          3  |   .0338212   .0062789     5.39   0.000     .0215148    .0461276
+          4  |     .05021   .0091732     5.47   0.000     .0322308    .0681891
+          5  |   .0662508   .0119053     5.56   0.000     .0429169    .0895847
+          6  |   .0819438    .014476     5.66   0.000     .0535714    .1103161
+          7  |   .0972888   .0168864     5.76   0.000     .0641921    .1303855
+          8  |    .112286   .0191377     5.87   0.000     .0747769    .1497951
+          9  |   .1269352   .0212311     5.98   0.000     .0853229    .1685475
+         10  |   .1412366   .0231683     6.10   0.000     .0958275    .1866457
+         11  |     .15519   .0249509     6.22   0.000     .1062873    .2040928
+         12  |   .1687956   .0265807     6.35   0.000     .1166985    .2208927
+         13  |   .1820533   .0280598     6.49   0.000      .127057    .2370495
+         14  |    .194963   .0293908     6.63   0.000      .137358     .252568
+         15  |   .2075249   .0305764     6.79   0.000     .1475961    .2674536
+         16  |   .2197388   .0316198     6.95   0.000     .1577651    .2817126
+         17  |   .2316049   .0325246     7.12   0.000     .1678578     .295352
+         18  |   .2431231    .033295     7.30   0.000     .1778661    .3083801
+         19  |   .2542933   .0339358     7.49   0.000     .1877804    .3208063
+         20  |   .2651157   .0344526     7.70   0.000     .1975899    .3326415
+         21  |   .2755902   .0348518     7.91   0.000     .2072818    .3438985
+         22  |   .2857167    .035141     8.13   0.000     .2168416    .3545919
+         23  |   .2954954   .0353289     8.36   0.000      .226252    .3647388
+         24  |   .3049262   .0354257     8.61   0.000     .2354931    .3743592
+         25  |    .314009   .0354431     8.86   0.000     .2445419    .3834762
+         26  |    .322744    .035395     9.12   0.000     .2533712    .3921169
+------------------------------------------------------------------------------
+(results isvtoda2 are active now)
+Warning: expression() does not contain predict() or xb().
+
+Predictive margins                              Number of obs     =      2,984
+Model VCE    : Robust
+
+Expression   : emptenure*_b[emptenure]
+               +(emptenure^2)*_b[c.emptenure#c.emptenure]
+
+1._at        : emptenure       =           0
+
+2._at        : emptenure       =           1
+
+3._at        : emptenure       =           2
+
+4._at        : emptenure       =           3
+
+5._at        : emptenure       =           4
+
+6._at        : emptenure       =           5
+
+7._at        : emptenure       =           6
+
+8._at        : emptenure       =           7
+
+9._at        : emptenure       =           8
+
+10._at       : emptenure       =           9
+
+11._at       : emptenure       =          10
+
+12._at       : emptenure       =          11
+
+13._at       : emptenure       =          12
+
+14._at       : emptenure       =          13
+
+15._at       : emptenure       =          14
+
+16._at       : emptenure       =          15
+
+17._at       : emptenure       =          16
+
+18._at       : emptenure       =          17
+
+19._at       : emptenure       =          18
+
+20._at       : emptenure       =          19
+
+21._at       : emptenure       =          20
+
+22._at       : emptenure       =          21
+
+23._at       : emptenure       =          22
+
+24._at       : emptenure       =          23
+
+25._at       : emptenure       =          24
+
+26._at       : emptenure       =          25
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |          0  (empty)
+          2  |   .0611809   .0261625     2.34   0.019     .0099033    .1124585
+          3  |   .1201239   .0515193     2.33   0.020     .0191479    .2210998
+          4  |   .1768289   .0760922     2.32   0.020     .0276908    .3259669
+          5  |   .2312959   .0999049     2.32   0.021     .0354859    .4271059
+          6  |    .283525   .1229821     2.31   0.021     .0424845    .5245656
+          7  |   .3335162   .1453504     2.29   0.022     .0486346    .6183977
+          8  |   .3812694   .1670378     2.28   0.022     .0538813    .7086574
+          9  |   .4267846   .1880741     2.27   0.023     .0581662     .795403
+         10  |   .4700619   .2084907     2.25   0.024     .0614276    .8786963
+         11  |   .5111013   .2283212     2.24   0.025        .0636    .9586026
+         12  |   .5499027   .2476006     2.22   0.026     .0646144    1.035191
+         13  |   .5864662   .2663663     2.20   0.028     .0643979    1.108534
+         14  |   .6207917   .2846572     2.18   0.029     .0628738     1.17871
+         15  |   .6528792   .3025146     2.16   0.031     .0599614    1.245797
+         16  |   .6827288   .3199817     2.13   0.033     .0555763    1.309881
+         17  |   .7103405   .3371035     2.11   0.035     .0496297    1.371051
+         18  |   .7357142   .3539273     2.08   0.038     .0420294    1.429399
+         19  |     .75885   .3705021     2.05   0.041     .0326792    1.485021
+         20  |   .7797478   .3868788     2.02   0.044     .0214793    1.538016
+         21  |   .7984076   .4031101     1.98   0.048     .0083264    1.588489
+         22  |   .8148295   .4192503     1.94   0.052    -.0068859    1.636545
+         23  |   .8290135   .4353552     1.90   0.057    -.0242669    1.682294
+         24  |   .8409595   .4514818     1.86   0.063    -.0439285    1.725848
+         25  |   .8506676   .4676883     1.82   0.069    -.0659846     1.76732
+         26  |   .8581377   .4840336     1.77   0.076    -.0905507    1.806826
+------------------------------------------------------------------------------
+(file C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Ou
+> tput\plot_as_toda_2.pdf written in PDF format)
+(results olstoda3 are active now)
+Warning: expression() does not contain predict() or xb().
+
+Predictive margins                              Number of obs     =      2,984
+Model VCE    : Robust
+
+Expression   : emptenure*_b[emptenure]
+               +(emptenure^2)*_b[c.emptenure#c.emptenure]
+               +(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure]
+
+1._at        : emptenure       =           0
+
+2._at        : emptenure       =           1
+
+3._at        : emptenure       =           2
+
+4._at        : emptenure       =           3
+
+5._at        : emptenure       =           4
+
+6._at        : emptenure       =           5
+
+7._at        : emptenure       =           6
+
+8._at        : emptenure       =           7
+
+9._at        : emptenure       =           8
+
+10._at       : emptenure       =           9
+
+11._at       : emptenure       =          10
+
+12._at       : emptenure       =          11
+
+13._at       : emptenure       =          12
+
+14._at       : emptenure       =          13
+
+15._at       : emptenure       =          14
+
+16._at       : emptenure       =          15
+
+17._at       : emptenure       =          16
+
+18._at       : emptenure       =          17
+
+19._at       : emptenure       =          18
+
+20._at       : emptenure       =          19
+
+21._at       : emptenure       =          20
+
+22._at       : emptenure       =          21
+
+23._at       : emptenure       =          22
+
+24._at       : emptenure       =          23
+
+25._at       : emptenure       =          24
+
+26._at       : emptenure       =          25
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |          0  (empty)
+          2  |   .0305189    .007122     4.29   0.000       .01656    .0444778
+          3  |   .0587533   .0134109     4.38   0.000     .0324683    .0850382
+          4  |   .0848129   .0189139     4.48   0.000     .0477424    .1218834
+          5  |   .1088074   .0236782     4.60   0.000     .0623991    .1552158
+          6  |   .1308467   .0277514     4.71   0.000     .0764549    .1852384
+          7  |   .1510403   .0311814     4.84   0.000     .0899259    .2121546
+          8  |    .169498    .034016     4.98   0.000     .1028279    .2361681
+          9  |   .1863296   .0363035     5.13   0.000      .115176    .2574832
+         10  |   .2016447   .0380923     5.29   0.000     .1269851    .2763043
+         11  |   .2155531   .0394309     5.47   0.000     .1382699    .2928364
+         12  |   .2281646   .0403679     5.65   0.000     .1490449    .3072843
+         13  |   .2395887   .0409518     5.85   0.000     .1593247    .3198527
+         14  |   .2499354   .0412307     6.06   0.000     .1691247    .3307461
+         15  |   .2593142   .0412523     6.29   0.000     .1784611    .3401673
+         16  |   .2678349   .0410634     6.52   0.000      .187352    .3483178
+         17  |   .2756073   .0407093     6.77   0.000     .1958185     .355396
+         18  |    .282741   .0402331     7.03   0.000     .2038857    .3615963
+         19  |   .2893458   .0396751     7.29   0.000      .211584    .3671076
+         20  |   .2955314   .0390722     7.56   0.000     .2189513    .3721115
+         21  |   .3014075   .0384563     7.84   0.000     .2260346    .3767804
+         22  |   .3070839    .037854     8.11   0.000     .2328915    .3812764
+         23  |   .3126703   .0372859     8.39   0.000     .2395912    .3857494
+         24  |   .3182764   .0367663     8.66   0.000     .2462157     .390337
+         25  |   .3240119   .0363033     8.93   0.000     .2528588     .395165
+         26  |   .3299865   .0358999     9.19   0.000     .2596239    .4003491
+------------------------------------------------------------------------------
+(results isvtoda3 are active now)
+Warning: expression() does not contain predict() or xb().
+
+Predictive margins                              Number of obs     =      2,984
+Model VCE    : Robust
+
+Expression   : emptenure*_b[emptenure]
+               +(emptenure^2)*_b[c.emptenure#c.emptenure]
+               +(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure]
+
+1._at        : emptenure       =           0
+
+2._at        : emptenure       =           1
+
+3._at        : emptenure       =           2
+
+4._at        : emptenure       =           3
+
+5._at        : emptenure       =           4
+
+6._at        : emptenure       =           5
+
+7._at        : emptenure       =           6
+
+8._at        : emptenure       =           7
+
+9._at        : emptenure       =           8
+
+10._at       : emptenure       =           9
+
+11._at       : emptenure       =          10
+
+12._at       : emptenure       =          11
+
+13._at       : emptenure       =          12
+
+14._at       : emptenure       =          13
+
+15._at       : emptenure       =          14
+
+16._at       : emptenure       =          15
+
+17._at       : emptenure       =          16
+
+18._at       : emptenure       =          17
+
+19._at       : emptenure       =          18
+
+20._at       : emptenure       =          19
+
+21._at       : emptenure       =          20
+
+22._at       : emptenure       =          21
+
+23._at       : emptenure       =          22
+
+24._at       : emptenure       =          23
+
+25._at       : emptenure       =          24
+
+26._at       : emptenure       =          25
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |          0  (empty)
+          2  |   .0530996   .0330822     1.61   0.108    -.0117403    .1179395
+          3  |   .1050068   .0631989     1.66   0.097    -.0188609    .2288745
+          4  |   .1556593   .0906459     1.72   0.086    -.0220034     .333322
+          5  |   .2049947   .1157206     1.77   0.076    -.0218135    .4318029
+          6  |   .2529507   .1387205     1.82   0.068    -.0189364    .5248378
+          7  |   .2994651   .1599403     1.87   0.061    -.0140121    .6129422
+          8  |   .3444753   .1796689     1.92   0.055    -.0076692    .6966198
+          9  |   .3879192   .1981853     1.96   0.050    -.0005169    .7763552
+         10  |   .4297343   .2157548     1.99   0.046     .0068628    .8526059
+         11  |   .4698584   .2326241     2.02   0.043     .0139235    .9257933
+         12  |   .5082291   .2490177     2.04   0.041     .0201634    .9962948
+         13  |   .5447841   .2651335     2.05   0.040      .025132    1.064436
+         14  |    .579461   .2811402     2.06   0.039     .0284364    1.130486
+         15  |   .6121975    .297175     2.06   0.039     .0297453     1.19465
+         16  |   .6429314   .3133427     2.05   0.040     .0287909    1.257072
+         17  |   .6716001   .3297165     2.04   0.042     .0253676    1.317833
+         18  |   .6981415   .3463391     2.02   0.044     .0193293    1.376954
+         19  |   .7224931   .3632254     1.99   0.047     .0105845    1.434402
+         20  |   .7445927   .3803658     1.96   0.050    -.0009106    1.490096
+         21  |   .7643779   .3977305     1.92   0.055    -.0151595    1.543915
+         22  |   .7817864    .415273     1.88   0.060    -.0321337    1.595706
+         23  |   .7967558   .4329352     1.84   0.066    -.0517816    1.645293
+         24  |   .8092238   .4506514     1.80   0.073    -.0740367    1.692484
+         25  |   .8191281   .4683529     1.75   0.080    -.0988266    1.737083
+         26  |   .8264064   .4859719     1.70   0.089    -.1260811    1.778894
+------------------------------------------------------------------------------
+(file C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Ou
+> tput\plot_as_toda_3.pdf written in PDF format)
+(results olstoda4 are active now)
+Warning: expression() does not contain predict() or xb().
+
+Predictive margins                              Number of obs     =      2,984
+Model VCE    : Robust
+
+Expression   : emptenure*_b[emptenure]
+               +(emptenure^2)*_b[c.emptenure#c.emptenure]
+               +(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure]
+               +(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenur
+               > e]
+
+1._at        : emptenure       =           0
+
+2._at        : emptenure       =           1
+
+3._at        : emptenure       =           2
+
+4._at        : emptenure       =           3
+
+5._at        : emptenure       =           4
+
+6._at        : emptenure       =           5
+
+7._at        : emptenure       =           6
+
+8._at        : emptenure       =           7
+
+9._at        : emptenure       =           8
+
+10._at       : emptenure       =           9
+
+11._at       : emptenure       =          10
+
+12._at       : emptenure       =          11
+
+13._at       : emptenure       =          12
+
+14._at       : emptenure       =          13
+
+15._at       : emptenure       =          14
+
+16._at       : emptenure       =          15
+
+17._at       : emptenure       =          16
+
+18._at       : emptenure       =          17
+
+19._at       : emptenure       =          18
+
+20._at       : emptenure       =          19
+
+21._at       : emptenure       =          20
+
+22._at       : emptenure       =          21
+
+23._at       : emptenure       =          22
+
+24._at       : emptenure       =          23
+
+25._at       : emptenure       =          24
+
+26._at       : emptenure       =          25
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |          0  (empty)
+          2  |   .0561626    .012481     4.50   0.000     .0317003    .0806249
+          3  |   .1038869   .0225229     4.61   0.000     .0597429    .1480309
+          4  |   .1440594   .0304256     4.73   0.000     .0844262    .2036925
+          5  |   .1775238   .0364731     4.87   0.000     .1060379    .2490097
+          6  |   .2050813   .0409323     5.01   0.000     .1248554    .2853072
+          7  |   .2274904   .0440535     5.16   0.000     .1411471    .3138337
+          8  |   .2454667   .0460687     5.33   0.000     .1551737    .3357598
+          9  |   .2596835   .0471914     5.50   0.000       .16719     .352177
+         10  |   .2707711    .047615     5.69   0.000     .1774474    .3640948
+         11  |   .2793172   .0475117     5.88   0.000     .1861959    .3724385
+         12  |   .2858668   .0470312     6.08   0.000     .1936874    .3780463
+         13  |   .2909223   .0462995     6.28   0.000     .2001769    .3816678
+         14  |   .2949434   .0454189     6.49   0.000     .2059241    .3839628
+         15  |   .2983471   .0444678     6.71   0.000     .2111918    .3855024
+         16  |   .3015076   .0435035     6.93   0.000     .2162423    .3867729
+         17  |   .3047565    .042565     7.16   0.000     .2213308    .3881823
+         18  |   .3083829   .0416777     7.40   0.000      .226696    .3900698
+         19  |   .3126329   .0408598     7.65   0.000     .2325492    .3927167
+         20  |   .3177102   .0401273     7.92   0.000     .2390621    .3963583
+         21  |   .3237756      .0395     8.20   0.000      .246357    .4011941
+         22  |   .3309473   .0390044     8.48   0.000        .2545    .4073946
+         23  |   .3393008   .0386757     8.77   0.000     .2634977    .4151039
+         24  |   .3488691   .0385552     9.05   0.000     .2733022    .4244359
+         25  |   .3596421   .0386853     9.30   0.000     .2838203    .4354639
+         26  |   .3715675   .0391012     9.50   0.000     .2949305    .4482045
+------------------------------------------------------------------------------
+(results isvtoda4 are active now)
+Warning: expression() does not contain predict() or xb().
+
+Predictive margins                              Number of obs     =      2,984
+Model VCE    : Robust
+
+Expression   : emptenure*_b[emptenure]
+               +(emptenure^2)*_b[c.emptenure#c.emptenure]
+               +(emptenure^3)*_b[c.emptenure#c.emptenure#c.emptenure]
+               +(emptenure^4)*_b[c.emptenure#c.emptenure#c.emptenure#c.emptenur
+               > e]
+
+1._at        : emptenure       =           0
+
+2._at        : emptenure       =           1
+
+3._at        : emptenure       =           2
+
+4._at        : emptenure       =           3
+
+5._at        : emptenure       =           4
+
+6._at        : emptenure       =           5
+
+7._at        : emptenure       =           6
+
+8._at        : emptenure       =           7
+
+9._at        : emptenure       =           8
+
+10._at       : emptenure       =           9
+
+11._at       : emptenure       =          10
+
+12._at       : emptenure       =          11
+
+13._at       : emptenure       =          12
+
+14._at       : emptenure       =          13
+
+15._at       : emptenure       =          14
+
+16._at       : emptenure       =          15
+
+17._at       : emptenure       =          16
+
+18._at       : emptenure       =          17
+
+19._at       : emptenure       =          18
+
+20._at       : emptenure       =          19
+
+21._at       : emptenure       =          20
+
+22._at       : emptenure       =          21
+
+23._at       : emptenure       =          22
+
+24._at       : emptenure       =          23
+
+25._at       : emptenure       =          24
+
+26._at       : emptenure       =          25
+
+------------------------------------------------------------------------------
+             |            Delta-method
+             |     Margin   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         _at |
+          1  |          0  (empty)
+          2  |   .0784282   .0463167     1.69   0.090    -.0123509    .1692073
+          3  |   .1488435   .0843729     1.76   0.078    -.0165243    .3142113
+          4  |   .2120959   .1155323     1.84   0.066    -.0143434    .4385351
+          5  |   .2689856   .1410998     1.91   0.057    -.0075651    .5455362
+          6  |    .320263   .1623068     1.97   0.048     .0021474    .6383785
+          7  |   .3666288   .1802909     2.03   0.042      .013265    .7199925
+          8  |   .4087339   .1960712     2.08   0.037     .0244414    .7930264
+          9  |   .4471795   .2105217     2.12   0.034     .0345646    .8597945
+         10  |    .482517     .22435     2.15   0.031      .042799     .922235
+         11  |    .515248   .2380857     2.16   0.030     .0486086    .9818873
+         12  |   .5458243   .2520829     2.17   0.030     .0517509    1.039898
+         13  |   .5746481    .266539     2.16   0.031     .0522413    1.097055
+         14  |   .6020717   .2815238     2.14   0.032     .0502951    1.153848
+         15  |   .6283976   .2970164     2.12   0.034     .0462561    1.210539
+         16  |   .6538788   .3129411     2.09   0.037     .0405256    1.267232
+         17  |   .6787181   .3291994     2.06   0.039     .0334991    1.323937
+         18  |    .703069   .3456961     2.03   0.042      .025517    1.380621
+         19  |   .7270348   .3623566     2.01   0.045     .0168291    1.437241
+         20  |   .7506695   .3791375     1.98   0.048     .0075736    1.493765
+         21  |   .7739769   .3960314     1.95   0.051    -.0022304    1.550184
+         22  |   .7969114   .4130651     1.93   0.054    -.0126813    1.606504
+         23  |   .8193773   .4302937     1.90   0.057    -.0239829    1.662738
+         24  |   .8412294    .447792     1.88   0.060    -.0364268    1.718886
+         25  |   .8622726   .4656417     1.85   0.064    -.0503683    1.774913
+         26  |    .882262   .4839183     1.82   0.068    -.0662004    1.830725
+------------------------------------------------------------------------------
+(file C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submittion\Ou
+> tput\plot_as_toda_4.pdf written in PDF format)
+
+. 
+. 
+. ** output tex file
+. *** coefficient
+. global EstList olstoda1 olstoda2 olstoda3 olstoda4 ///
+>                         isvtoda1 isvtoda2 isvtoda3 isvtoda4
+
+. global FileTex as_toda
+
+. global KeepVar emptenure c.emptenure#c.emptenure ///
+>                                                 c.emptenure#c.emptenure#c.empte
+> nure ///
+>                                                 c.emptenure#c.emptenure#c.empte
+> nure#c.emptenure ///
+>                                                 workexp c.workexp#c.workexp ///
+>                                                 c.workexp#c.workexp#c.workexp /
+> //
+>                                                 c.workexp#c.workexp#c.workexp#c
+> .workexp
+
+. global LabelVar emptenure "Employer tenure" ///
+>                                                 c.emptenure#c.emptenure "Emp.te
+> n.$^{2}\times 100$" ///
+>                                                 c.emptenure#c.emptenure#c.empte
+> nure "Emp.ten.$^{3}\times 100$" ///
+>                                                 c.emptenure#c.emptenure#c.empte
+> nure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
+>                                                 workexp "Total experience" c.wo
+> rkexp#c.workexp "Experience$^{2}$" ///
+>                                                 c.workexp#c.workexp#c.workexp "
+> Exp.$^{3}\times 100$" ///
+>                                                 c.workexp#c.workexp#c.workexp#c
+> .workexp "Exp.$^{4}\times 10000$"
+
+. global TransVar c.emptenure#c.emptenure 100*@ 100 ///
+>                                                 c.emptenure#c.emptenure#c.empte
+> nure 100*@ 100 ///
+>                                                 c.emptenure#c.emptenurec.empten
+> ure#c.emptenure 10000*@ 10000 ///
+>                                                 c.workexp#c.workexp#c.workexp 1
+> 00*@ 100 ///
+>                                                 c.workexp#c.workexp#c.workexp 1
+> 0000*@ 10000
+
+. global TitleTab "Replication of Toda (2007), using the AS's IV method."
+
+. global LabelTab
+
+. global Group "OLS" "IV"
+
+. global GroupPattern 1 0 0 0 1 0 0 0
+
+. 
+. do "$Code\TexFormat.do"
+
+. /* Title: TexFormat */
+. /// Date: Feb 15th, 2019
+> /// Written by Ayaka Nakamura
+> /// 
+> /// Standard format of estout
+> 
+. * set variables
+. local estList $EstList
+
+. local fileTex $FileTex
+
+. local keepVar $KeepVar
+
+. local labelVar $LabelVar
+
+. local transVar $TransVar
+
+. local titleTab $TitleTab
+
+. local labelTab $LabelTab
+
+. local group $Group
+
+. local groupPattern $GroupPattern
+
+. 
+. * estout
+. estout `estList' ///
+> using "$Output/`fileTex'.tex", ///
+> cells( ///
+>                 b(star fmt(%9.4f) ) ///
+>                 se(par fmt(%9.4f) ) ///
+>                 ) ///
+> starlevels(\sym{*} 0.1 \sym{**} 0.05 \sym{***} 0.01) ///
+> stats(N, labels("Observations") fmt(%9.0f)) ///
+> collabels(none) ///
+> mlabels( *, nodepvars numbers notitles) ///
+> nolz ///
+> style(tex) ///
+> substitute(_ \_) ///
+> keep(`keepVar') ///
+> order(`keepVar') ///
+> varlabels(`labelVar') ///
+> transform(`transVar') ///
+> title(`titleTab' \label{`labelTab'}) ///
+> prehead( ///
+>                                 "\begin{table}[htbp]\centering" ///
+>                                 "\begin{threeparttable}" ///
+>                                 "\caption{@title}" ///
+>                                 "\begin{tabular}{l*{@M}{c}}" ///
+>                                 "\hline\hline\\" ///
+>                                 ) ///
+> posthead( "\hline\\" ) ///
+> prefoot( "\hline\\" ) ///
+> postfoot( "\hline\hline" ///
+>                                 "\end{tabular}" ///
+>                                 "\begin{tablenotes}" ///
+>                                 "\small" ///
+>                                 "\im Notes: Robust standard errors are in paren
+> theses." ///
+>                                 "\im $^{*}$ , $^{**}$ and $^{***}$ Denote stati
+> stical significance at the 10\%, 5\% and 1\% level, respectively." ///
+>                                 "\end{tablenotes}" ///
+>                                 "\end{threeparttable}" ///
+>                                 "\end{table}" ///
+>                                 ) ///
+> mgroups( ///
+>                                 `group', ///
+>                                 nodep ///
+>                                 pattern( `groupPattern' ) ///
+>                                 prefix( \multicolumn{@span}{c}{ ) ///
+>                                 suffix( } ) ///
+>                                 span erepeat( \cmidrule(lr){@span}) ///
+>                                 ) ///
+> replace
+(output written to C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\
+> Submittion\Output/as_toda.tex)
+
+. 
+end of do-file
+
+. 
+. **** return
+. global EstList olstodar1 olstodar2 olstodar3 olstodar4 ///
+>                                                 isvtodar1 isvtodar2 isvtodar3 i
+> svtodar4
+
+. global FileTex as_return_toda
+
+. global KeepVar 3._at 6._at 11._at 16._at 21._at 26._at
+
+. global LabelVar 3._at "2 Years" ///
+>                                                         6._at "5 Years" 11._at 
+> "10 Years" ///
+>                                                         16._at "15 Years" ///
+>                                                         21._at "20 Years" 26._a
+> t "25 Years"
+
+. global TransVar 
+
+. global TitleTab "Estimated Returns to Employer Tenure, based on replication of 
+> Toda (2007)."
+
+. 
+. do "$Code\TexFormat.do"
+
+. /* Title: TexFormat */
+. /// Date: Feb 15th, 2019
+> /// Written by Ayaka Nakamura
+> /// 
+> /// Standard format of estout
+> 
+. * set variables
+. local estList $EstList
+
+. local fileTex $FileTex
+
+. local keepVar $KeepVar
+
+. local labelVar $LabelVar
+
+. local transVar $TransVar
+
+. local titleTab $TitleTab
+
+. local labelTab $LabelTab
+
+. local group $Group
+
+. local groupPattern $GroupPattern
+
+. 
+. * estout
+. estout `estList' ///
+> using "$Output/`fileTex'.tex", ///
+> cells( ///
+>                 b(star fmt(%9.4f) ) ///
+>                 se(par fmt(%9.4f) ) ///
+>                 ) ///
+> starlevels(\sym{*} 0.1 \sym{**} 0.05 \sym{***} 0.01) ///
+> stats(N, labels("Observations") fmt(%9.0f)) ///
+> collabels(none) ///
+> mlabels( *, nodepvars numbers notitles) ///
+> nolz ///
+> style(tex) ///
+> substitute(_ \_) ///
+> keep(`keepVar') ///
+> order(`keepVar') ///
+> varlabels(`labelVar') ///
+> transform(`transVar') ///
+> title(`titleTab' \label{`labelTab'}) ///
+> prehead( ///
+>                                 "\begin{table}[htbp]\centering" ///
+>                                 "\begin{threeparttable}" ///
+>                                 "\caption{@title}" ///
+>                                 "\begin{tabular}{l*{@M}{c}}" ///
+>                                 "\hline\hline\\" ///
+>                                 ) ///
+> posthead( "\hline\\" ) ///
+> prefoot( "\hline\\" ) ///
+> postfoot( "\hline\hline" ///
+>                                 "\end{tabular}" ///
+>                                 "\begin{tablenotes}" ///
+>                                 "\small" ///
+>                                 "\im Notes: Robust standard errors are in paren
+> theses." ///
+>                                 "\im $^{*}$ , $^{**}$ and $^{***}$ Denote stati
+> stical significance at the 10\%, 5\% and 1\% level, respectively." ///
+>                                 "\end{tablenotes}" ///
+>                                 "\end{threeparttable}" ///
+>                                 "\end{table}" ///
+>                                 ) ///
+> mgroups( ///
+>                                 `group', ///
+>                                 nodep ///
+>                                 pattern( `groupPattern' ) ///
+>                                 prefix( \multicolumn{@span}{c}{ ) ///
+>                                 suffix( } ) ///
+>                                 span erepeat( \cmidrule(lr){@span}) ///
+>                                 ) ///
+> replace
+(output written to C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\
+> Submittion\Output/as_return_toda.tex)
+
+. 
+end of do-file
+
+. 
+. ** Topel
+. qui {
+
+. 
+. qui {
+
+. do "$Code\EstTopel.do"
+
+. qui{
+
+. 
+. 
+. * estimation
+. forvalues i=1/4 {
+  2.         **** 1st step
+.         qui $FstReg ///
+>                                 `contrl`i'' ///
+>                                 if fst==1
+  3.         est sto fst`i'
+  4.         gen emptenB`i'=`LHSterm`i'' ///
+>                                                                 $DmYear
+  5.         gen intwemp`i'=realwage-emptenB`i'
+  6.         
+.         **** 2nd step
+.         qui reg intwemp`i' ///
+>                                 $SndReg
+  7.         est sto snd`i'
+  8. }
+(469 missing values generated)
+(813 missing values generated)
+(475 missing values generated)
+(817 missing values generated)
+(475 missing values generated)
+(817 missing values generated)
+(475 missing values generated)
+(817 missing values generated)
+
+. 
+. * calc. return
+. ** linear
+. capture program drop coef
+
+. program coef, rclass
+  1.         suest fst1 snd1
+  2.         lincom [fst1_mean]_b[_cons]-[snd1_mean]_b[initialemp]
+  3. end
+
+. coef
+
+Simultaneous results for fst1, snd1
+
+                                                Number of obs     =      3,009
+
+------------------------------------------------------------------------------
+             |               Robust
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+fst1_mean    |
+       _cons |     .03188    .012709     2.51   0.012     .0069708    .0567893
+-------------+----------------------------------------------------------------
+fst1_lnvar   |
+       _cons |  -1.501376    .080442   -18.66   0.000    -1.659039   -1.343712
+-------------+----------------------------------------------------------------
+snd1_mean    |
+    1.dunion |   .0317339   .0238511     1.33   0.183    -.0150134    .0784812
+             |
+         occ |
+          2  |   .0794048   .1620386     0.49   0.624    -.2381851    .3969947
+          3  |   .3712421   .1055576     3.52   0.000     .1643531    .5781311
+          4  |    .255106   .1134239     2.25   0.025     .0327991    .4774128
+          5  |   .5269265   .1055111     4.99   0.000     .3201285    .7337245
+          6  |   .4218297   .1033007     4.08   0.000      .219364    .6242953
+          7  |   .3444903   .1119895     3.08   0.002     .1249949    .5639858
+          8  |   .2731098   .1022259     2.67   0.008     .0727507    .4734689
+          9  |   .4979416   .1077815     4.62   0.000     .2866937    .7091894
+         10  |   .4831621   .1059578     4.56   0.000     .2754887    .6908356
+         11  |   .1842554   .1114957     1.65   0.098    -.0342722    .4027831
+         12  |   .2824808   .1330569     2.12   0.034      .021694    .5432676
+             |
+         ind |
+          2  |  -.1142308   .1291568    -0.88   0.376    -.3673735     .138912
+          3  |    .069746   .3417234     0.20   0.838    -.6000195    .7395114
+          4  |  -.0729614   .0876068    -0.83   0.405    -.2446675    .0987447
+          5  |   .0368898   .0845709     0.44   0.663    -.1288662    .2026457
+          6  |  -.0183558   .0887921    -0.21   0.836    -.1923852    .1556736
+          7  |   .1534324   .1237424     1.24   0.215    -.0890983     .395963
+          8  |   .1055553   .0894374     1.18   0.238    -.0697388    .2808493
+          9  |   .0905396   .0986464     0.92   0.359    -.1028038    .2838829
+         10  |  -.0067927   .0937129    -0.07   0.942    -.1904666    .1768811
+         11  |   .1419697    .097078     1.46   0.144    -.0482996     .332239
+         12  |   .1444706   .1008892     1.43   0.152    -.0532686    .3422099
+         13  |   .0748808   .1062326     0.70   0.481    -.1333312    .2830928
+         14  |   .1199847   .1013025     1.18   0.236    -.0785645    .3185339
+         15  |   .0841905   .0954355     0.88   0.378    -.1028597    .2712406
+         16  |   .0704839   .0891221     0.79   0.429    -.1041921      .24516
+         17  |  -.0326395   .1362891    -0.24   0.811    -.2997613    .2344823
+         18  |   .0771309    .154899     0.50   0.619    -.2264656    .3807273
+             |
+       dsize |
+          1  |    .031477    .028644     1.10   0.272    -.0246642    .0876182
+          2  |    .118535   .0278921     4.25   0.000     .0638674    .1732025
+             |
+  initialemp |    .013485   .0010365    13.01   0.000     .0114535    .0155165
+       _cons |   6.572049     .07707    85.27   0.000     6.420995    6.723104
+-------------+----------------------------------------------------------------
+snd1_lnvar   |
+       _cons |  -1.360234   .0418006   -32.54   0.000    -1.442161   -1.278306
+------------------------------------------------------------------------------
+
+ ( 1)  [fst1_mean]_cons - [snd1_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |    .018395   .0128453     1.43   0.152    -.0067812    .0435712
+------------------------------------------------------------------------------
+
+. capture program drop emprtn
+
+. program emprtn, rclass
+  1.         qui suest fst1 snd1
+  2.         foreach X of numlist 2 5 10 15 20 25 {
+  3.         lincom ([fst1_mean]_b[_cons]-[snd1_mean]_b[initialemp])*`X'
+  4.         }
+  5. end
+
+. emprtn
+
+ ( 1)  2*[fst1_mean]_cons - 2*[snd1_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |     .03679   .0256905     1.43   0.152    -.0135625    .0871424
+------------------------------------------------------------------------------
+
+ ( 1)  5*[fst1_mean]_cons - 5*[snd1_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0919749   .0642263     1.43   0.152    -.0339062    .2178561
+------------------------------------------------------------------------------
+
+ ( 1)  10*[fst1_mean]_cons - 10*[snd1_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .1839499   .1284525     1.43   0.152    -.0678124    .4357122
+------------------------------------------------------------------------------
+
+ ( 1)  15*[fst1_mean]_cons - 15*[snd1_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .2759248   .1926788     1.43   0.152    -.1017187    .6535683
+------------------------------------------------------------------------------
+
+ ( 1)  20*[fst1_mean]_cons - 20*[snd1_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .3678998   .2569051     1.43   0.152    -.1356249    .8714244
+------------------------------------------------------------------------------
+
+ ( 1)  25*[fst1_mean]_cons - 25*[snd1_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .4598747   .3211313     1.43   0.152    -.1695311    1.089281
+------------------------------------------------------------------------------
+
+. 
+. ** qadratic
+. capture program drop coef
+
+. program coef, rclass
+  1.         suest fst2 snd2
+  2.         lincom [fst2_mean]_b[_cons]-[snd2_mean]_b[initialemp]
+  3. end
+
+. coef
+
+Simultaneous results for fst2, snd2
+
+                                                Number of obs     =      3,008
+
+------------------------------------------------------------------------------
+             |               Robust
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+fst2_mean    |
+  emptendif2 |  -.0003577   .0006441    -0.56   0.579    -.0016202    .0009048
+  empexpdif2 |  -.0017679   .0008059    -2.19   0.028    -.0033475   -.0001883
+       _cons |   .1310008   .0371815     3.52   0.000     .0581263    .2038753
+-------------+----------------------------------------------------------------
+fst2_lnvar   |
+       _cons |  -1.505558   .0803875   -18.73   0.000    -1.663114   -1.348001
+-------------+----------------------------------------------------------------
+snd2_mean    |
+    1.dunion |   .0343267   .0238892     1.44   0.151    -.0124953    .0811486
+             |
+         occ |
+          2  |  -.0602138   .1532518    -0.39   0.694    -.3605818    .2401543
+          3  |   .2913653   .1524839     1.91   0.056    -.0074976    .5902283
+          4  |   .1934428   .1579587     1.22   0.221    -.1161505    .5030361
+          5  |   .4137757   .1520886     2.72   0.007     .1156875    .7118639
+          6  |   .3484542   .1508065     2.31   0.021     .0528788    .6440295
+          7  |   .2896378   .1574236     1.84   0.066    -.0189069    .5981824
+          8  |   .2064531   .1497963     1.38   0.168    -.0871423    .5000486
+          9  |   .4200342   .1539164     2.73   0.006     .1183635    .7217048
+         10  |   .3992392   .1526063     2.62   0.009     .1001363    .6983421
+         11  |   .0917766   .1559444     0.59   0.556    -.2138688    .3974219
+         12  |   .1515373   .1767724     0.86   0.391    -.1949302    .4980049
+             |
+         ind |
+          2  |   .0725673   .1479263     0.49   0.624    -.2173629    .3624974
+          3  |   .1644225   .3378194     0.49   0.626    -.4976914    .8265364
+          4  |   .0508474   .1130238     0.45   0.653    -.1706752      .27237
+          5  |    .108992   .1106616     0.98   0.325    -.1079007    .3258847
+          6  |   .0951795   .1140606     0.83   0.404    -.1283751    .3187341
+          7  |   .2585526   .1501738     1.72   0.085    -.0357826    .5528878
+          8  |   .2089293   .1145374     1.82   0.068    -.0155598    .4334184
+          9  |    .141316   .1233967     1.15   0.252    -.1005371     .383169
+         10  |   .1011455   .1184933     0.85   0.393    -.1310971     .333388
+         11  |   .2440321   .1220008     2.00   0.045     .0049148    .4831493
+         12  |    .257727   .1241505     2.08   0.038     .0143964    .5010575
+         13  |   .2028277   .1268232     1.60   0.110    -.0457412    .4513966
+         14  |   .2325504   .1234397     1.88   0.060     -.009387    .4744877
+         15  |   .2092644   .1194033     1.75   0.080    -.0247618    .4432907
+         16  |   .1766842   .1150872     1.54   0.125    -.0488825    .4022509
+         17  |    .121769   .1587303     0.77   0.443    -.1893368    .4328747
+         18  |   .2223594   .1669934     1.33   0.183    -.1049417    .5496604
+             |
+       dsize |
+          1  |   .0402843   .0291739     1.38   0.167    -.0168955    .0974641
+          2  |   .1156741    .027956     4.14   0.000     .0608813    .1704669
+             |
+  initialemp |   .1013289    .001052    96.32   0.000     .0992671    .1033908
+       _cons |   5.569969   .1212738    45.93   0.000     5.332277    5.807662
+-------------+----------------------------------------------------------------
+snd2_lnvar   |
+       _cons |  -1.339916   .0413182   -32.43   0.000    -1.420899   -1.258934
+------------------------------------------------------------------------------
+
+ ( 1)  [fst2_mean]_cons - [snd2_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0296719   .0373664     0.79   0.427     -.043565    .1029087
+------------------------------------------------------------------------------
+
+. capture program drop emprtn
+
+. program emprtn, rclass
+  1.         qui suest fst2 snd2
+  2.         foreach X of numlist 2 5 10 15 20 25 {
+  3.         lincom ([fst2_mean]_b[_cons]-[snd2_mean]_b[initialemp])*`X' ///
+>                                 +[fst2_mean]_b[emptendif2]*`X'*`X'
+  4.         }
+  5. end
+
+. emprtn
+
+ ( 1)  4*[fst2_mean]emptendif2 + 2*[fst2_mean]_cons - 2*[snd2_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |    .057913   .0748199     0.77   0.439    -.0887314    .2045574
+------------------------------------------------------------------------------
+
+ ( 1)  25*[fst2_mean]emptendif2 + 5*[fst2_mean]_cons - 5*[snd2_mean]initialemp =
+       0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .1394176   .1877907     0.74   0.458    -.2286455    .5074807
+------------------------------------------------------------------------------
+
+ ( 1)  100*[fst2_mean]emptendif2 + 10*[fst2_mean]_cons - 10*[snd2_mean]initialemp
+       = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .2609516    .380227     0.69   0.493    -.4842796    1.006183
+------------------------------------------------------------------------------
+
+ ( 1)  225*[fst2_mean]emptendif2 + 15*[fst2_mean]_cons - 15*[snd2_mean]initialemp
+       = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .3646022   .5812539     0.63   0.530    -.7746346    1.503839
+------------------------------------------------------------------------------
+
+ ( 1)  400*[fst2_mean]emptendif2 + 20*[fst2_mean]_cons - 20*[snd2_mean]initialemp
+       = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .4503693   .7945279     0.57   0.571    -1.106877    2.007615
+------------------------------------------------------------------------------
+
+ ( 1)  625*[fst2_mean]emptendif2 + 25*[fst2_mean]_cons - 25*[snd2_mean]initialemp
+       = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .5182529   1.023333     0.51   0.613    -1.487442    2.523948
+------------------------------------------------------------------------------
+
+. 
+. ** cubic
+. capture program drop coef
+
+. program coef, rclass
+  1.         suest fst3 snd3
+  2.         lincom [fst3_mean]_b[_cons]-[snd3_mean]_b[initialemp]
+  3. end
+
+. coef
+
+Simultaneous results for fst3, snd3
+
+                                                Number of obs     =      3,008
+
+------------------------------------------------------------------------------
+             |               Robust
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+fst3_mean    |
+  emptendif2 |  -.0006047   .0023802    -0.25   0.799    -.0052698    .0040604
+  empexpdif2 |  -.0031686   .0037281    -0.85   0.395    -.0104756    .0041384
+  emptendif3 |   4.68e-06   .0000411     0.11   0.909    -.0000758    .0000852
+  empexpdif3 |   .0000187   .0000496     0.38   0.706    -.0000785     .000116
+       _cons |   .1638686   .0771975     2.12   0.034     .0125643    .3151729
+-------------+----------------------------------------------------------------
+fst3_lnvar   |
+       _cons |  -1.504261   .0802467   -18.75   0.000    -1.661542    -1.34698
+-------------+----------------------------------------------------------------
+snd3_mean    |
+    1.dunion |   .0327337   .0237606     1.38   0.168    -.0138363    .0793037
+             |
+         occ |
+          2  |   -.063018    .157879    -0.40   0.690    -.3724551     .246419
+          3  |   .2805511   .1582872     1.77   0.076    -.0296861    .5907883
+          4  |   .1895456   .1636162     1.16   0.247    -.1311363    .5102275
+          5  |   .4217018   .1578901     2.67   0.008      .112243    .7311607
+          6  |   .3446559   .1566692     2.20   0.028       .03759    .6517218
+          7  |   .2760818   .1629474     1.69   0.090    -.0432893    .5954529
+          8  |    .197762   .1556893     1.27   0.204    -.1073835    .5029074
+          9  |   .4107415   .1596399     2.57   0.010     .0978531    .7236299
+         10  |   .3909895   .1584056     2.47   0.014     .0805201    .7014588
+         11  |   .0861121   .1618439     0.53   0.595    -.2310961    .4033204
+         12  |   .1497986   .1824017     0.82   0.412    -.2077022    .5072994
+             |
+         ind |
+          2  |   .1102941   .1525753     0.72   0.470    -.1887479    .4093361
+          3  |   .1847293   .3243811     0.57   0.569     -.451046    .8205047
+          4  |   .0618387   .1114805     0.55   0.579    -.1566591    .2803366
+          5  |   .1212964   .1091295     1.11   0.266    -.0925934    .3351862
+          6  |   .1064091    .112556     0.95   0.344    -.1141967    .3270148
+          7  |   .2660726    .149482     1.78   0.075    -.0269067    .5590519
+          8  |   .2157169   .1130455     1.91   0.056    -.0058482    .4372821
+          9  |   .1496496   .1220017     1.23   0.220    -.0894692    .3887685
+         10  |   .1134676   .1169178     0.97   0.332    -.1156871    .3426223
+         11  |     .25104   .1206476     2.08   0.037     .0145751    .4875049
+         12  |   .2697198   .1225136     2.20   0.028     .0295975    .5098421
+         13  |   .2113299    .125674     1.68   0.093    -.0349866    .4576464
+         14  |   .2412615   .1220657     1.98   0.048     .0020172    .4805059
+         15  |   .2205702    .118043     1.87   0.062    -.0107898    .4519303
+         16  |   .1871173   .1137044     1.65   0.100    -.0357392    .4099737
+         17  |   .1373356   .1579871     0.87   0.385    -.1723134    .4469846
+         18  |    .234998   .1657064     1.42   0.156    -.0897805    .5597765
+             |
+       dsize |
+          1  |   .0391576   .0290327     1.35   0.177    -.0177455    .0960607
+          2  |   .1176771   .0277204     4.25   0.000     .0633461    .1720082
+             |
+  initialemp |   .1318514   .0010466   125.98   0.000     .1298001    .1339028
+       _cons |   5.390234   .1280281    42.10   0.000     5.139303    5.641164
+-------------+----------------------------------------------------------------
+snd3_lnvar   |
+       _cons |  -1.349127   .0413913   -32.59   0.000    -1.430252   -1.268001
+------------------------------------------------------------------------------
+
+ ( 1)  [fst3_mean]_cons - [snd3_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0320171   .0773606     0.41   0.679    -.1196069    .1836412
+------------------------------------------------------------------------------
+
+. capture program drop emprtn
+
+. program emprtn, rclass
+  1.         qui suest fst3 snd3
+  2.         foreach X of numlist 2 5 10 15 20 25 {
+  3.         lincom ([fst3_mean]_b[_cons]-[snd3_mean]_b[initialemp])*`X' ///
+>                                 +[fst3_mean]_b[emptendif2]*`X'*`X' ///
+>                                 +[fst3_mean]_b[emptendif3]*`X'*`X'*`X'
+  4.         }
+  5. end
+
+. emprtn
+
+ ( 1)  4*[fst3_mean]emptendif2 + 8*[fst3_mean]emptendif3 + 2*[fst3_mean]_cons -
+       2*[snd3_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0616528   .1556792     0.40   0.692    -.2434728    .3667784
+------------------------------------------------------------------------------
+
+ ( 1)  25*[fst3_mean]emptendif2 + 125*[fst3_mean]emptendif3 + 5*[fst3_mean]_cons
+       - 5*[snd3_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .1455528   .3946811     0.37   0.712    -.6280079    .9191136
+------------------------------------------------------------------------------
+
+ ( 1)  100*[fst3_mean]emptendif2 + 1000*[fst3_mean]emptendif3 +
+       10*[fst3_mean]_cons - 10*[snd3_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .2643825   .8133117     0.33   0.745    -1.329679    1.858444
+------------------------------------------------------------------------------
+
+ ( 1)  225*[fst3_mean]emptendif2 + 3375*[fst3_mean]emptendif3 +
+       15*[fst3_mean]_cons - 15*[snd3_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .3600025   1.257937     0.29   0.775    -2.105508    2.825513
+------------------------------------------------------------------------------
+
+ ( 1)  400*[fst3_mean]emptendif2 + 8000*[fst3_mean]emptendif3 +
+       20*[fst3_mean]_cons - 20*[snd3_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .4359264   1.721327     0.25   0.800    -2.937813    3.809666
+------------------------------------------------------------------------------
+
+ ( 1)  625*[fst3_mean]emptendif2 + 15625*[fst3_mean]emptendif3 +
+       25*[fst3_mean]_cons - 25*[snd3_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .4956678    2.19169     0.23   0.821    -3.799966    4.791301
+------------------------------------------------------------------------------
+
+. 
+. ** quartic
+. capture program drop coef
+
+. program coef, rclass
+  1.         suest fst4 snd4
+  2.         lincom [fst4_mean]_b[_cons]-[snd4_mean]_b[initialemp]
+  3. end
+
+. coef
+
+Simultaneous results for fst4, snd4
+
+                                                Number of obs     =      3,008
+
+------------------------------------------------------------------------------
+             |               Robust
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+fst4_mean    |
+  emptendif2 |  -.0046408   .0060638    -0.77   0.444    -.0165255     .007244
+  empexpdif2 |  -.0060407   .0089467    -0.68   0.500    -.0235759    .0114946
+  emptendif3 |   .0001808   .0002335     0.77   0.439    -.0002769    .0006385
+  empexpdif3 |   .0000924   .0002723     0.34   0.734    -.0004413    .0006261
+  emptendif4 |  -2.27e-06   2.79e-06    -0.82   0.415    -7.74e-06    3.19e-06
+  empexpdif4 |  -6.58e-07   2.85e-06    -0.23   0.818    -6.25e-06    4.93e-06
+       _cons |     .23407   .1162256     2.01   0.044     .0062721    .4618679
+-------------+----------------------------------------------------------------
+fst4_lnvar   |
+       _cons |  -1.503403   .0802134   -18.74   0.000    -1.660619   -1.346188
+-------------+----------------------------------------------------------------
+snd4_mean    |
+    1.dunion |   .0314693   .0237537     1.32   0.185    -.0150871    .0780257
+             |
+         occ |
+          2  |   .0164408    .164296     0.10   0.920    -.3055735     .338455
+          3  |   .3023438     .16492     1.83   0.067    -.0208936    .6255811
+          4  |   .2062506   .1702634     1.21   0.226    -.1274595    .5399608
+          5  |   .4324393   .1645859     2.63   0.009     .1098568    .7550217
+          6  |   .3628792   .1633752     2.22   0.026     .0426697    .6830887
+          7  |    .288377   .1692655     1.70   0.088    -.0433773    .6201314
+          8  |   .2113047    .162424     1.30   0.193    -.1070405    .5296499
+          9  |   .4308861   .1661729     2.59   0.010     .1051933    .7565789
+         10  |   .4062465   .1650218     2.46   0.014     .0828098    .7296832
+         11  |   .1122438   .1683117     0.67   0.505     -.217641    .4421287
+         12  |   .1700638   .1880684     0.90   0.366    -.1985434    .5386711
+             |
+         ind |
+          2  |   .0492956   .1543294     0.32   0.749    -.2531843    .3517756
+          3  |   .1149013   .3230995     0.36   0.722    -.5183621    .7481646
+          4  |   .0261438   .1080302     0.24   0.809    -.1855915    .2378791
+          5  |   .0862379   .1056195     0.82   0.414    -.1207725    .2932483
+          6  |   .0662058   .1091416     0.61   0.544    -.1477078    .2801193
+          7  |   .2332308   .1473219     1.58   0.113    -.0555148    .5219764
+          8  |   .1825304   .1096818     1.66   0.096    -.0324421    .3975028
+          9  |   .1168592   .1186941     0.98   0.325    -.1157769    .3494953
+         10  |    .081892   .1135459     0.72   0.471    -.1406539    .3044379
+         11  |   .2162418   .1174568     1.84   0.066    -.0139692    .4464529
+         12  |   .2365389   .1191321     1.99   0.047     .0030442    .4700335
+         13  |   .1771983   .1224985     1.45   0.148    -.0628944     .417291
+         14  |   .2140671   .1186803     1.80   0.071    -.0185419    .4466761
+         15  |   .1868487   .1146752     1.63   0.103    -.0379105    .4116078
+         16  |   .1521624   .1104264     1.38   0.168    -.0642693    .3685942
+         17  |   .1063845   .1567786     0.68   0.497     -.200896     .413665
+         18  |   .1946095   .1632673     1.19   0.233    -.1253886    .5146076
+             |
+       dsize |
+          1  |   .0382115   .0289496     1.32   0.187    -.0185287    .0949517
+          2  |   .1164242   .0276415     4.21   0.000     .0622479    .1706004
+             |
+  initialemp |   .1760203   .0010458   168.31   0.000     .1739705    .1780701
+       _cons |   5.186418   .1409629    36.79   0.000     4.910136    5.462701
+-------------+----------------------------------------------------------------
+snd4_lnvar   |
+       _cons |  -1.350526   .0414386   -32.59   0.000    -1.431744   -1.269308
+------------------------------------------------------------------------------
+
+ ( 1)  [fst4_mean]_cons - [snd4_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0580497   .1163085     0.50   0.618    -.1699108    .2860102
+------------------------------------------------------------------------------
+
+. capture program drop emprtn
+
+. program emprtn, rclass
+  1.         qui suest fst4 snd4
+  2.         foreach X of numlist 2 5 10 15 20 25 {
+  3.         lincom ([fst4_mean]_b[_cons]-[snd4_mean]_b[initialemp])*`X' ///
+>                                 +[fst4_mean]_b[emptendif2]*`X'*`X' ///
+>                                 +[fst4_mean]_b[emptendif3]*`X'*`X'*`X' ///
+>                                 +[fst4_mean]_b[emptendif4]*`X'*`X'*`X'*`X'
+  4.         }
+  5. end
+
+. emprtn
+
+ ( 1)  4*[fst4_mean]emptendif2 + 8*[fst4_mean]emptendif3 +
+       16*[fst4_mean]emptendif4 + 2*[fst4_mean]_cons - 2*[snd4_mean]initialemp =
+       0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .0989465   .2320243     0.43   0.670    -.3558128    .5537058
+------------------------------------------------------------------------------
+
+ ( 1)  25*[fst4_mean]emptendif2 + 125*[fst4_mean]emptendif3 +
+       625*[fst4_mean]emptendif4 + 5*[fst4_mean]_cons - 5*[snd4_mean]initialemp =
+       0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .1954101   .5855804     0.33   0.739    -.9523063    1.343127
+------------------------------------------------------------------------------
+
+ ( 1)  100*[fst4_mean]emptendif2 + 1000*[fst4_mean]emptendif3 +
+       10000*[fst4_mean]emptendif4 + 10*[fst4_mean]_cons -
+       10*[snd4_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .2744989   1.202966     0.23   0.820    -2.083271    2.632269
+------------------------------------------------------------------------------
+
+ ( 1)  225*[fst4_mean]emptendif2 + 3375*[fst4_mean]emptendif3 +
+       50625*[fst4_mean]emptendif4 + 15*[fst4_mean]_cons -
+       15*[snd4_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .3217234   1.842605     0.17   0.861    -3.289715    3.933162
+------------------------------------------------------------------------------
+
+ ( 1)  400*[fst4_mean]emptendif2 + 8000*[fst4_mean]emptendif3 +
+       160000*[fst4_mean]emptendif4 + 20*[fst4_mean]_cons -
+       20*[snd4_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .3874388   2.480498     0.16   0.876    -4.474248    5.249126
+------------------------------------------------------------------------------
+
+ ( 1)  625*[fst4_mean]emptendif2 + 15625*[fst4_mean]emptendif3 +
+       390625*[fst4_mean]emptendif4 + 25*[fst4_mean]_cons -
+       25*[snd4_mean]initialemp = 0
+
+------------------------------------------------------------------------------
+             |      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+         (1) |   .4878984   3.103435     0.16   0.875    -5.594722    6.570519
+------------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. 
+. **** output tex all results
+. qui {
+
+. 
+. log close
+      name:  <unnamed>
+       log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
+> tion\Log\ReplicationToda.log
+  log type:  text
+ closed on:  15 Feb 2019, 21:18:57
+---------------------------------------------------------------------------------

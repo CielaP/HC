@@ -10,7 +10,7 @@ local fileTex $FileTex
 local keepVar $KeepVar
 local labelVar $LabelVar
 local transVar $TransVar
-local titleTab $global
+local titleTab $TitleTab
 local labelTab $LabelTab
 local group $Group
 local groupPattern $GroupPattern
