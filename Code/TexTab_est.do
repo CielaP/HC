@@ -1,4 +1,4 @@
-/* Title: TexFormat */
+/* Title: TexTab_est */
 /// Date: Feb 15th, 2019
 /// Written by Ayaka Nakamura
 /// 
@@ -25,8 +25,8 @@ cells( ///
 starlevels(\sym{*} 0.1 \sym{**} 0.05 \sym{***} 0.01) ///
 stats(N, labels("Observations") fmt(%9.0f)) ///
 collabels(none) ///
-mlabels( *, nodepvars numbers notitles) ///
-nolz ///
+mlabels( *, none) ///
+numbers nolz ///
 style(tex) ///
 substitute(_ \_) ///
 keep(`keepVar') ///
@@ -62,4 +62,11 @@ mgroups( ///
 				span erepeat( \cmidrule(lr){@span}) ///
 				) ///
 replace
-	
+
+
+
+
+
+
+
+

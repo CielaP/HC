@@ -1,42 +1,39 @@
 \begin{table}[htbp]\centering
-\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
-\caption{Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables}
+\begin{threeparttable}
+\caption{Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables. \label{}}
 \begin{tabular}{l*{2}{c}}
-\hline\hline
-            &         OLS         &                     \\
-            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         \\
-\hline
-$ T\_{ij}\geq1$&     -0.0190         &     -0.0144         \\
-            &    (0.0352)         &    (0.0451)         \\
-[1em]
-$ T\_{ij}\geq2$&      0.0473\sym{*}  &      0.0097         \\
-            &    (0.0282)         &    (0.0315)         \\
-[1em]
-$ T\_{ij}\geq5$&      0.0360\sym{*}  &      0.0280         \\
-            &    (0.0194)         &    (0.0270)         \\
-[1em]
-$ T\_{ij}\geq10$&      0.1136\sym{***}&      0.0124         \\
-            &    (0.0194)         &    (0.0275)         \\
-[1em]
-$ T\_{ij}\geq15$&     -0.0065         &     -0.0098         \\
-            &    (0.0200)         &    (0.0316)         \\
-[1em]
-$ T\_{ij}\geq20$&      0.0159         &      0.0186         \\
-            &    (0.0201)         &    (0.0291)         \\
-[1em]
-$ T\_{ij}\geq25$&      0.0998\sym{***}&      0.0461         \\
-            &    (0.0237)         &    (0.0352)         \\
-[1em]
-$ T\_{ij}\geq30$&     -0.0262         &      0.0375         \\
-            &    (0.0218)         &    (0.0375)         \\
-[1em]
-Total experience&      0.0202\sym{***}&      0.0398\sym{***}\\
-            &    (0.0025)         &    (0.0074)         \\
-[1em]
-Experience$^{2}$&     -0.0003\sym{***}&     -0.0008\sym{***}\\
-            &    (0.0000)         &    (0.0001)         \\
-\hline
-\(N\)       &        8394         &        8394         \\
+\hline\hline\\
+            &\multicolumn{1}{c}{OLS"}&\multicolumn{1}{c}{IV}\\\cmidrule(lr){2-2}\cmidrule(lr){3-3}
+            &         (1)         &         (2)         \\
+\hline\\
+$ T\_{ij}\geq1$&      -.0190         &      -.0144         \\
+            &     (.0352)         &     (.0451)         \\
+$ T\_{ij}\geq2$&       .0473\sym{*}  &       .0097         \\
+            &     (.0282)         &     (.0315)         \\
+$ T\_{ij}\geq5$&       .0360\sym{*}  &       .0280         \\
+            &     (.0194)         &     (.0270)         \\
+$ T\_{ij}\geq10$&       .1136\sym{***}&       .0124         \\
+            &     (.0194)         &     (.0275)         \\
+$ T\_{ij}\geq15$&      -.0065         &      -.0098         \\
+            &     (.0200)         &     (.0316)         \\
+$ T\_{ij}\geq20$&       .0159         &       .0186         \\
+            &     (.0201)         &     (.0291)         \\
+$ T\_{ij}\geq25$&       .0998\sym{***}&       .0461         \\
+            &     (.0237)         &     (.0352)         \\
+$ T\_{ij}\geq30$&      -.0262         &       .0375         \\
+            &     (.0218)         &     (.0375)         \\
+Total experience&       .0202\sym{***}&       .0398\sym{***}\\
+            &     (.0025)         &     (.0074)         \\
+Experience$^{2}$&      -.0003\sym{***}&      -.0008\sym{***}\\
+            &     (.0000)         &     (.0001)         \\
+\hline\\
+Observations&        8394         &        8394         \\
 \hline\hline
 \end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}

@@ -1,39 +1,37 @@
 \begin{table}[htbp]\centering
-\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
-\caption{Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled.}
+\begin{threeparttable}
+\caption{Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled. \label{}}
 \begin{tabular}{l*{6}{c}}
-\hline\hline
-            &         OLS         &                     &                     &                     &                     &                     \\
-            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         &\multicolumn{1}{c}{(5)}         &\multicolumn{1}{c}{(6)}         \\
-\hline
-Employer tenure&      0.0140\sym{***}&      0.0106\sym{**} &      0.0155\sym{*}  &      0.0032         &      0.0001         &      0.0054         \\
-            &    (0.0020)         &    (0.0045)         &    (0.0088)         &    (0.0058)         &    (0.0095)         &    (0.0148)         \\
-[1em]
-Emp.ten.$^{2}\times 100$&     -0.0132\sym{***}&      0.0107         &     -0.0459         &     -0.0006         &      0.0244         &     -0.0433         \\
-            &    (0.0051)         &    (0.0269)         &    (0.0864)         &    (0.0150)         &    (0.0606)         &    (0.1528)         \\
-[1em]
-Emp.ten.$^{3}\times 100$&                     &     -0.0004         &      0.0018         &                     &     -0.0005         &      0.0024         \\
-            &                     &    (0.0004)         &    (0.0031)         &                     &    (0.0010)         &    (0.0057)         \\
-[1em]
-Emp.ten.$^{4}\times 1000$&                     &                     &     -0.0000         &                     &                     &     -0.0000         \\
-            &                     &                     &    (0.0000)         &                     &                     &    (0.0000)         \\
-[1em]
-Old job     &      0.0661\sym{**} &      0.0799\sym{***}&      0.0688\sym{**} &      0.0260         &      0.0366         &      0.0274         \\
-            &    (0.0283)         &    (0.0310)         &    (0.0348)         &    (0.0460)         &    (0.0475)         &    (0.0510)         \\
-[1em]
-Total experience&      0.0203\sym{***}&      0.0058         &      0.0238         &      0.0398\sym{***}&      0.0113         &      0.0614\sym{**} \\
-            &    (0.0027)         &    (0.0074)         &    (0.0150)         &    (0.0080)         &    (0.0166)         &    (0.0289)         \\
-[1em]
-Experience$^{2}$&     -0.0004\sym{***}&      0.0003         &     -0.0011         &     -0.0007\sym{***}&      0.0005         &     -0.0034         \\
-            &    (0.0001)         &    (0.0003)         &    (0.0011)         &    (0.0001)         &    (0.0007)         &    (0.0021)         \\
-[1em]
-Exp.$^{3}\times 100$&                     &     -0.0008\sym{**} &      0.0031         &                     &     -0.0016\sym{*}  &      0.0099         \\
-            &                     &    (0.0004)         &    (0.0031)         &                     &    (0.0009)         &    (0.0061)         \\
-[1em]
-Exp.$^{4}\times 10000$&                     &                     &     -0.0000         &                     &                     &     -0.0000\sym{*}  \\
-            &                     &                     &    (0.0000)         &                     &                     &    (0.0000)         \\
-\hline
-\(N\)       &        7648         &        7648         &        7648         &        7648         &        7648         &        7648         \\
+\hline\hline\\
+            &\multicolumn{3}{c}{OLS"}                                         &\multicolumn{3}{c}{IV}                                           \\\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+            &         (1)         &         (2)         &         (3)         &         (4)         &         (5)         &         (6)         \\
+\hline\\
+Employer tenure&       .0140\sym{***}&       .0106\sym{**} &       .0155\sym{*}  &       .0032         &       .0001         &       .0054         \\
+            &     (.0020)         &     (.0045)         &     (.0088)         &     (.0058)         &     (.0095)         &     (.0148)         \\
+Emp.ten.$^{2}\times 100$&      -.0132\sym{***}&       .0107         &      -.0459         &      -.0006         &       .0244         &      -.0433         \\
+            &     (.0051)         &     (.0269)         &     (.0864)         &     (.0150)         &     (.0606)         &     (.1528)         \\
+Emp.ten.$^{3}\times 100$&                     &      -.0004         &       .0018         &                     &      -.0005         &       .0024         \\
+            &                     &     (.0004)         &     (.0031)         &                     &     (.0010)         &     (.0057)         \\
+Emp.ten.$^{4}\times 1000$&                     &                     &      -.0000         &                     &                     &      -.0000         \\
+            &                     &                     &     (.0000)         &                     &                     &     (.0000)         \\
+Old job     &       .0661\sym{**} &       .0799\sym{***}&       .0688\sym{**} &       .0260         &       .0366         &       .0274         \\
+            &     (.0283)         &     (.0310)         &     (.0348)         &     (.0460)         &     (.0475)         &     (.0510)         \\
+Total experience&       .0203\sym{***}&       .0058         &       .0238         &       .0398\sym{***}&       .0113         &       .0614\sym{**} \\
+            &     (.0027)         &     (.0074)         &     (.0150)         &     (.0080)         &     (.0166)         &     (.0289)         \\
+Experience$^{2}$&      -.0004\sym{***}&       .0003         &      -.0011         &      -.0007\sym{***}&       .0005         &      -.0034         \\
+            &     (.0001)         &     (.0003)         &     (.0011)         &     (.0001)         &     (.0007)         &     (.0021)         \\
+Exp.$^{3}\times 100$&                     &      -.0008\sym{**} &       .0031         &                     &      -.0016\sym{*}  &       .0099         \\
+            &                     &     (.0004)         &     (.0031)         &                     &     (.0009)         &     (.0061)         \\
+Exp.$^{4}\times 10000$&                     &                     &      -.0000         &                     &                     &      -.0000\sym{*}  \\
+            &                     &                     &     (.0000)         &                     &                     &     (.0000)         \\
+\hline\\
+Observations&        7648         &        7648         &        7648         &        7648         &        7648         &        7648         \\
 \hline\hline
 \end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}

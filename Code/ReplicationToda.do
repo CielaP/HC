@@ -23,16 +23,12 @@ qui {
 	adopath + "$Prg\coefplot"
 	adopath + "$Prg\estout"
 
-	local comSetTex prefix(\multicolumn{@span}{c}{) suffix(}) span erepeat(\cmidrule(lr){@span})) ///
-					se(fmt(%9.3f)) ///
-					star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-					stats(N, labels("Observations")) ///
-					nodep nonote nomtitles ///
-					replace
+	* Setting for plot
 	local comSetPlot at ciopts(recast(rline) lpattern(dash)) recast(connected) ///
 								xtitle("Employer Tenure") ytitle("Returns to Tenure on Earnings (%)") ///
 								yline(0) rescale(100)
-
+	
+	* Variable lists used for estimation
 	local commonVar realwage i.occ i.ind i.dunion schooling i.dsize
 	local todaemp1 c.emptenure
 	local todaexp2 c.workexp
@@ -46,7 +42,8 @@ qui {
 	local todaiv2 emptenureiv emptenureiv2
 	local todaiv3 emptenureiv emptenureiv2 emptenureiv3
 	local todaiv4 emptenureiv emptenureiv2 emptenureiv3 emptenureiv4
-
+	
+	* Equations used for calculation of returns
 	local culcemp1 emptenure*_b[emptenure]
 	local culcemp2 emptenure*_b[emptenure] ///
 							+(emptenure^2)*_b[c.emptenure#c.emptenure]
@@ -63,7 +60,7 @@ qui {
 cap log close /* close any log files that accidentally have been left open. */
 log using "$Path\Log\ReplicationToda.log", replace
 
-/**/
+/*
 ** make the same sample as Toda
 qui {
 	use "$Inputfd\jhps_hc_allsample.dta", clear
@@ -163,33 +160,41 @@ forvalues poly_x=1/4{ /* loop within ten_inomial */
 
 ** output tex file
 *** coefficient
-global EstList olstoda1 olstoda2 olstoda3 olstoda4 ///
-			isvtoda1 isvtoda2 isvtoda3 isvtoda4
-global FileTex as_toda
-global KeepVar emptenure c.emptenure#c.emptenure ///
-						c.emptenure#c.emptenure#c.emptenure ///
-						c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-						workexp c.workexp#c.workexp ///
-						c.workexp#c.workexp#c.workexp ///
-						c.workexp#c.workexp#c.workexp#c.workexp
-global LabelVar emptenure "Employer tenure" ///
-						c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
-						c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
-						c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
-						workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
-						c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
-						c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 10000$"
-global TransVar c.emptenure#c.emptenure 100*@ 100 ///
-						c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
-						c.emptenure#c.emptenurec.emptenure#c.emptenure 10000*@ 10000 ///
-						c.workexp#c.workexp#c.workexp 100*@ 100 ///
-						c.workexp#c.workexp#c.workexp 10000*@ 10000
-global TitleTab "Replication of Toda (2007), using the AS's IV method."
+global EstList ///
+		olstoda1 olstoda2 olstoda3 olstoda4 ///
+		isvtoda1 isvtoda2 isvtoda3 isvtoda4
+global FileTex ///
+		as_toda
+global KeepVar ///
+		emptenure c.emptenure#c.emptenure ///
+		c.emptenure#c.emptenure#c.emptenure ///
+		c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
+		workexp c.workexp#c.workexp ///
+		c.workexp#c.workexp#c.workexp ///
+		c.workexp#c.workexp#c.workexp#c.workexp
+global LabelVar ///
+		emptenure "Employer tenure" ///
+		c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
+		c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
+		c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
+		workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
+		c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
+		c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 10000$"
+global TransVar ///
+		c.emptenure#c.emptenure 100*@ 100 ///
+		c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
+		c.emptenure#c.emptenurec.emptenure#c.emptenure 10000*@ 10000 ///
+		c.workexp#c.workexp#c.workexp 100*@ 100 ///
+		c.workexp#c.workexp#c.workexp 10000*@ 10000
+global TitleTab ///
+		"Replication of Toda (2007), using the AS's IV method."
 global LabelTab
-global Group "OLS" "IV"
-global GroupPattern 1 0 0 0 1 0 0 0
+global Group ///
+		"OLS" "IV"
+global GroupPattern ///
+		1 0 0 0 1 0 0 0
 
-do "$Code\TexFormat.do"
+do "$Code\TexTab_est.do"
 
 **** return
 global EstList olstodar1 olstodar2 olstodar3 olstodar4 ///
@@ -203,7 +208,7 @@ global LabelVar 3._at "2 Years" ///
 global TransVar 
 global TitleTab "Estimated Returns to Employer Tenure, based on replication of Toda (2007)."
 
-do "$Code\TexFormat.do"
+do "$Code\TexTab_est.do"
 
 ** Topel
 qui {
@@ -248,7 +253,7 @@ global LabelTab
 global Group 
 global GroupPattern 
 
-do "$Code\TexFormat.do"
+do "$Code\TexTab_est.do"
 }
 
 log close

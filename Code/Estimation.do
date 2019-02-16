@@ -89,32 +89,31 @@ tabulate dsize, generate(sized)
 tabulate schooling, generate(edud)
 estpost sum age edud* dmarital dunion sized* dregular ///
 					realwage workexp emptenure
-esttab using "$Output\sum.tex", ///
-	cell( ///
-			( ///
-			mean(label(Mean) fmt(%5.4f)) ///
-			sd(label(St.d) fmt(%5.4f)) ///
- 			min(label(Min)) ///
-			max(label(Max)) ///
-			) ///
-			) ///
-	coeflabel( ///
-					age "Age" ///
-					edud1 "\quad Junior High School" ///
-					edud2 "\quad High School" ///
-					edud3 "\quad 2-year College or Vocational" ///
-					edud4 "\quad College or More" ///
-					dmarital "Married" ///
-					dunion "Union Member" ///
-					sized1 "\quad Size $<100$" ///
-					sized2 "\quad $100\leq$ Size $<500$" ///
-					sized3 "\quad Size $\geq 500$" ///
-					dregular "Regular Employee" ///
-					realwage "Log of Real Hourly Wage" ///
-					workexp "Total Experience" ///
-					emptenure "Employer Tenure" ///
-					) ///
-	replace
+global FileTex ///
+		"sum"
+global LabelVar ///
+		age "Age" ///
+		edud1 "\quad Junior High School" ///
+		edud2 "\quad High School" ///
+		edud3 "\quad 2-year College or Vocational" ///
+		edud4 "\quad College or More" ///
+		dmarital "Married" ///
+		dunion "Union Member" ///
+		sized1 "\quad Size $<100$" ///
+		sized2 "\quad $100\leq$ Size $<500$" ///
+		sized3 "\quad Size $\geq 500$" ///
+		dregular "Regular Employee" ///
+		realwage "Log of Real Hourly Wage" ///
+		workexp "Total Experience" ///
+		emptenure "Employer Tenure" ///
+global TitleTab ///
+			"Summary Statistics"
+global LabelTab ///
+		summary
+global Space ///
+		.3em
+do "$Code\TexTab_sum.do"
+
 
 * 1. OLS->AS / 1-4 dimenational polynomial
 {
@@ -196,109 +195,121 @@ foreach ten_i of local isIncOcc{ /* loop within emp and empocc */
 }
 
 ** output tex all results
-{
 qui{
-local labelVar emptenure "Employer tenure" ///
-						c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
-						c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
-						c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
-						oj "Old job" ///
-						workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
-						c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
-						c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 10000$"
-local transVar c.emptenure#c.emptenure 100*@ 100 ///
-						c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
-						c.emptenure#c.emptenurec.emptenure#c.emptenure 10000*@ 10000 ///
-						c.workexp#c.workexp#c.workexp 100*@ 100 ///
-						c.workexp#c.workexp#c.workexp 10000*@ 10000 ///
-						c.occtenure#c.occtenure 100*@ 100 ///
-						c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
-						c.occtenure#c.occtenure#c.occtenure#c.occtenure 10000*@ 10000
-local comSetTex prefix(\multicolumn{@span}{c}{) suffix(}) ///
-					se(fmt(%9.3f)) ///
-					star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-					stats(N, labels("Observations")) ///
-					nodep nonote nomtitles ///
-					replace
+global TransVar ///
+		c.emptenure#c.emptenure 100*@ 100 ///
+		c.emptenure#c.emptenure#c.emptenure 100*@ 100 ///
+		c.emptenure#c.emptenurec.emptenure#c.emptenure 10000*@ 10000 ///
+		c.workexp#c.workexp#c.workexp 100*@ 100 ///
+		c.workexp#c.workexp#c.workexp 10000*@ 10000 ///
+		c.occtenure#c.occtenure 100*@ 100 ///
+		c.occtenure#c.occtenure#c.occtenure 100*@ 100 ///
+		c.occtenure#c.occtenure#c.occtenure#c.occtenure 10000*@ 10000
+local emp ///
+		emptenure c.emptenure#c.emptenure ///
+		c.emptenure#c.emptenure#c.emptenure ///
+		c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
+		oj
+local exp ///
+		workexp c.workexp#c.workexp ///
+		c.workexp#c.workexp#c.workexp ///
+		c.workexp#c.workexp#c.workexp#c.workexp
+local occ ///
+		occtenure c.occtenure#c.occtenure ///
+		c.occtenure#c.occtenure#c.occtenure ///
+		c.occtenure#c.occtenure#c.occtenure#c.occtenure
+local varEmp ///
+		`emp' ///
+		`exp'
+local varOcc ///
+		`emp' ///
+		`occ' ///
+		`exp'
+local labelEmp ///
+		emptenure "Employer tenure" ///
+		c.emptenure#c.emptenure "Emp.ten.$^{2}\times 100$" ///
+		c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{3}\times 100$" ///
+		c.emptenure#c.emptenure#c.emptenure#c.emptenure "Emp.ten.$^{4}\times 1000$" ///
+		oj "Old job" ///
+		workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$" ///
+		c.workexp#c.workexp#c.workexp "Exp.$^{3}\times 100$" ///
+		c.workexp#c.workexp#c.workexp#c.workexp "Exp.$^{4}\times 10000$"
+local labelOcc ///
+		`labelEmp' ///
+		occtenure "Occupation tenure" ///
+		c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
+		c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
+		c.occtenure#c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{4}\times 10000$"
+local varRet ///
+		3._at 6._at 11._at 16._at 21._at 26._at
+local labelRet ///
+		3._at "2 Years" ///
+		6._at "5 Years" 11._at "10 Years" ///
+		16._at "15 Years" ///
+		21._at "20 Years" 26._at "25 Years"
 
 *** coefficients / emp+occ
-local keepVar emptenure c.emptenure#c.emptenure ///
-						c.emptenure#c.emptenure#c.emptenure ///
-						c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-						oj ///
-						occtenure c.occtenure#c.occtenure ///
-						c.occtenure#c.occtenure#c.occtenure ///
-						c.occtenure#c.occtenure#c.occtenure#c.occtenure ///
-						workexp c.workexp#c.workexp ///
-						c.workexp#c.workexp#c.workexp ///
-						c.workexp#c.workexp#c.workexp#c.workexp
+global EstList ///
+		olsempocc2 olsempocc3 olsempocc4 ///
+		isvempocc2 isvempocc3 isvempocc4
+global FileTex ///
+		as_empocc
+global KeepVar ///
+		`varOcc'
+global LabelVar ///
+		`labelOcc'
+global TitleTab ///
+		"Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled."
+global LabelTab
+global Group ///
+		"OLS" "IV"
+global GroupPattern ///
+		1 0 0 1 0 0
 
-esttab olsempocc2 olsempocc3 olsempocc4 isvempocc2 isvempocc3 isvempocc4 ///
-using "$Output\as_empocc.tex", ///
-keep(`keepVar') ///
-order(`keepVar') ///
-coeflabel(`labelVar' ///
-				occtenure "Occupation tenure" ///
-				c.occtenure#c.occtenure "Occ.ten.$^{2}\times 100$" ///
-				c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{3}\times 100$" ///
-				c.occtenure#c.occtenure#c.occtenure#c.occtenure "Occ.ten.$^{4}\times 10000$" ///
-				) ///
-transform(`transVar') ///
-title(Earnings Function Estimates, using Sample up to 64-year-old, ///
-including Non-regular Workers and Specialists, ///
-Variables of Occupation Tenure are Controlled.) ///
-mgroups("OLS" "IV" ///
-pattern(1 0 0 1 0 0) ///
-`comSetTex'
+do "$Code\TexTab_est.do"
 
 *** coefficients / emptenure
-local keepVar emptenure c.emptenure#c.emptenure ///
-						c.emptenure#c.emptenure#c.emptenure ///
-						c.emptenure#c.emptenure#c.emptenure#c.emptenure ///
-						oj workexp c.workexp#c.workexp ///
-						c.workexp#c.workexp#c.workexp ///
-						c.workexp#c.workexp#c.workexp#c.workexp
+global EstList ///
+		olsemp2 olsemp3 olsemp4 ///
+		isvemp2 isvemp3 isvemp4
+global FileTex ///
+		as_emp
+global KeepVar ///
+		`varEmp'
+global LabelVar ///
+		`labelEmp'
+global TitleTab ///
+		"Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled."
+global LabelTab
 
-esttab olsemp2 olsemp3 olsemp4 isvemp2 isvemp3 isvemp4 ///
-using "$Output\as_emp.tex", ///
-keep(`keepVar') ///
-order(`keepVar') ///
-coeflabel(`labelVar') ///
-transform(`transVar') ///
-title(Earnings Function Estimates, using Sample up to 64-year-old, ///
-including Non-regular Workers and Specialists, ///
-Variables of Occupation Tenure are not Controlled.) ///
-mgroups("OLS" "IV" ///
-pattern(1 0 0 1 0 0) ///
-`comSetTex'
+do "$Code\TexTab_est.do"
 
 *** main table
-esttab olsemp2 olsempocc2 isvemp2 isvempocc2 ///
-using "$Output\as_main.tex", ///
-keep(`keepVar') ///
-order(`keepVar') ///
-coeflabel(`labelVar') ///
-transform(`transVar') ///
-title(Earnings Function Estimates, using Sample up to 64-year-old, ///
-including Non-regular Workers and Specialists.) ///
-mgroups("OLS" "IV" ///
-pattern(1 0 1 0) ///
-`comSetTex'
+global EstList ///
+		olsemp2 olsempocc2 ///
+		isvemp2 isvempocc2
+global FileTex ///
+		as_main
+global TitleTab ///
+		"Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists."
+global LabelTab
+global GroupPattern ///
+		1 0 1 0
+
+do "$Code\TexTab_est.do"
 
 *** return
-esttab olsempr2 olsempoccr2 isvempr2 isvempoccr2 ///
-using "$Output\as_return.tex", ///
-keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
-coeflabel(3._at "2 Years" ///
-6._at "5 Years" 11._at "10 Years" ///
-16._at "15 Years" ///
-21._at "20 Years" 26._at "25 Years") ///
-title(Estimated Returns to Employer Tenure, using Sample up to 64-year-old, ///
-including Non-regular Workers and Specialists.) ///
-mgroups("OLS" "IV" ///
-pattern(1 0 1 0) ///
-`comSetTex'
-}
+global EstList ///
+		olsempr2 olsempoccr2 ///
+		isvempr2 isvempoccr2
+global FileTex ///
+		as_return
+global KeepVar ///
+		`varRet'
+global LabelVar ///
+		`labelRet'
+global TitleTab ///
+		"Estimated Returns to Employer Tenure, using Sample up to 64-year-old, including Non-regular Workers and Specialists."
 }
 }
 
@@ -383,36 +394,44 @@ graph export "$Output\plot_as_emp_rob.pdf", replace
 
 ** output tex all results
 qui{
-local keepVar emptenure c.emptenure#c.emptenure ///
-						oj workexp c.workexp#c.workexp
 ** coefficients
-esttab olsrobYn isvrobYn olsrobLa isvrobLa ///
-olsrobSm isvrobSm olsrobPr isvrobPr olsrobRg isvrobRg ///
-using "$Output\as_emp_rob.tex", ///
-keep(`keepVar') ///
-order(`keepVar') ///
-coeflabel(`labelVar') ///
-transform(`transVar') ///
-title(Earnings Function Estimates, using Various Subsamples.) ///
-mgroups("Under 59-year-old" "Large firms ($\geq500$)" ///
-"Small Firms ($<500$)" "Non-Professional" "Regular Employee" ///
-pattern(1 0 1 0 1 0 1 0 1 0) ///
-`comSetTex'
+global EstList ///
+		olsrobYn isvrobYn olsrobLa isvrobLa ///
+		olsrobSm isvrobSm olsrobPr isvrobPr olsrobRg isvrobRg
+global FileTex ///
+		as_emp_rob
+global KeepVar ///
+		emptenure c.emptenure#c.emptenure ///
+		oj ///
+		workexp c.workexp#c.workexp
+global LabelVar ///
+		`labelEmp'
+global TitleTab ///
+		"Earnings Function Estimates, using Various Subsamples."
+global LabelTab
+global Group ///
+		"Under 59-year-old" "Large firms ($\geq500$)" ///
+		"Small Firms ($<500$)" "Non-Professional" "Regular Employee"
+global GroupPattern ///
+		1 0 1 0 1 0 1 0 1 0
+
+do "$Code\TexTab_est.do"
 
 **** return
-esttab olsrobnYn isvrobnYn olsrobnLa isvrobnLa ///
-olsrobnSm isvrobnSm olsrobnPr isvrobnPr olsrobnRg isvrobnRg ///
-using "$Output\as_return_rob.tex", ///
-keep(3._at 6._at 11._at 16._at 21._at 26._at) ///
-coeflabel(3._at "2 Years" ///
-6._at "5 Years" 11._at "10 Years" ///
-16._at "15 Years" ///
-21._at "20 Years" 26._at "25 Years") ///
-title(Estimated Returns to Employer Tenure, using Various Subsamples.) ///
-mgroups("Under 59-year-old" "Large firms ($\geq500$)" ///
-"Small Firms ($<500$)" "Non-Professional" "Regular Employee" ///
-pattern(1 0 1 0 1 0 1 0 1 0) ///
-`comSetTex'
+global EstList ///
+		olsrobnYn isvrobnYn olsrobnLa isvrobnLa ///
+		olsrobnSm isvrobnSm olsrobnPr isvrobnPr olsrobnRg isvrobnRg
+global FileTex ///
+		as_return_rob
+global KeepVar ///
+		`varRet'
+global LabelVar ///
+		`labelRet'
+global TitleTab ///
+		"Estimated Returns to Employer Tenure, using Various Subsamples."
+global LabelTab
+
+do "$Code\TexTab_est.do"
 }
 }
 
@@ -487,22 +506,29 @@ est sto isvempD
  
 *** output tex all results
 qui{
-local keepVar emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
-						workexp c.workexp#c.workexp
 *** coefficients
-esttab olsempD isvempD ///
-using "$Output\as_emp_dm.tex", ///
-keep(`keepVar') ///
-order(`keepVar') ///
-coeflabel(emp1 "$ T_{ij}\geq1$" emp2 "$ T_{ij}\geq2$" ///
-emp5 "$ T_{ij}\geq5$" emp10 "$ T_{ij}\geq10$" ///
-emp15 "$ T_{ij}\geq15$" emp20 "$ T_{ij}\geq20$" ///
-emp25 "$ T_{ij}\geq25$" emp30 "$ T_{ij}\geq30$" ///
-workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$") ///
-title(Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables) ///
-mgroups("OLS" "IV" ///
-pattern(1 1) ///
-`comSetTex'
+global EstList ///
+		olsempD isvempD
+global FileTex ///
+		as_emp_dm
+global KeepVar ///
+		emp1 emp2 emp5 emp10 emp15 emp20 emp25 emp30 ///
+		workexp c.workexp#c.workexp
+global LabelVar ///
+		emp1 "$ T_{ij}\geq1$" emp2 "$ T_{ij}\geq2$" ///
+		emp5 "$ T_{ij}\geq5$" emp10 "$ T_{ij}\geq10$" ///
+		emp15 "$ T_{ij}\geq15$" emp20 "$ T_{ij}\geq20$" ///
+		emp25 "$ T_{ij}\geq25$" emp30 "$ T_{ij}\geq30$" ///
+		workexp "Total experience" c.workexp#c.workexp "Experience$^{2}$"
+global TitleTab ///
+		"Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables."
+global LabelTab
+global Group ///
+		"OLS" "IV"
+global GroupPattern ///
+		1 1
+
+do "$Code\TexTab_est.do"
 
 *** simple dummy
 est res Dm
@@ -588,7 +614,6 @@ foreach eq_i of local dmList{
 	global FstReg `fstReg`eq_i''
 	global SndReg `sndReg`eq_i''
 	
-	dis "Year Dummy Type: `eq_i'"
 	do "$Code\ReadData.do"
 	
 	if "`eq_i'"=="Det"{
@@ -597,42 +622,41 @@ foreach eq_i of local dmList{
 		replace realwage=hatwage
 	}
 	
+	dis "Year Dummy Type: `eq_i'"
 	do "$Code\EstTopel.do"
 	
 	*** output tex all results
 	quietly {
 	**** coefficients 
-	esttab fst1 fst2 fst3 fst4 ///
-	using "$Output\topel_`eq_i'.tex", ///
-	se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-	keep( ///
+	global EstList ///
+			fst1 fst2 fst3 fst4
+	global FileTex ///
+			topel_`eq_i'
+	global KeepVar ///
 			_cons emptendif2 emptendif3 emptendif4 ///
-			empexpdif2 empexpdif3 empexpdif4 ///
-			) ///
-	order( ///
-			_cons emptendif2 emptendif3 emptendif4 ///
-			empexpdif2 empexpdif3 empexpdif4 ///
-			) ///
-	coeflabel( ///
+			empexpdif2 empexpdif3 empexpdif4
+	global LabelVar ///
 			_cons "Constant" ///
 			emptendif2 "Emp.ten.$^{2}\times 100$" ///
 			emptendif3 "Emp.ten.$^{3}\times 1000$" ///
 			emptendif4 "Emp.ten.$^{4}\times 10000$" ///
 			empexpdif2 "Experience$^{2}\times 100$" ///
 			empexpdif3 "Experience$^{3}\times 1000$" ///
-			empexpdif4 "Experience$^{4}\times 10000$" ///
-			) ///
-	transform( ///
+			empexpdif4 "Experience$^{4}\times 10000$"
+	global TransVar ///
 			emptendif2 100*@ 100 ///
 			emptendif3 1000*@ 1000 ///
 			emptendif4 10000*@ 10000 ///
 			empexpdif2 100*@ 100 ///
 			empexpdif3 1000*@ 1000 ///
-			empexpdif4 10000*@ 10000 ///
-			) ///
-	nodep nonote nomtitles ///
-	title("Estimation Results, using the Method of 2SFD Estimation.") ///
-	replace
+			empexpdif4 10000*@ 10000
+	global TitleTab ///
+			"Estimation Results, using the Method of 2SFD Estimation."
+	global LabelTab
+	global Group
+	global GroupPattern
+	
+	do "$Code\TexTab_est.do"
 	}
 }
  
@@ -658,46 +682,13 @@ foreach eq_i of local charList{
 	global SndReg ``eq_i'' ///
 							i. year initialemp
 	
-	dis "Controls: `eq_i'"
 	do "$Code\ReadData.do"
 	
+	dis "Controls: `eq_i'"
 	do "$Code\EstTopel.do"
 	
 	*** output tex all results
-	quietly {
-	**** coefficients 
-	esttab fst1 fst2 fst3 fst4 ///
-	using "$Output\topel_`eq_i'.tex", ///
-	se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
-	keep( ///
-			_cons emptendif2 emptendif3 emptendif4 ///
-			empexpdif2 empexpdif3 empexpdif4 ///
-			) ///
-	order( ///
-			_cons emptendif2 emptendif3 emptendif4 ///
-			empexpdif2 empexpdif3 empexpdif4 ///
-			) ///
-	coeflabel( ///
-			_cons "Constant" ///
-			emptendif2 "Emp.ten.$^{2}\times 100$" ///
-			emptendif3 "Emp.ten.$^{3}\times 1000$" ///
-			emptendif4 "Emp.ten.$^{4}\times 10000$" ///
-			empexpdif2 "Experience$^{2}\times 100$" ///
-			empexpdif3 "Experience$^{3}\times 1000$" ///
-			empexpdif4 "Experience$^{4}\times 10000$" ///
-			) ///
-	transform( ///
-			emptendif2 100*@ 100 ///
-			emptendif3 1000*@ 1000 ///
-			emptendif4 10000*@ 10000 ///
-			empexpdif2 100*@ 100 ///
-			empexpdif3 1000*@ 1000 ///
-			empexpdif4 10000*@ 10000 ///
-			) ///
-	nodep nonote nomtitles ///
-	title("Estimation Results, using the Method of 2SFD Estimation.") ///
-	replace
-	}
+	do "$Code\TexTab_est.do"
 }
  
 

@@ -3,7 +3,7 @@
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\EstTopel.log
   log type:  text
- opened on:  13 Feb 2019, 17:57:43
+ opened on:  16 Feb 2019, 20:18:47
 
 . ** changing time treand
 . qui{
@@ -30,39 +30,38 @@
 .         *** output tex all results
 .         quietly {
  14.         **** coefficients 
-.         esttab fst1 fst2 fst3 fst4 ///
->         using "$Output\topel_`eq_i'.tex", ///
->         se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
->         keep( ///
+.         global EstList ///
+>                         fst1 fst2 fst3 fst4
+ 15.         global FileTex ///
+>                         topel_`eq_i'
+ 16.         global KeepVar ///
 >                         _cons emptendif2 emptendif3 emptendif4 ///
->                         empexpdif2 empexpdif3 empexpdif4 ///
->                         ) ///
->         order( ///
->                         _cons emptendif2 emptendif3 emptendif4 ///
->                         empexpdif2 empexpdif3 empexpdif4 ///
->                         ) ///
->         coeflabel( ///
+>                         empexpdif2 empexpdif3 empexpdif4
+ 17.         global LabelVar ///
 >                         _cons "Constant" ///
 >                         emptendif2 "Emp.ten.$^{2}\times 100$" ///
 >                         emptendif3 "Emp.ten.$^{3}\times 1000$" ///
 >                         emptendif4 "Emp.ten.$^{4}\times 10000$" ///
 >                         empexpdif2 "Experience$^{2}\times 100$" ///
 >                         empexpdif3 "Experience$^{3}\times 1000$" ///
->                         empexpdif4 "Experience$^{4}\times 10000$" ///
->                         ) ///
->         transform( ///
+>                         empexpdif4 "Experience$^{4}\times 10000$"
+ 18.         global TransVar ///
 >                         emptendif2 100*@ 100 ///
 >                         emptendif3 1000*@ 1000 ///
 >                         emptendif4 10000*@ 10000 ///
 >                         empexpdif2 100*@ 100 ///
 >                         empexpdif3 1000*@ 1000 ///
->                         empexpdif4 10000*@ 10000 ///
->                         ) ///
->         nodep nonote nomtitles ///
->         title("Estimation Results, using the Method of 2SFD Estimation.") ///
->         replace
- 15.         }
- 16. }
+>                         empexpdif4 10000*@ 10000
+ 19.         global TitleTab ///
+>                         "Estimation Results, using the Method of 2SFD Estimatio
+> n."
+ 20.         global LabelTab
+ 21.         global Group
+ 22.         global GroupPattern
+ 23.         
+.         do "$Code\TexTab_est.do"
+ 24.         }
+ 25. }
 Year Dummy Type: Sum
 
 . /* Title: ReadData */
@@ -3799,38 +3798,7 @@ end of do-file
   6.         
 .         *** output tex all results
 .         quietly {
-  7.         **** coefficients 
-.         esttab fst1 fst2 fst3 fst4 ///
->         using "$Output\topel_`eq_i'.tex", ///
->         se star(* 0.1 ** 0.05 *** 0.01) b(4) ///
->         keep( ///
->                         _cons emptendif2 emptendif3 emptendif4 ///
->                         empexpdif2 empexpdif3 empexpdif4 ///
->                         ) ///
->         order( ///
->                         _cons emptendif2 emptendif3 emptendif4 ///
->                         empexpdif2 empexpdif3 empexpdif4 ///
->                         ) ///
->         coeflabel( ///
->                         _cons "Constant" ///
->                         emptendif2 "Emp.ten.$^{2}\times 100$" ///
->                         emptendif3 "Emp.ten.$^{3}\times 1000$" ///
->                         emptendif4 "Emp.ten.$^{4}\times 10000$" ///
->                         empexpdif2 "Experience$^{2}\times 100$" ///
->                         empexpdif3 "Experience$^{3}\times 1000$" ///
->                         empexpdif4 "Experience$^{4}\times 10000$" ///
->                         ) ///
->         transform( ///
->                         emptendif2 100*@ 100 ///
->                         emptendif3 1000*@ 1000 ///
->                         emptendif4 10000*@ 10000 ///
->                         empexpdif2 100*@ 100 ///
->                         empexpdif3 1000*@ 1000 ///
->                         empexpdif4 10000*@ 10000 ///
->                         ) ///
->         nodep nonote nomtitles ///
->         title("Estimation Results, using the Method of 2SFD Estimation.") ///
->         replace
+  7.         do "$Code\TexTab_est.do"
   8.         }
   9. }
 Controls: pred
@@ -5692,5 +5660,5 @@ end of do-file
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\EstTopel.log
   log type:  text
- closed on:  13 Feb 2019, 17:58:00
+ closed on:  16 Feb 2019, 20:19:06
 ---------------------------------------------------------------------------------

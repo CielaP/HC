@@ -3,7 +3,7 @@
        log:  C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\Submit
 > tion\Log\Estimation.log
   log type:  text
- opened on:  15 Feb 2019, 20:30:22
+ opened on:  16 Feb 2019, 21:06:18
 
 . 
 . * Summary statistics
@@ -91,8 +91,55 @@ end of do-file
      workexp |        50     196966 
    emptenure |        47     110896 
 
-. esttab using "$Output\sum.tex", ///
->         stats( N, label("Observations") fmt(%9.0f) ) ///
+. global FileTex ///
+>                 "sum"
+
+. global LabelVar ///
+>                 age "Age" ///
+>                 edud1 "\quad Junior High School" ///
+>                 edud2 "\quad High School" ///
+>                 edud3 "\quad 2-year College or Vocational" ///
+>                 edud4 "\quad College or More" ///
+>                 dmarital "Married" ///
+>                 dunion "Union Member" ///
+>                 sized1 "\quad Size $<100$" ///
+>                 sized2 "\quad $100\leq$ Size $<500$" ///
+>                 sized3 "\quad Size $\geq 500$" ///
+>                 dregular "Regular Employee" ///
+>                 realwage "Log of Real Hourly Wage" ///
+>                 workexp "Total Experience" ///
+>                 emptenure "Employer Tenure" ///
+> global TitleTab ///
+>                         "Summary Statistics"
+
+. global LabelTab ///
+>                 summary
+
+. global Space ///
+>                 .3em
+
+. do "$Code\TexTab_sum.do"
+
+. /* Title: TexTab_sum */
+. /// Date: Feb 16th, 2019
+> /// Written by Ayaka Nakamura
+> /// 
+> /// Standard format of summary statistics
+> 
+. * set variables
+. local fileTex $FileTex
+
+. local labelVar $LabelVar
+
+. local titleTab $TitleTab
+
+. local labelTab $LabelTab
+
+. local space $Space
+
+. 
+. * estab
+. esttab using "$Output/`fileTex'.tex", ///
 >         cells( ///
 >                         ( ///
 >                         mean( label(Mean) fmt(%5.4f) ) ///
@@ -101,45 +148,37 @@ end of do-file
 >                         max(label(Max) fmt(%9.0f) ) ///
 >                         ) ///
 >                         ) ///
->         coeflabel( ///
->                                         age "Age" ///
->                                         edud1 "\quad Junior High School" ///
->                                         edud2 "\quad High School" ///
->                                         edud3 "\quad 2-year College or Vocation
-> al" ///
->                                         edud4 "\quad College or More" ///
->                                         dmarital "Married" ///
->                                         dunion "Union Member" ///
->                                         sized1 "\quad Size $<100$" ///
->                                         sized2 "\quad $100\leq$ Size $<500$" //
-> /
->                                         sized3 "\quad Size $\geq 500$" ///
->                                         dregular "Regular Employee" ///
->                                         realwage "Log of Real Hourly Wage" ///
->                                         workexp "Total Experience" ///
->                                         emptenure "Employer Tenure" ///
+>         coeflabel( `labelVar' ) ///
+>         noobs nomtitles nonumber nolz ///
+>         gaps ///
+>         style(tex) ///
+>         substitute(_ \_ 1em `space') ///
+>         title(`titleTab' \label{`labelTab'}) ///
+>         prehead( ///
+>                                         "\begin{table}[htbp]\centering" ///
+>                                         "\begin{threeparttable}" ///
+>                                         "\caption{@title}" ///
+>                                         "\begin{tabular}{l*{4}{c}}" ///
+>                                         "\hline\hline\\" ///
 >                                         ) ///
->         refcat( ///
->                                 edu1 "Years of Education" ///
->                                 ) ///
->         replace
+>         posthead( "\hline\\" ) ///
+>         prefoot( "\hline\\" ) ///
+>         postfoot( "\end{tabular}" ///
+>                                         "\begin{tablenotes}" ///
+>                                         "\small" ///
+>                                         "\im Notes: ." ///
+>                                         "\end{tablenotes}" ///
+>                                         "\end{threeparttable}" ///
+>                                         "\end{table}" ///
+>                                         ) ///
+> replace
 (output written to C:\Users\AyakaNakamura\Dropbox\materials\Works\Master\program\
-> Submittion\Output\sum.tex)
+> Submittion\Output/sum.tex)
+
+. 
+. 
+end of do-file
 
 . 
 end of do-file
 
-. do "C:\Users\AYAKAN~1\AppData\Local\Temp\STDb64_000000.tmp"
-
-. /* Title: ReplicationToda */
-. /// Date: Dec 14th, 2018
-> /// Written by Ayaka Nakamura
-> /// 
-> /// Comparing the coefficients with Toda (2007).
-> 
-. *  0. Preparation
-. qui {
-
-. 
-. * Open Log file
-. cap log close /* close any log files that accidentally have been left open. */
