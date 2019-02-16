@@ -5,11 +5,11 @@
 /// Standard format of summary statistics
 
 * set variables
-local fileTex $FileTex
-local labelVar $LabelVar
-local titleTab $TitleTab
-local labelTab $LabelTab
-local space $Space
+local fileTex $FileTex /* file name of .tex */
+local labelVar $LabelVar /* display format of variable name */
+local titleTab $TitleTab /* title of the table */
+local labelTab $LabelTab /* label of the table */
+local space $Space /* vertical space between variables */
 
 * estab
 esttab using "$Output/`fileTex'.tex", ///

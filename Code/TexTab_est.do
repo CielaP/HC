@@ -5,15 +5,15 @@
 /// Standard format of estout
 
 * set variables
-local estList $EstList
-local fileTex $FileTex
-local keepVar $KeepVar
-local labelVar $LabelVar
-local transVar $TransVar
-local titleTab $TitleTab
-local labelTab $LabelTab
-local group $Group
-local groupPattern $GroupPattern
+local estList $EstList /* list of estimation */
+local fileTex $FileTex /* file name of .tex */
+local keepVar $KeepVar /* variables kept in the table */
+local labelVar $LabelVar /* display format of variable name */
+local transVar $TransVar /* transformation of the esimtors */
+local titleTab $TitleTab /* title of the table */
+local labelTab $LabelTab /* label of the table */
+local group $Group /* group of the estimations, ex) "OLS" "IV" */
+local groupPattern $GroupPattern /* pattern of the groups, ex) 1 0 1 0 */
 
 * estout
 estout `estList' ///
