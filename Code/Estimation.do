@@ -262,7 +262,7 @@ global TitleTab ///
 		"Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled."
 global LabelTab
 global Group ///
-		"OLS" "IV"
+		"OLS" "AS's IV"
 global GroupPattern ///
 		1 0 0 1 0 0
 
@@ -524,7 +524,7 @@ global TitleTab ///
 		"Estimated Returns to Employer Tenure, Employer Tenure is Treated as Dummy Variables."
 global LabelTab
 global Group ///
-		"OLS" "IV"
+		"OLS" "AS's IV"
 global GroupPattern ///
 		1 1
 

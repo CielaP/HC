@@ -35,14 +35,21 @@ varlabels(`labelVar') ///
 transform(`transVar') ///
 title(`titleTab' \label{`labelTab'}) ///
 prehead( ///
-				"\begin{table}[htbp]\centering" ///
+				"\begin{table}[!tp] \centering" ///
 				"\begin{threeparttable}" ///
 				"\caption{@title}" ///
 				"\begin{tabular}{l*{@M}{c}}" ///
 				"\hline\hline\\" ///
+				"[-.8em]" ///
 				) ///
-posthead( "\hline\\" ) ///
-prefoot( "\hline\\" ) ///
+posthead( 
+				"\hline\\" ///
+				"[-.8em]" ///
+				) ///
+prefoot( 
+				"\hline\\" ///
+				"[-.8em]" ///
+				) ///
 postfoot( "\hline\hline" ///
 				"\end{tabular}" ///
 				"\begin{tablenotes}" ///
