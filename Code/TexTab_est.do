@@ -22,8 +22,12 @@ cells( ///
 		b(star fmt(%9.4f) ) ///
 		se(par fmt(%9.4f) ) ///
 		) ///
-starlevels(\sym{*} 0.1 \sym{**} 0.05 \sym{***} 0.01) ///
-stats(N, labels("Observations") fmt(%9.0f)) ///
+starlevels( ///
+		\sym{*} 0.1 \sym{**} 0.05 \sym{***} 0.01 ///
+		) ///
+stats( ///
+		N, labels("Observations") fmt(%9.0f) ///
+		) ///
 collabels(none) ///
 mlabels( *, none) ///
 numbers nolz ///
@@ -42,11 +46,11 @@ prehead( ///
 				"\hline\hline\\" ///
 				"[-.8em]" ///
 				) ///
-posthead( 
+posthead( ///
 				"\hline\\" ///
 				"[-.8em]" ///
 				) ///
-prefoot( 
+prefoot( ///
 				"\hline\\" ///
 				"[-.8em]" ///
 				) ///

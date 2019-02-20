@@ -187,8 +187,9 @@ global TransVar ///
 		c.workexp#c.workexp#c.workexp 100*@ 100 ///
 		c.workexp#c.workexp#c.workexp 10000*@ 10000
 global TitleTab ///
-		"Replication of Toda (2007), using the AS's IV method."
-global LabelTab
+		"Replication of Toda (2008), using the 2SFD."
+global LabelTab ///
+		todatpcoef
 global Group ///
 		"OLS" "IV"
 global GroupPattern ///
@@ -197,16 +198,23 @@ global GroupPattern ///
 do "$Code\TexTab_est.do"
 
 **** return
-global EstList olstodar1 olstodar2 olstodar3 olstodar4 ///
-						isvtodar1 isvtodar2 isvtodar3 isvtodar4
-global FileTex as_return_toda
-global KeepVar 3._at 6._at 11._at 16._at 21._at 26._at
-global LabelVar 3._at "2 Years" ///
-							6._at "5 Years" 11._at "10 Years" ///
-							16._at "15 Years" ///
-							21._at "20 Years" 26._at "25 Years"
+global EstList ///
+		olstodar1 olstodar2 olstodar3 olstodar4 ///
+		isvtodar1 isvtodar2 isvtodar3 isvtodar4
+global FileTex ///
+		as_return_toda
+global KeepVar ///
+		3._at 6._at 11._at 16._at 21._at 26._at
+global LabelVar ///
+		3._at "2 Years" ///
+		6._at "5 Years" 11._at "10 Years" ///
+		16._at "15 Years" ///
+		21._at "20 Years" 26._at "25 Years"
 global TransVar 
-global TitleTab "Estimated Returns to Employer Tenure, based on replication of Toda (2007)."
+global TitleTab ///
+		"Estimated Returns based on Replication of Toda (2008), using the AS's IV method."
+global LabelTab ///
+		todaivret
 
 do "$Code\TexTab_est.do"
 
@@ -228,8 +236,10 @@ do "$Code\EstTopel.do"
 
 **** output tex all results
 qui {
-global EstList fst1 fst2 fst3 fst4
-global FileTex topel_toda
+global EstList ///
+		fst1 fst2 fst3 fst4
+global FileTex ///
+		topel_toda
 global KeepVar ///
 		_cons emptendif2 emptendif3 emptendif4 ///
 		empexpdif2 empexpdif3 empexpdif4
@@ -248,8 +258,10 @@ global TransVar ///
 		empexpdif2 100*@ 100 ///
 		empexpdif3 1000*@ 1000 ///
 		empexpdif4 10000*@ 10000
-global TitleTab "Replication of Toda (2007), using the method of 2SFD."
-global LabelTab
+global TitleTab ///
+		"Replication of Toda (2008), using the 2SFD."
+global LabelTab ///
+		todatpcoef
 global Group 
 global GroupPattern 
 

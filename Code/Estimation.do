@@ -107,9 +107,9 @@ global LabelVar ///
 		workexp "Total Experience" ///
 		emptenure "Employer Tenure" ///
 global TitleTab ///
-			"Summary Statistics"
+			"Descriptive Statistics using JHPS/KHPS, 2004--2014."
 global LabelTab ///
-		summary
+		stat
 global Space ///
 		.3em
 do "$Code\TexTab_sum.do"
@@ -259,8 +259,9 @@ global KeepVar ///
 global LabelVar ///
 		`labelOcc'
 global TitleTab ///
-		"Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are Controlled."
-global LabelTab
+		"Earnings Function Estimates, using the AS's IV Method, Occupation Tenure is Included."
+global LabelTab ///
+		coefempocc
 global Group ///
 		"OLS" "AS's IV"
 global GroupPattern ///
@@ -279,8 +280,9 @@ global KeepVar ///
 global LabelVar ///
 		`labelEmp'
 global TitleTab ///
-		"Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists, Variables of Occupation Tenure are not Controlled."
-global LabelTab
+		"Earnings Function Estimates, using the AS's IV Method, Occupation Tenure is Not Included."
+global LabelTab ///
+		coefemp
 
 do "$Code\TexTab_est.do"
 
@@ -291,8 +293,9 @@ global EstList ///
 global FileTex ///
 		as_main
 global TitleTab ///
-		"Earnings Function Estimates, using Sample up to 64-year-old, including Non-regular Workers and Specialists."
-global LabelTab
+		"Earnings Function Estimates, using the AS's IV Method."
+global LabelTab ///
+		"est"
 global GroupPattern ///
 		1 0 1 0
 
@@ -309,7 +312,15 @@ global KeepVar ///
 global LabelVar ///
 		`labelRet'
 global TitleTab ///
-		"Estimated Returns to Employer Tenure, using Sample up to 64-year-old, including Non-regular Workers and Specialists."
+		"Estimated Returns to Employer Tenure."
+global LabelTab ///
+		"return"
+global Group ///
+		"OLS" "AS's IV" "2SFD"
+global GroupPattern ///
+		1 0 1 0 1
+
+do "$Code\TexTab_est.do"
 }
 }
 
@@ -408,7 +419,8 @@ global LabelVar ///
 		`labelEmp'
 global TitleTab ///
 		"Earnings Function Estimates, using Various Subsamples."
-global LabelTab
+global LabelTab ///
+		coefrob
 global Group ///
 		"Under 59-year-old" "Large firms ($\geq500$)" ///
 		"Small Firms ($<500$)" "Non-Professional" "Regular Employee"
@@ -429,7 +441,8 @@ global LabelVar ///
 		`labelRet'
 global TitleTab ///
 		"Estimated Returns to Employer Tenure, using Various Subsamples."
-global LabelTab
+global LabelTab ///
+		retrob
 
 do "$Code\TexTab_est.do"
 }
@@ -555,47 +568,69 @@ log using "$Path\Log\EstTopel.log", replace
 ** changing time treand
 qui{
 ** common variables
-local first reg empwagedif
-local charc i.dmarital i.schooling ///
-				i.dregular i.dunion ///
-				i.occ i.ind i.dsize ///
-				initialemp
+local first ///
+		reg empwagedif
+local charc ///
+		i.dmarital i.schooling ///
+		i.dregular i.dunion ///
+		i.occ i.ind i.dsize ///
+		initialemp
 ** sum of year dummies
 /// 1. w_{ijt}-w_{ijt-1}=(\beta_{W}+\beta_{T})+\Delta\beta_{t}+\Delta\ve_{ijt}
 /// 2. w_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}-\sum_{0}^{t-1}\Delta\beta_{t}
 ///		=\beta+\beta_{W}W0_{ijt}+X_{ijt}+\ve_{ijt}
-local dmYearSum +y2004*_b[y2004]+y2005*_b[y2005]+y2006*_b[y2006] ///
-							+y2007*_b[y2007]+y2008*_b[y2008]+y2009*_b[y2009] ///
-							+y2010*_b[y2010]+y2011*_b[y2011]+y2012*_b[y2012] ///
-							+y2013*_b[y2013]+y2014*_b[y2014]
-local fstRegSum `first' ///
-							y2004-y2014
-local sndRegSum `charc'
+local dmYearSum1 ///
+		+y2004*_b[y2004]+y2005*_b[y2005]+y2006*_b[y2006] ///
+		+y2007*_b[y2007]+y2008*_b[y2008]+y2009*_b[y2009] ///
+		+y2010*_b[y2010]+y2011*_b[y2011]+y2012*_b[y2012] ///
+		+y2013*_b[y2013]+y2014*_b[y2014]
+local fstRegSum1 ///
+		`first' ///
+		y2004-y2014
+local sndRegSum1 ///
+		`charc'
 ** sum of year dummies+year dummy in 2nd
 /// 1. w_{ijt}-w_{ijt-1}=(\beta_{W}+\beta_{T})+\Delta\beta_{t}+\Delta\ve_{ijt}
 /// 2. w_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}-\sum_{0}^{t-1}\Delta\beta_{t}
 ///		=\beta+\beta_{W}W0_{ijt}+X_{ijt}+\beta_{t}+\ve_{ijt}
-local dmYearSum2 `dmYearSum'
-local fstRegSum2 `fstRegSum'
-local sndRegSum2 i.year ///
-								`charc'
+local dmYearSum2 ///
+		`dmYearSum1'
+local fstRegSum2 ///
+		`fstRegSum1'
+local sndRegSum2 ///
+		i.year ///
+		`charc'
+** year dummies in the 1st stage
+/// 1. w_{ijt}-w_{ijt-1}=(\beta_{W}+\beta_{T})+\beta_{t}+\Delta\ve_{ijt}
+/// 2. w_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}
+///		=\gamma+\beta_{W}W0_{ijt}+X_{ijt}+\ve_{ijt}
+local dmYearDm1 
+local fstRegDm1 ///
+		`first' ///
+		i.dyear
+local sndRegDm1 ///
+		`charc'
+** year dummies in the 2nd stage -- main result
+/// 1. w_{ijt}-w_{ijt-1}=(\beta_{W}+\beta_{T})+\Delta\ve_{ijt}
+/// 2. w_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}
+///		=\gamma+\beta_{W}W0_{ijt}+X_{ijt}+\gamma_{t}+\ve_{ijt}
+local dmYearDm2 ///
+		`dmYearDm1'
+local fstRegDm2 ///
+		`first'
+local sndRegDm2 ///
+		i.year ///
+		`charc'
 ** year dummies in the 1st and 2nd stage
 /// 1. w_{ijt}-w_{ijt-1}=(\beta_{W}+\beta_{T})+\beta_{t}+\Delta\ve_{ijt}
 /// 2. w_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}
-///		=\beta+\beta_{W}W0_{ijt}+X_{ijt}+\beta_{t}+\ve_{ijt}
-local dmYearDm 
-local fstRegDm `first' ///
-							i.dyear
-local sndRegDm i.year ///
-							`charc'
-** year dummies in the 2nd stage
-/// 1. w_{ijt}-w_{ijt-1}=(\beta_{W}+\beta_{T})+\Delta\ve_{ijt}
-/// 2. w_{ijt}-(\beta_{W}+\beta_{T})T_{ijt}
-///		=\beta+\beta_{W}W0_{ijt}+X_{ijt}+\beta_{t}+\ve_{ijt}
-local dmYearDm2 `dmYearDm'
-local fstRegDm2 `first'
-local sndRegDm2 i.year ///
-							`charc'
+///		=\gamma+\beta_{W}W0_{ijt}+X_{ijt}+\gamma_{t}+\ve_{ijt}
+local dmYearDm3 ///
+		`dmYearDm1'
+local fstRegDm3 ///
+		`fstRegDm1'
+local sndRegDm3 ///
+		`sndRegDm2'
 ** detrend with year dummy
 /// 0. w_{ijt}=\alpha+\alpha_{t}I_{t}+\ve_{ijt}
 /// 	-> \hat{w}_{ijt}=w_{ijt}-\hat_{\alpha}-\hat{\alpha}_{t}I_{t}
@@ -608,7 +643,7 @@ local sndRegDet i.year ///
 							`charc'
 }
 
-local dmList Sum Sum2 Dm Dm2 Det
+local dmList Sum1 Sum2 Dm1 Dm2 Dm3 Det
 foreach eq_i of local dmList{
 	global DmYear `dmYear`eq_i''
 	global FstReg `fstReg`eq_i''
@@ -652,7 +687,8 @@ foreach eq_i of local dmList{
 			empexpdif4 10000*@ 10000
 	global TitleTab ///
 			"Estimation Results, using the Method of 2SFD Estimation."
-	global LabelTab
+	global LabelTab ///
+			topel_`eq_i'
 	global Group
 	global GroupPattern
 	
@@ -662,25 +698,34 @@ foreach eq_i of local dmList{
  
 
 ** changing control variables
+*** time dummies are included in 2nd step (Dm2)
 qui{
 ** common variables
-global FstReg reg empwagedif
-global DmYear
+global FstReg ///
+		`fstRegDm2'
+global DmYear ///
+		`dmYearDm2'
 
 ** Predeterminant
-local pred i.schooling
+local pred ///
+		i.schooling
 ** Predeterminant + Changing infrequently
-local infr i.dmarital i.schooling i.dunion
+local infr ///
+		i.schooling ///
+		i.dmarital i.dunion
 ** All controls
-local all i.dmarital i.schooling ///
-				i.dregular i.dunion ///
-				i.occ i.ind i.dsize
+local all ///
+		i.schooling ///
+		i.dmarital i.dunion ///
+		i.dregular ///
+		i.occ i.ind i.dsize
 }
 
 local charList pred infr all
 foreach eq_i of local charList{
-	global SndReg ``eq_i'' ///
-							i. year initialemp
+	global SndReg ///
+			``eq_i'' ///
+			i. year initialemp
 	
 	do "$Code\ReadData.do"
 	

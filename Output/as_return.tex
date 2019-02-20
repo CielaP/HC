@@ -1,30 +1,34 @@
-\begin{table}[htbp]\centering
-\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
-\caption{Estimated Returns to Employer Tenure, using Sample up to 64-year-old, including Non-regular Workers and Specialists.}
+\begin{table}[!tp] \centering
+\begin{threeparttable}
+\caption{Estimated Returns to Employer Tenure. \label{return}}
 \begin{tabular}{l*{4}{c}}
-\hline\hline
-            &         OLS         &                     &                     &                     \\
-            &\multicolumn{1}{c}{(1)}         &\multicolumn{1}{c}{(2)}         &\multicolumn{1}{c}{(3)}         &\multicolumn{1}{c}{(4)}         \\
-\hline
-2 Years     &      0.0935\sym{***}&      0.0995\sym{***}&      0.0323         &      0.0348         \\
-            &    (0.0271)         &    (0.0283)         &    (0.0430)         &    (0.0443)         \\
-[1em]
-5 Years     &      0.1327\sym{***}&      0.1370\sym{***}&      0.0417         &      0.0463         \\
-            &    (0.0264)         &    (0.0276)         &    (0.0434)         &    (0.0449)         \\
-[1em]
-10 Years    &      0.1926\sym{***}&      0.1945\sym{***}&      0.0570         &      0.0632         \\
-            &    (0.0268)         &    (0.0283)         &    (0.0515)         &    (0.0537)         \\
-[1em]
-15 Years    &      0.2460\sym{***}&      0.2457\sym{***}&      0.0720         &      0.0770         \\
-            &    (0.0277)         &    (0.0296)         &    (0.0622)         &    (0.0646)         \\
-[1em]
-20 Years    &      0.2927\sym{***}&      0.2907\sym{***}&      0.0867         &      0.0879         \\
-            &    (0.0285)         &    (0.0304)         &    (0.0731)         &    (0.0749)         \\
-[1em]
-25 Years    &      0.3329\sym{***}&      0.3295\sym{***}&      0.1011         &      0.0957         \\
-            &    (0.0289)         &    (0.0309)         &    (0.0848)         &    (0.0858)         \\
-\hline
-\(N\)       &        7519         &        7519         &        7519         &        7519         \\
+\hline\hline\\
+[-.8em]
+            &\multicolumn{2}{c}{OLS"}                   &\multicolumn{2}{c}{AS's IV}                \\\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+            &         (1)         &         (2)         &         (3)         &         (4)         \\
+\hline\\
+[-.8em]
+2 Years     &       .0935\sym{***}&       .0995\sym{***}&       .0323         &       .0348         \\
+            &     (.0271)         &     (.0283)         &     (.0430)         &     (.0443)         \\
+5 Years     &       .1327\sym{***}&       .1370\sym{***}&       .0417         &       .0463         \\
+            &     (.0264)         &     (.0276)         &     (.0434)         &     (.0449)         \\
+10 Years    &       .1926\sym{***}&       .1945\sym{***}&       .0570         &       .0632         \\
+            &     (.0268)         &     (.0283)         &     (.0515)         &     (.0537)         \\
+15 Years    &       .2460\sym{***}&       .2457\sym{***}&       .0720         &       .0770         \\
+            &     (.0277)         &     (.0296)         &     (.0622)         &     (.0646)         \\
+20 Years    &       .2927\sym{***}&       .2907\sym{***}&       .0867         &       .0879         \\
+            &     (.0285)         &     (.0304)         &     (.0731)         &     (.0749)         \\
+25 Years    &       .3329\sym{***}&       .3295\sym{***}&       .1011         &       .0957         \\
+            &     (.0289)         &     (.0309)         &     (.0848)         &     (.0858)         \\
+\hline\\
+[-.8em]
+Observations&        7519         &        7519         &        7519         &        7519         \\
 \hline\hline
 \end{tabular}
+\begin{tablenotes}
+\small
+\im Notes: Robust standard errors are in parentheses.
+\im $^{*}$ , $^{**}$ and $^{***}$ Denote statistical significance at the 10\%, 5\% and 1\% level, respectively.
+\end{tablenotes}
+\end{threeparttable}
 \end{table}
